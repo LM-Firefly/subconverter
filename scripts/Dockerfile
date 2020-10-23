@@ -1,5 +1,5 @@
 FROM alpine:3.12
-LABEL maintainer "tindy.it@gmail.com"
+LABEL maintainer "firefly.lzh@gmail.com"
 
 # build minimized
 WORKDIR /
@@ -21,7 +21,7 @@ RUN apk add --no-cache --virtual .build-tools git g++ build-base linux-headers c
     install -m0644 ../extras/module-node/duk_module_node.h /usr/include && \
     cd ../../../.. && \
     rm -rf duktape /usr/lib/python2.7 && \
-    git clone https://github.com/tindy2013/subconverter --depth=1 && \
+    git clone https://github.com/LM-Firefly/subconverter --depth=1 && \
     cd subconverter && \
     cmake -DCMAKE_BUILD_TYPE=Release . && \
     make -j4 && \
