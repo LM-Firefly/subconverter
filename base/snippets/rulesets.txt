@@ -8,31 +8,34 @@
 ;🐟 漏网之鱼,[]FINAL
 ;https://raw.githubusercontent.com/LM-Firefly/Rules/master/
 
-🥥 DNS Improvement,surge:rules/LM-Firefly/Rules/Special/DNS.list
-⛔️ ADBlock,clash-classic:rules/LM-Firefly/Rules/Clash-RuleSet-Classical/Adblock/Adblock.yaml
-⏰ NTP Service,surge:rules/LM-Firefly/Rules/Special/NTP-Service.list
-🍎 Apple,surge:rules/LM-Firefly/Rules/Apple.list
-📺 BiliBili,surge:rules/LM-Firefly/Rules/Domestic-Services/BiliBili.list
-🎯 DIRECT,surge:rules/LM-Firefly/Rules/Special/TeamViewer-CIDR.list
-🐷 NeteaseMusic,surge:rules/LM-Firefly/Rules/Domestic-Services/NeteaseMusic.list
-🕸️ LAN Special Apps,surge:rules/LM-Firefly/Rules/Special/LAN-Special-Apps.list
-📡 Video Crack,surge:rules/LM-Firefly/Rules/Domestic-Services/Video-Crack.list
-💊 Xiaomi,surge:rules/LM-Firefly/Rules/Domestic-Services/Xiaomi.list
-🚦 DMCA Sensitive,surge:rules/LM-Firefly/Rules/Special/DMCA-Sensitive.list
-🌍 GlobalMedia,surge:rules/LM-Firefly/Rules/GlobalMedia.list
-🙈 Google,surge:rules/LM-Firefly/Rules/Google.list
-🥝 iQIYI,surge:rules/LM-Firefly/Rules/Domestic-Services/iQIYI.list
-🐻 LineTV,surge:rules/LM-Firefly/Rules/LineTV.list
-🐼 Microsoft,surge:rules/LM-Firefly/Rules/Microsoft.list
-🎥 Netflix,surge:rules/LM-Firefly/Rules/Netflix.list
-📲 Telegram,surge:rules/LM-Firefly/Rules/Telegram.list
-🎬 Twitch,surge:rules/LM-Firefly/Rules/Twitch.list
-🍖 PROXY,surge:rules/LM-Firefly/Rules/PROXY.list
-🌏 Domestic,surge:rules/LM-Firefly/Rules/Domestic.list
-🌏 Domestic,surge:rules/LM-Firefly/Rules/CCC-CN.list
-🍖 PROXY,surge:rules/LM-Firefly/Rules/CCC-Global.list
-🏬 Alibaba,surge:rules/LM-Firefly/Rules/Domestic-Services/Alibaba.list
-🚀 SpeedTest,surge:rules/LM-Firefly/Rules/SpeedTest.list
-🎯 DIRECT,surge:rules/LM-Firefly/Rules/Special/Local-LAN.list
+🥥 DNS Improvement,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DNS.list,10800
+⛔️ ADBlock,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list,10800
+⏰ NTP Service,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/NTP-Service.list,10800
+🍎 Apple,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Apple.list,10800
+📺 BiliBili,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/BiliBili.list,10800
+🎯 DIRECT,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/TeamViewer-CIDR.list,10800
+🐷 NeteaseMusic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/NeteaseMusic.list,10800
+🕸️ LAN Special Apps,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/LAN-Special-Apps.list,10800
+📡 Video Crack,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Video-Crack.list,10800
+💊 Xiaomi,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Xiaomi.list,10800
+🚦 DMCA Sensitive,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DMCA-Sensitive.list,10800
+🎮 Game,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Game.list,10800
+🌍 GlobalMedia,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/GlobalMedia.list,10800
+🙈 Google,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Google.list,10800
+🥝 iQIYI,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/iQIYI.list,10800
+🐻 LineTV,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/LineTV.list,10800
+🐼 Microsoft,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Microsoft.list,10800
+🎥 Netflix,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Netflix.list,10800
+📲 Telegram,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Telegram.list,10800
+🎬 Twitch,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Twitch.list,10800
+🍖 PROXY,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY.list,10800
+🍥 Government CN,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Government-CN.list,10800
+🌏 Domestic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic.list,10800
+🌏 Domestic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-CN.list,10800
+🍖 PROXY,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-Global.list,10800
+🏬 Alibaba,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Alibaba.list,10800
+🚀 SpeedTest,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/SpeedTest.list,10800
+🎯 DIRECT,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Local-LAN.list,10800
+🌏 Domestic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CN-IP.list,10800
 🌏 Domestic,[]GEOIP,CN
 🚧 The End,[]MATCH
