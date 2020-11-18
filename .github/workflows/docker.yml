@@ -44,4 +44,3 @@ jobs:
         run: |
           docker buildx build --output "type=image,push=true" --platform=linux/amd64,linux/arm/v7,linux/arm64,linux/386 --tag fireflylzh/subconverter:${{steps.version.outputs.result}} scripts/
           docker buildx build --output "type=image,push=true" --platform=linux/amd64,linux/arm/v7,linux/arm64,linux/386 --tag fireflylzh/subconverter:latest scripts/
-
