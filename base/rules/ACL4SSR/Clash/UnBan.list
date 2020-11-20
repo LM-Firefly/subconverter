@@ -22,6 +22,9 @@ DOMAIN,analytics.strava.com
 DOMAIN,msg.umeng.com
 DOMAIN,msg.umengcloud.com
 
+# Miui 小米
+DOMAIN,tracking.miui.com
+
 # General
 DOMAIN,app.adjust.com
 DOMAIN,bdtj.tagtic.cn

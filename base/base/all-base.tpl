@@ -1,13 +1,13 @@
 {% if request.target == "clash" or request.target == "clashr" %}
 
-port: {{ default(global.clash.http_port, "8888") }}
-socks-port: {{ default(global.clash.socks_port, "8890") }}
+mixed-port: {{ local.clash.mixed_port }}
+redir-port: {{ local.clash.redir_port}}
 #authentication:
 #  - "firefly:WJ960923"
-allow-lan: {{ default(global.clash.allow_lan, "true") }}
+allow-lan: {{ local.clash.allow_lan }}
 bind-address: '*'
 mode: rule
-log-level: {{ default(global.clash.log_level, "info") }}
+log-level: {{ local.clash.log_level }}
 ipv6: true
 external-controller: {{ local.clash.api_port}}
 #external-ui: folder
@@ -51,12 +51,20 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - '*.lan'
+    - '*.localdomain'
+    - '*.example'
+    - '*.invalid'
+    - '*.localhost'
+    - '*.test'
+    - '*.local'
+    - '*.home.arpa'
+    - '*.router.asus.com'
+    - 'localhost.ptlogin2.qq.com'
+    - 'localhost.sec.qq.com'
     - 'msftconnecttest.com'
     - '*.msftconnecttest.com'
     - 'msftncsi.com'
     - '*.msftncsi.com'
-    - 'localhost.ptlogin2.qq.com'
-    - 'localhost.sec.qq.com'
     - '+.stun.*.*'
     - '+.stun.*.*.*'
     - '+.stun.*.*.*.*'
@@ -108,7 +116,7 @@ dns:
     geoip: true # default
     ipcidr: # ips in these subnets will be considered polluted
       - 0.0.0.0/32
-      - 127.0.0.1/32
+      - 127.0.0.0/8
       - 240.0.0.0/4
 
 {% endif %}
