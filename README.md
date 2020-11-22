@@ -3,8 +3,8 @@
 Utility to convert between various proxy subscription formats.
 
 [![Build Status](https://travis-ci.com/LM-Firefly/subconverter.svg?branch=master)](https://travis-ci.com/LM-Firefly/subconverter)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/tags)
-[![GitHub release](https://img.shields.io/github/release/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/releases)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/LM-Firefly/subconverter.svg)](https://github.com/LM-Firefly/subconverter/tags)
+[![GitHub release](https://img.shields.io/github/release/LM-Firefly/subconverter.svg)](https://github.com/LM-Firefly/subconverter/releases)
 [![GitHub license](https://img.shields.io/github/license/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/blob/master/LICENSE)
 
 [Docker README](https://github.com/LM-Firefly/subconverter/blob/master/README-docker.md)
