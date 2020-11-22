@@ -221,7 +221,7 @@ After saving it to the `profile` directory, you can access `http://127.0.0.1:255
 
 ### External Configuration File
 
-> Most settings works the same as the ones with the same name inside `pref.ini`, you can check [the example configuration file](https://github.com/LM-Firefly/subconverter/blob/master/base/config/example_external_config.ini) and comments inside [pref.example.ini](https://github.com/LM-Firefly/subconverter/blob/master/base/pref.example.ini) for more information.
+> Most settings works the same as the ones with the same name inside `pref.ini`, you can check [the example configuration file](https://github.com/LM-Firefly/subconverter/blob/master/base/config/AIO.ini) and comments inside [pref.example.ini](https://github.com/LM-Firefly/subconverter/blob/master/base/pref.example.ini) for more information.
 
 Any setting defined in the external configuration file will **override** the ones from `pref.ini`.
 
