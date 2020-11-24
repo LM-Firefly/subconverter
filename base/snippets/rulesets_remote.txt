@@ -1,12 +1,31 @@
-⛔️ 广告拦截,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Advertising.list
-🚫 运营劫持,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Hijacking.list
-🌌 YouTube,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/Video/YouTube.list
-🎥 NETFLIX,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/Video/Netflix.list
-HBO,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Media/HBO.list
-Fox,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Media/Fox.list
-🌍 国外媒体,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/Streaming.list
-🌏 港台媒体,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/StreamingSE.list
-📲 电报信息,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Extra/Telegram/Telegram.list
-🔰 节点选择,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Global.list
-🍎 苹果服务,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Extra/Apple/Apple.list
-DIRECT,https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/China.list
+🥥 DNS Improvement,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DNS.list,10800
+⛔️ 广告服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list,10800
+⏰ 时间校准,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/NTP-Service.list,10800
+🍎 苹果服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Apple.list,10800
+📺 哔哩哔哩,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/BiliBili.list,10800
+🙈 谷歌服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Google.list,10800
+🍥 政府网站,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Government-CN.list,10800
+🥝 爱奇艺,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/iQIYI.list,10800
+🐻 LineTV,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/LineTV.list,10800
+🐼 微软服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Microsoft.list,10800
+🐷 网易音乐,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/NeteaseMusic.list,10800
+🎥 奈飞影视,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Netflix.list,10800
+📲 电报消息,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Telegram.list,10800
+🎬 推趣影音,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Twitch.list,10800
+📡 视频解析,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Video-Crack.list,10800
+💊 小米服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Xiaomi.list,10800
+🚦 DMCA Sensitive,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DMCA-Sensitive.list,10800
+🎯 直连服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/TeamViewer-CIDR.list,10800
+🕸️ 局域网服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/LAN-Special-Apps.list,10800
+🎮 游戏服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Game.list,10800
+🌍 国外媒体,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/GlobalMedia.list,10800
+🍖 默认代理,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY.list,10800
+🌏 大陆服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic.list,10800
+🌏 大陆服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-CN.list,10800
+🍖 默认代理,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-Global.list,10800
+🏬 阿里巴巴,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Alibaba.list,10800
+🚀 SpeedTest,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/SpeedTest.list,10800
+🎯 直连服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Local-LAN.list,10800
+🌏 大陆服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CN-IP.list,10800
+🌏 大陆服务,[]GEOIP,CN
+🚧 终末策略,[]MATCH

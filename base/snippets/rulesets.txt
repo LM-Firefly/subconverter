@@ -2,40 +2,36 @@
 ;Format: Group name,URL
 ;        Group name,[]Rule
 
-;DIRECT,https://raw.githubusercontent.com/ConnersHua/Profiles/master/Surge/Ruleset/Unbreak.list
-;🎯 全球直连,rules/LocalAreaNetwork.list
-;🎯 全球直连,[]GEOIP,CN
-;🐟 漏网之鱼,[]FINAL
-;https://raw.githubusercontent.com/LM-Firefly/Rules/master/
+;rules/
 
-🥥 DNS Improvement,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DNS.list,10800
-⛔️ ADBlock,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list,10800
-⏰ NTP Service,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/NTP-Service.list,10800
-🍎 Apple,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Apple.list,10800
-📺 BiliBili,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/BiliBili.list,10800
-🎯 DIRECT,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/TeamViewer-CIDR.list,10800
-🐷 NeteaseMusic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/NeteaseMusic.list,10800
-🕸️ LAN Special Apps,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/LAN-Special-Apps.list,10800
-📡 Video Crack,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Video-Crack.list,10800
-💊 Xiaomi,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Xiaomi.list,10800
-🚦 DMCA Sensitive,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DMCA-Sensitive.list,10800
-🎮 Game,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Game.list,10800
-🌍 GlobalMedia,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/GlobalMedia.list,10800
-🙈 Google,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Google.list,10800
-🥝 iQIYI,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/iQIYI.list,10800
-🐻 LineTV,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/LineTV.list,10800
-🐼 Microsoft,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Microsoft.list,10800
-🎥 Netflix,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Netflix.list,10800
-📲 Telegram,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Telegram.list,10800
-🎬 Twitch,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Twitch.list,10800
-🍖 PROXY,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY.list,10800
-🍥 Government CN,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Government-CN.list,10800
-🌏 Domestic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic.list,10800
-🌏 Domestic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-CN.list,10800
-🍖 PROXY,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-Global.list,10800
-🏬 Alibaba,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Alibaba.list,10800
-🚀 SpeedTest,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/SpeedTest.list,10800
-🎯 DIRECT,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Local-LAN.list,10800
-🌏 Domestic,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/CN-IP.list,10800
-🌏 Domestic,[]GEOIP,CN
-🚧 The End,[]MATCH
+🥥 DNS Improvement,surge:rules/Special/DNS.list,10800
+⛔️ 广告服务,surge:rules/Adblock/Adblock.list,10800
+⏰ 时间校准,surge:rules/Special/NTP-Service.list,10800
+🍎 苹果服务,surge:rules/Apple.list,10800
+📺 哔哩哔哩,surge:rules/Domestic-Services/BiliBili.list,10800
+🙈 谷歌服务,surge:rules/Google.list,10800
+🍥 政府网站,surge:rules/Special/Government-CN.list,10800
+🥝 爱奇艺,surge:rules/Domestic-Services/iQIYI.list,10800
+🐻 LineTV,surge:rules/Global-Services/LineTV.list,10800
+🐼 微软服务,surge:rules/Microsoft.list,10800
+🐷 网易音乐,surge:rules/Domestic-Services/NeteaseMusic.list,10800
+🎥 奈飞影视,surge:rules/Netflix.list,10800
+📲 电报消息,surge:rules/PROXY/Telegram.list,10800
+🎬 推趣影音,surge:rules/PROXY/Twitch.list,10800
+📡 视频解析,surge:rules/Domestic-Services/Video-Crack.list,10800
+💊 小米服务,surge:rules/Domestic-Services/Xiaomi.list,10800
+🚦 DMCA Sensitive,surge:rules/Special/DMCA-Sensitive.list,10800
+🎯 直连服务,surge:rules/Special/TeamViewer-CIDR.list,10800
+🕸️ 局域网服务,surge:rules/Special/LAN-Special-Apps.list,10800
+🎮 游戏服务,surge:rules/Game.list,10800
+🌍 国外媒体,surge:rules/GlobalMedia.list,10800
+🍖 默认代理,surge:rules/PROXY.list,10800
+🌏 大陆服务,surge:rules/Domestic.list,10800
+🌏 大陆服务,surge:rules/CCC-CN.list,10800
+🍖 默认代理,surge:rules/CCC-Global.list,10800
+🏬 阿里巴巴,surge:rules/Domestic-Services/Alibaba.list,10800
+🚀 SpeedTest,surge:rules/SpeedTest.list,10800
+🎯 直连服务,surge:rules/Special/Local-LAN.list,10800
+🌏 大陆服务,surge:rules/CN-IP.list,10800
+🌏 大陆服务,[]GEOIP,CN
+🚧 终末策略,[]MATCH

@@ -17,120 +17,118 @@
 ;sstw`select`!!GROUP=V2RayProvider!!(深台|彰化|新北|台|tw)
 
 ;for forcerule.yaml
-🍎 Apple`select`[]🍖 PROXY`[]🔄 Optimal Latency`[]🎯 DIRECT
-📺 BiliBili`select`[]🎯 DIRECT`(🇨🇳)`[]🇯🇵 JP-AWS`[]🇯🇵 JP-Azure`[]🇯🇵 JP-CloudN`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-Others`[]🇭🇰 HK-Fallback`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 深港专线`[]🇭🇰 HK-Others`[]🇭🇰 召唤师-HK`[]🇹🇼 TW-Fallback`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🇺🇲 US-Fallback`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 US-Others`[]🇺🇲 召唤师-US`[]🍱 Unpopular Area`[]🍖 PROXY
-🙈 Google`select`[]🔄 Optimal Latency`[]🇺🇲 US-Fallback`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 US-Others`[]🇯🇵 JP-Fallback`[]🇯🇵 JP-AWS`[]🇯🇵 JP-Azure`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-CloudN`[]🇯🇵 JP-Others`[]🇬🇧 UK`[]🇭🇰 HK-Fallback`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 深港专线`[]🇭🇰 HK-Others`[]🇹🇼 TW-Fallback`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🍱 Unpopular Area`[]🇭🇰 召唤师-HK`[]🇺🇲 召唤师-US`[]🇯🇵 召唤师-JP`[]🥗 召唤师-Others`[]🇷🇺 RU-伯力`[]🇷🇺 RU-Others`[]🇷🇺 RU-Fallback`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇸🇬 SG-Others`[]🇰🇷 KR-Fallback`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`[]🇩🇪 DE-Fallback`[]🇩🇪 DE-TL
-🐷 NeteaseMusic`select`[]🎯 DIRECT`(网易云)`(UnblockNetEaseMusic)`(🇨🇳)`[]🌏 Domestic
-🥝 iQIYI`select`[]🎯 DIRECT`(🇨🇳)`[]🇭🇰 HK-Fallback`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 深港专线`[]🇭🇰 HK-Others`[]🇹🇼 TW-Fallback`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🇭🇰 召唤师-HK
-🐻 LineTV`select`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`(台.*(?!▷)|TW|彰化)
-🐼 Microsoft`select`[]🔄 Optimal Latency`[]🇺🇲 US-Fallback`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇬🇧 UK`[]🇭🇰 HK-Fallback`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 深港专线`[]🇭🇰 HK-Others`[]🇹🇼 TW-Fallback`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🍱 Unpopular Area`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇰🇷 KR-Fallback`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`[]🇩🇪 DE-Fallback`[]🇩🇪 DE-TL`[]🌏 Domestic`[]🎯 DIRECT
-🎥 Netflix`select`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 HK-Others`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-HiNet-FB`[]🇹🇼 TW-ZHS`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 召唤师-US`[]🇭🇰 召唤师-HK`[]🇯🇵 JP-AWS`[]🇯🇵 JP-Azure`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-CloudN`[]🇬🇧 UK`[]🇯🇵 召唤师-JP`[]🇷🇺 RU-伯力`[]🇷🇺 RU-Others`[]🇷🇺 RU-Fallback`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇸🇬 SG-Others`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`[]🇩🇪 DE-TL`[]🍖 PROXY
-📲 Telegram`select`[]🔄 Optimal Latency`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇸🇬 SG-Others`[]🇹🇼 TW-Fallback`[]🇭🇰 HK-Fallback`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 HK-Others`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`台TFN`[]🇺🇲 US-Fallback`[]🍱 Unpopular Area`[]🇯🇵 JP-Fallback`[]🇬🇧 UK`[]🇷🇺 RU-伯力`[]🇷🇺 RU-Others`[]🇷🇺 RU-Fallback`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`[]🇩🇪 DE-Fallback`[]🇩🇪 DE-TL`[]🍖 PROXY
-🎬 Twitch`select`[]🔄 Optimal Latency`[]🇺🇲 US-Fallback`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 US-Others`[]🍱 Unpopular Area`[]🇯🇵 JP-Fallback`[]🇯🇵 JP-AWS`[]🇯🇵 JP-Azure`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-CloudN`[]🇯🇵 JP-Others`[]🇬🇧 UK`[]🇭🇰 HK-Fallback`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 深港专线`[]🇭🇰 HK-Others`[]🇹🇼 TW-Fallback`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🇬🇧 UK`[]🍖 PROXY
-🌍 GlobalMedia`select`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 召唤师-HK`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🇹🇼 TW-Fallback`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 召唤师-US`[]🇯🇵 召唤师-JP`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-CloudN`[]🇬🇧 UK`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇸🇬 SG-Others`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`[]🇩🇪 DE-TL`[]🍖 PROXY
-🌏 Domestic`select`[]🎯 DIRECT`(🇨🇳)`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 HK-Others`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`台TFN`!!GROUPID=2!!(台.*(?!▷))`[]🍖 PROXY
-💊 Xiaomi`select`[]🎯 DIRECT`(🇨🇳)`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 HK-Others`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`台TFN`!!GROUPID=2!!(台.*(?!▷))`[]🍖 PROXY
-🥥 DNS Improvement`select`[]🎯 DIRECT`(🇨🇳)`[]🔄 Optimal Latency`[]🍖 PROXY
-🥩 云霄阁`select`(云霄阁)
-🍙 云霄阁SR`select`(云霄阁SR)
-🍖 PROXY`select`[]🔄 Optimal Latency`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🇭🇰 召唤师-HK`[]🇺🇲 召唤师-US`[]🇯🇵 召唤师-JP`[]🥗 召唤师-Others`[]🍱 Unpopular Area`[]🇺🇲 US-Fallback`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 US-Others`[]🇯🇵 JP-Fallback`[]🇯🇵 JP-AWS`[]🇯🇵 JP-Azure`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-CloudN`[]🇯🇵 JP-Others`[]🇬🇧 UK`[]🇭🇰 HK-Fallback`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 深港专线`[]🇭🇰 HK-Others`[]🇷🇺 RU-伯力`[]🇷🇺 RU-Others`[]🇷🇺 RU-Fallback`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇸🇬 SG-Others`[]🇰🇷 KR-Fallback`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`[]🇩🇪 DE-Fallback`[]🇩🇪 DE-TL
-🏬 Alibaba`select`[]🎯 DIRECT`(🇨🇳)`[]🌏 Domestic
-🚦 DMCA Sensitive`select`[]🎯 DIRECT`[]🌏 Domestic`(灭霸)`[]🍖 PROXY
-📡 Video Crack`select`[]🎯 DIRECT`[]🔄 Optimal Latency`[]🌏 Domestic`[]🍖 PROXY
-🕸️ LAN Special Apps`select`[]🎯 DIRECT`[]🍖 PROXY
-🚀 SpeedTest`select`[]🎯 DIRECT`[]🍖 PROXY`.*
-🚧 The End`select`[]🔄 Optimal Latency`[]🎯 DIRECT`[]🌏 Domestic`(灭霸)`[]🍖 PROXY
-🇹🇼 TW-HiNet`url-test`(🇹🇼.*台HiNet(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇹🇼 TW-Seednet`url-test`(🇹🇼.*台Seednet(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇹🇼 TW-HiNet-FB`fallback`[]🇹🇼 TW-HiNet`(🇹🇼.*台HiNet(?!▷))`https://cp.cloudflare.com/generate_204`180,,30
-🇹🇼 TW-Fallback`fallback`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`(🇹🇼.*台TFN)`!!GROUPID=2!!(🇹🇼.*台.*(?!▷))`https://cp.cloudflare.com/generate_204`180,,30
-🇹🇼 TW-ZHS`fallback`!!GROUPID=2!!(🇹🇼.*台.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-AWS`url-test`(🇭🇰.*港AWS.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-Azure`url-test`(🇭🇰.*港Azure.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-BGP`url-test`(🇭🇰.*港BGP.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-HGC`url-test`(🇭🇰.*HGC.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-HKBN`url-test`(🇭🇰.*HKBN.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-HKT`url-test`(🇭🇰.*HKT.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-M247`url-test`(🇭🇰.*港M247.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-WTT`url-test`(🇭🇰.*WTT.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-LS`url-test`(🇭🇰.*港LS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 深港专线`url-test`(🇭🇰.*不限速|深港临时专线)`(🇭🇰.*深港(?!▷|回))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-Others`url-test`(🇭🇰.*港CI)`(🇭🇰.*港icable)`(🇭🇰.*港阿里云)`!!GROUPID=2!!(🇭🇰.*港-)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-Optimal Latency`url-test`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 HK-Others`[]🇭🇰 深港专线`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 HK-Fallback`fallback`[]🇭🇰 HK-Optimal Latency`[]🇭🇰 HK-AWS`[]🇭🇰 HK-Azure`[]🇭🇰 HK-HGC`[]🇭🇰 HK-HKBN`[]🇭🇰 HK-HKT`[]🇭🇰 HK-M247`[]🇭🇰 HK-WTT`[]🇭🇰 HK-Others`[]🇭🇰 深港专线`https://cp.cloudflare.com/generate_204`180,,30
-🇬🇧 UK`url-test`(🇬🇧.*伦敦|英)`!!GROUPID=2!!(🇬🇧.*英.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-AWS`url-test`(🇺🇲.*美.*AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-Azure`url-test`(🇺🇲.*美.*Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-BGP`url-test`(🇺🇲.*美.*BGP)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-CC`url-test`(🇺🇲.*美.*CC)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-CH`url-test`(🇺🇲.*美.*CH)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-CN2`url-test`(🇺🇲.*美.*CN2)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-DO`url-test`(🇺🇲.*美.*DO)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-DS`url-test`(🇺🇲.*美.*DS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-EN`url-test`(🇺🇲.*美.*EN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-GF`url-test`(🇺🇲.*美.*GF)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-GIA`url-test`(🇺🇲.*美.*GIA(?!D))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-GIAD`url-test`(🇺🇲.*美.*GIAD)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-HE`url-test`(🇺🇲.*美.*HE)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-INAP`url-test`(🇺🇲.*美.*INAP)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-KT`url-test`(🇺🇲.*美.*KT)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-M247`url-test`(🇺🇲.*美.*M247)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-MC`url-test`(🇺🇲.*美.*MC)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-NHN`url-test`(🇺🇲.*美.*NHN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-QN`url-test`(🇺🇲.*美.*QN(?!C))`(🇺🇲.*美.*QN[0-9])`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-QNC`url-test`(🇺🇲.*美.*QNC)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-QP`url-test`(🇺🇲.*美.*QP)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-RN`url-test`(🇺🇲.*美.*RN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-RS`url-test`(🇺🇲.*美.*RS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-XS`url-test`(🇺🇲.*美.*XS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-ANCH`url-test`(🇺🇲.*美.*安畅)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-Others`url-test`(🇺🇲.*美.*DP)`(🇺🇲.*美.*VM)`!!GROUPID=2!!(🇺🇲.*美.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-Optimal Latency`url-test`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 US-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 US-Fallback`fallback`[]🇺🇲 US-Optimal Latency`[]🇺🇲 US-AWS`[]🇺🇲 US-Azure`[]🇺🇲 US-DO`[]🇺🇲 US-DS`[]🇺🇲 US-HE`[]🇺🇲 US-M247`[]🇺🇲 US-MC`[]🇺🇲 US-NHN`[]🇺🇲 US-QN`[]🇺🇲 US-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-AWS`url-test`(🇯🇵.*日.*AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-Azure`url-test`(🇯🇵.*日.*Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-CloudN`url-test`(🇯🇵.*日.*CloudN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-GMO`url-test`(🇯🇵.*日.*GMO)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-IDCF`url-test`(🇯🇵.*日.*IDCF)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-IIJ`url-test`(🇯🇵.*日.*IIJ.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-M247`url-test`(🇯🇵.*日.*M247)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-NHN`url-test`(🇯🇵.*日.*NHN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-NTT`url-test`(🇯🇵.*日.*NTT)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-Webarena`url-test`(🇯🇵.*日.*Webarena)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-Others`url-test`(🇯🇵.*日.*阿里云)`!!GROUPID=2!!(🇯🇵.*日.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-Optimal Latency`url-test`[]🇯🇵 JP-CloudN`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-AWS`[]🇯🇵 JP-Azure`[]🇯🇵 JP-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 JP-Fallback`fallback`[]🇯🇵 JP-Optimal Latency`[]🇯🇵 JP-CloudN`[]🇯🇵 JP-M247`[]🇯🇵 JP-NHN`[]🇯🇵 JP-NTT`[]🇯🇵 JP-Webarena`[]🇯🇵 JP-AWS`[]🇯🇵 JP-Azure`[]🇯🇵 JP-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇷🇺 RU-伯力`url-test`(🇷🇺.*俄伯力)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇷🇺 RU-Others`url-test`(🇷🇺.*新西伯利亚)`(🇷🇺.*莫斯科)`!!GROUPID=2!!(🇷🇺.*俄.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇷🇺 RU-Optimal Latency`url-test`[]🇷🇺 RU-伯力`[]🇷🇺 RU-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇷🇺 RU-Fallback`fallback`[]🇷🇺 RU-Optimal Latency`[]🇷🇺 RU-伯力`[]🇷🇺 RU-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇸🇬 SG-AWS`url-test`(🇸🇬.*新AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇸🇬 SG-Azure`url-test`(🇸🇬.*新Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇸🇬 SG-DO`url-test`(🇸🇬.*新DO)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇸🇬 SG-NTT`url-test`(🇸🇬.*新NTT(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇸🇬 SG-Others`url-test`(🇸🇬.*新(?!Azure|AWS|DO|NTT))`!!GROUPID=2!!(🇸🇬.*新.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇸🇬 SG-Optimal Latency`url-test`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇸🇬 SG-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇸🇬 SG-Fallback`fallback`[]🇸🇬 SG-Optimal Latency`[]🇸🇬 SG-AWS`[]🇸🇬 SG-Azure`[]🇸🇬 SG-DO`[]🇸🇬 SG-NTT`[]🇸🇬 SG-Others`https://cp.cloudflare.com/generate_204`180,,30
-🇰🇷 KR-AWS`url-test`(🇰🇷.*韩.*AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇰🇷 KR-Azure`url-test`(🇰🇷.*韩.*Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇰🇷 KR-NHN`url-test`(🇰🇷.*韩.*NHN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇰🇷 KR-KT`url-test`(🇰🇷.*韩KT)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇰🇷 KR-Others`url-test`!!GROUPID=2!!(🇰🇷.*韩.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇰🇷 KR-Optimal Latency`url-test`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`https://cp.cloudflare.com/generate_204`180,,30
-🇰🇷 KR-Fallback`fallback`[]🇰🇷 KR-Optimal Latency`[]🇰🇷 KR-AWS`[]🇰🇷 KR-Azure`[]🇰🇷 KR-NHN`https://cp.cloudflare.com/generate_204`180,,30
-🇩🇪 DE-TL`url-test`(🇩🇪.*德.*TL)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇩🇪 DE-GIA`url-test`(🇩🇪.*德.*GIA)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇩🇪 DE-Optimal Latency`url-test`[]🇩🇪 DE-TL`https://cp.cloudflare.com/generate_204`180,,30
-🇩🇪 DE-Fallback`fallback`[]🇩🇪 DE-Optimal Latency`[]🇩🇪 DE-TL`https://cp.cloudflare.com/generate_204`180,,30
-🇦🇺 AU-Auto`fallback`(🇦🇺.*悉尼AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇭🇰 召唤师-HK`url-test`!!GROUPID=2!!(🇭🇰.*港)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇺🇲 召唤师-US`url-test`!!GROUPID=2!!(🇺🇲.*美.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🇯🇵 召唤师-JP`url-test`!!GROUPID=2!!(🇯🇵.*日.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🥗 召唤师-Others`url-test`!!GROUPID=2!!(🇹🇼.*台.*(?!▷))`!!GROUPID=2!!(🇸🇬.*新.*(?!▷))`!!GROUPID=2!!(🇬🇧.*英.*(?!▷))`!!GROUPID=2!!(🇷🇺.*俄.*(?!▷))`!!GROUPID=2!!(🇰🇷.*韩.*(?!▷))`!!GROUPID=2!!(🇨🇦.*加.*(?!▷))`!!GROUPID=2!!(🇫🇷.*法国)`!!GROUPID=2!!(🇹🇷.*土.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,30
-🍄 Cheap-Nodes`url-test`(\(倍率:0\))`https://cp.cloudflare.com/generate_204`180,,30
-🔄 Optimal Latency`url-test`[]🇺🇲 US-Optimal Latency`[]🇭🇰 HK-Optimal Latency`[]🇹🇼 TW-HiNet`[]🇹🇼 TW-Seednet`[]🇯🇵 JP-Optimal Latency`[]🇷🇺 RU-Optimal Latency`[]🇩🇪 DE-Optimal Latency`[]🍱 Unpopular Area`[]🇺🇲 召唤师-US`[]🇯🇵 召唤师-JP`[]🥗 召唤师-Others`[]🇸🇬 SG-Optimal Latency`[]🇬🇧 UK`[]🇰🇷 KR-Optimal Latency`https://cp.cloudflare.com/generate_204`180,,30
-🍱 Unpopular Area`url-test`(🇩🇪)`(🇬🇧)`(🇸🇬)`(🇰🇷)`(🇹🇷)`(🇵🇭)`(🇮🇪)`(🇫🇷)`(🇮🇳)`(🇨🇦)`(🇷🇺)`https://cp.cloudflare.com/generate_204`180,,30
-🍙 云霄阁-Fallback`fallback`(云霄阁)`https://cp.cloudflare.com/generate_204`180,,30
-🎯 DIRECT`select`[]DIRECT
-⛔️ ADBlock`select`[]REJECT`[]🎯 DIRECT
-⏰ NTP Service`select`[]🎯 DIRECT
+🌮 手动选择`select`.*
+🍖 默认代理`select`[]🔄 延迟最低`[]🌮 手动选择`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🇩🇪 德国-轮询`[]🇩🇪 德国-TL`[]🍱 Unpopular Area`[]🇺🇲 美国-轮询`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-Others`[]🇯🇵 日本-轮询`[]🇯🇵 日本-AWS`[]🇯🇵 日本-Azure`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇯🇵 日本-CloudN`[]🇬🇧 英国`[]🇭🇰 香港-轮询`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 深港专线`[]🇭🇰 香港-Others`[]🇷🇺 俄罗斯-Others`[]🇷🇺 俄罗斯-轮询`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`[]🇰🇷 韩国-轮询`[]🇰🇷 韩国-Azure`[]🇩🇪 德国-轮询`[]🇩🇪 德国-TL
+🌍 国外媒体`select`[]🌮 手动选择`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🇹🇼 台湾-轮询`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-Others`[]🇯🇵 日本-CloudN`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇬🇧 英国`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇰🇷 韩国-轮询`[]🇰🇷 韩国-Azure`[]🇩🇪 德国-TL
+🎮 游戏服务`select`[]🌮 手动选择`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🇹🇼 台湾-轮询`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇯🇵 日本-CloudN`[]🇬🇧 英国`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`[]🇰🇷 韩国-Azure`[]🇩🇪 德国-TL`[]🍖 默认代理
+🌏 大陆服务`select`[]🎯 直连服务`(🇨🇳)`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 香港-Others`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`台TFN`[]🍖 默认代理
+🚧 终末策略`select`[]🔄 延迟最低`[]🎯 直连服务`[]🌏 大陆服务`[]🍖 默认代理
+📡 视频解析`select`[]🎯 直连服务`[]🔄 延迟最低`[]🌏 大陆服务`[]🍖 默认代理
+🎥 奈飞影视`select`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-Others`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-HiNet-FB`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-Others`[]🇯🇵 日本-CloudN`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇯🇵 日本-AWS`[]🇯🇵 日本-Azure`[]🇬🇧 英国`[]🇷🇺 俄罗斯-Others`[]🇷🇺 俄罗斯-轮询`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇰🇷 韩国-Azure`[]🇩🇪 德国-TL
+🐷 网易音乐`select`[]🎯 直连服务`(网易云)`(UnblockNetEaseMusic)`(🇨🇳)`[]🌏 大陆服务
+🍎 苹果服务`select`[]🍖 默认代理`[]🔄 延迟最低`[]🎯 直连服务
+📺 哔哩哔哩`select`[]🎯 直连服务`(🇨🇳)`[]🌮 手动选择`[]🇯🇵 日本-AWS`[]🇯🇵 日本-Azure`[]🇯🇵 日本-CloudN`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇭🇰 香港-轮询`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 深港专线`[]🇭🇰 香港-Others`[]🇹🇼 台湾-轮询`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🇺🇲 美国-轮询`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-Others`[]🍱 Unpopular Area
+🙈 谷歌服务`select`[]🔄 延迟最低`[]🌮 手动选择`[]🇺🇲 美国-轮询`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-Others`[]🇯🇵 日本-轮询`[]🇯🇵 日本-AWS`[]🇯🇵 日本-Azure`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇯🇵 日本-CloudN`[]🇬🇧 英国`[]🇭🇰 香港-轮询`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 深港专线`[]🇭🇰 香港-Others`[]🇹🇼 台湾-轮询`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🍱 Unpopular Area`[]🇷🇺 俄罗斯-Others`[]🇷🇺 俄罗斯-轮询`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`[]🇰🇷 韩国-轮询`[]🇰🇷 韩国-Azure`[]🇩🇪 德国-轮询`[]🇩🇪 德国-TL
+🥝 爱奇艺`select`[]🎯 直连服务`(🇨🇳)`[]🌮 手动选择`[]🇭🇰 香港-轮询`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 深港专线`[]🇭🇰 香港-Others`[]🇹🇼 台湾-轮询`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet
+🐻 LineTV`select`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🍖 默认代理`(台.*(?!▷)|TW|彰化)
+🐼 微软服务`select`[]🔄 延迟最低`[]🌮 手动选择`[]🇺🇲 美国-轮询`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-Others`[]🇬🇧 英国`[]🇭🇰 香港-轮询`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 深港专线`[]🇭🇰 香港-Others`[]🇹🇼 台湾-轮询`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🍱 Unpopular Area`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`[]🇰🇷 韩国-轮询`[]🇰🇷 韩国-Azure`[]🇩🇪 德国-轮询`[]🇩🇪 德国-TL`[]🌏 大陆服务`[]🎯 直连服务
+📲 电报消息`select`[]🔄 延迟最低`[]🌮 手动选择`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`[]🇰🇷 韩国-轮询`[]🇰🇷 韩国-Azure`[]🇩🇪 德国-轮询`[]🇩🇪 德国-TL`[]🇹🇼 台湾-轮询`[]🇭🇰 香港-轮询`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 香港-Others`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`台TFN`[]🇺🇲 美国-轮询`[]🍱 Unpopular Area`[]🇯🇵 日本-轮询`[]🇬🇧 英国`[]🇷🇺 俄罗斯-Others`[]🇷🇺 俄罗斯-轮询
+🎬 推趣影音`select`[]🔄 延迟最低`[]🌮 手动选择`[]🇺🇲 美国-轮询`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-Others`[]🍱 Unpopular Area`[]🇯🇵 日本-轮询`[]🇯🇵 日本-AWS`[]🇯🇵 日本-Azure`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇯🇵 日本-CloudN`[]🇬🇧 英国`[]🇭🇰 香港-轮询`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 深港专线`[]🇭🇰 香港-Others`[]🇹🇼 台湾-轮询`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet
+💊 小米服务`select`[]🎯 直连服务`(🇨🇳)`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 香港-Others`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`台TFN`[]🍖 默认代理
+🏬 阿里巴巴`select`[]🎯 直连服务`(🇨🇳)`[]🌏 大陆服务
+🚦 DMCA Sensitive`select`[]🎯 直连服务`[]🌏 大陆服务`[]🍖 默认代理
+🥥 DNS Improvement`select`[]🎯 直连服务`(🇨🇳)`[]🔄 延迟最低`[]🍖 默认代理
+🕸️ 局域网服务`select`[]🎯 直连服务`[]🍖 默认代理
+🚀 SpeedTest`select`[]🎯 直连服务`[]🌮 手动选择
+🇹🇼 台湾-HiNet`url-test`(🇹🇼.*台HiNet(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇹🇼 台湾-Seednet`url-test`(🇹🇼.*台Seednet(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇹🇼 台湾-HiNet-FB`fallback`[]🇹🇼 台湾-HiNet`(🇹🇼.*台HiNet(?!▷))`https://cp.cloudflare.com/generate_204`180,,60
+🇹🇼 台湾-轮询`fallback`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`(🇹🇼.*台TFN(?!▷))`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-AWS`url-test`(🇭🇰.*港AWS.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-Azure`url-test`(🇭🇰.*港Azure.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇭🇰 香港-BGP`url-test`(🇭🇰.*港BGP.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-HGC`url-test`(🇭🇰.*HGC.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-HKBN`url-test`(🇭🇰.*HKBN.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-HKT`url-test`(🇭🇰.*HKT.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇭🇰 香港-M247`url-test`(🇭🇰.*港M247.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-NTT`url-test`(🇭🇰.*NTT.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇭🇰 香港-WTT`url-test`(🇭🇰.*WTT.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇭🇰 香港-LS`url-test`(🇭🇰.*港LS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 深港专线`url-test`(🇭🇰.*不限速|深港临时专线)`(🇭🇰.*深港(?!▷|回))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-Others`url-test`(🇭🇰.*港CI)`(🇭🇰.*港icable)`(🇭🇰.*港阿里云)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-延迟最低`url-test`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 香港-Others`[]🇭🇰 深港专线`https://cp.cloudflare.com/generate_204`180,,60
+🇭🇰 香港-轮询`fallback`[]🇭🇰 香港-延迟最低`[]🇭🇰 香港-AWS`[]🇭🇰 香港-Azure`[]🇭🇰 香港-HGC`[]🇭🇰 香港-HKBN`[]🇭🇰 香港-HKT`[]🇭🇰 香港-NTT`[]🇭🇰 香港-Others`[]🇭🇰 深港专线`https://cp.cloudflare.com/generate_204`180,,60
+🇬🇧 英国`url-test`(🇬🇧.*伦敦|英)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-AWS`url-test`(🇺🇲.*美.*AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-Azure`url-test`(🇺🇲.*美.*Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-BGP`url-test`(🇺🇲.*美.*BGP)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-CC`url-test`(🇺🇲.*美.*CC)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-CH`url-test`(🇺🇲.*美.*CH)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-CN2`url-test`(🇺🇲.*美.*CN2)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-CT`url-test`(🇺🇲.*美.*CT)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-DO`url-test`(🇺🇲.*美.*DO)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-DS`url-test`(🇺🇲.*美.*DS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-EN`url-test`(🇺🇲.*美.*EN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-GF`url-test`(🇺🇲.*美.*GF)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-GIA`url-test`(🇺🇲.*美.*GIA(?!D))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-GIAD`url-test`(🇺🇲.*美.*GIAD)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-HE`url-test`(🇺🇲.*美.*HE)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-INAP`url-test`(🇺🇲.*美.*INAP)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-JS`url-test`(🇺🇲.*美.*JS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-KT`url-test`(🇺🇲.*美.*KT)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-M247`url-test`(🇺🇲.*美.*M247)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-MC`url-test`(🇺🇲.*美.*MC)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-NHN`url-test`(🇺🇲.*美.*NHN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-QN`url-test`(🇺🇲.*美.*QN(?!C))`(🇺🇲.*美.*QN[0-9])`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-QNC`url-test`(🇺🇲.*美.*QNC)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-QP`url-test`(🇺🇲.*美.*QP)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-RN`url-test`(🇺🇲.*美.*RN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-RS`url-test`(🇺🇲.*美.*RS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-XS`url-test`(🇺🇲.*美.*XS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇺🇲 美国-ANCH`url-test`(🇺🇲.*美.*安畅)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-Others`url-test`(🇺🇲.*美.*DP)`(🇺🇲.*美.*VM)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-延迟最低`url-test`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-Others`https://cp.cloudflare.com/generate_204`180,,60
+🇺🇲 美国-轮询`fallback`[]🇺🇲 美国-延迟最低`[]🇺🇲 美国-AWS`[]🇺🇲 美国-Azure`[]🇺🇲 美国-CT`[]🇺🇲 美国-DO`[]🇺🇲 美国-JS`[]🇺🇲 美国-RN`[]🇺🇲 美国-Others`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-AWS`url-test`(🇯🇵.*日.*AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-Azure`url-test`(🇯🇵.*日.*Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-CloudN`url-test`(🇯🇵.*日.*CloudN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇯🇵 日本-GMO`url-test`(🇯🇵.*日.*GMO)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇯🇵 日本-IDCF`url-test`(🇯🇵.*日.*IDCF)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇯🇵 日本-IIJ`url-test`(🇯🇵.*日.*IIJ.*(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-M247`url-test`(🇯🇵.*日.*M247)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-NHN`url-test`(🇯🇵.*日.*NHN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-NTT`url-test`(🇯🇵.*日.*NTT)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-Webarena`url-test`(🇯🇵.*日.*Webarena)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇯🇵 日本-Others`url-test`(🇯🇵.*日.*阿里云)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-延迟最低`url-test`[]🇯🇵 日本-CloudN`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇯🇵 日本-AWS`[]🇯🇵 日本-Azure`https://cp.cloudflare.com/generate_204`180,,60
+🇯🇵 日本-轮询`fallback`[]🇯🇵 日本-延迟最低`[]🇯🇵 日本-CloudN`[]🇯🇵 日本-M247`[]🇯🇵 日本-NHN`[]🇯🇵 日本-NTT`[]🇯🇵 日本-Webarena`[]🇯🇵 日本-AWS`[]🇯🇵 日本-Azure`https://cp.cloudflare.com/generate_204`180,,60
+;🇷🇺 俄罗斯-伯力`url-test`(🇷🇺.*俄伯力)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇷🇺 俄罗斯-Others`url-test`(🇷🇺.*新西伯利亚)`(🇷🇺.*莫斯科)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇷🇺 俄罗斯-延迟最低`url-test`[]🇷🇺 俄罗斯-Others`https://cp.cloudflare.com/generate_204`180,,60
+🇷🇺 俄罗斯-轮询`fallback`[]🇷🇺 俄罗斯-延迟最低`[]🇷🇺 俄罗斯-Others`https://cp.cloudflare.com/generate_204`180,,60
+🇸🇬 新加坡-AWS`url-test`(🇸🇬.*新AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇸🇬 新加坡-Azure`url-test`(🇸🇬.*新Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇸🇬 新加坡-DO`url-test`(🇸🇬.*新DO)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇸🇬 新加坡-NTT`url-test`(🇸🇬.*新NTT(?!▷))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇸🇬 新加坡-Others`url-test`(🇸🇬.*新(?!Azure|AWS|DO|NTT))`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇸🇬 新加坡-延迟最低`url-test`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`https://cp.cloudflare.com/generate_204`180,,60
+🇸🇬 新加坡-轮询`fallback`[]🇸🇬 新加坡-延迟最低`[]🇸🇬 新加坡-AWS`[]🇸🇬 新加坡-Azure`[]🇸🇬 新加坡-DO`[]🇸🇬 新加坡-NTT`https://cp.cloudflare.com/generate_204`180,,60
+;🇰🇷 韩国-AWS`url-test`(🇰🇷.*韩.*AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇰🇷 韩国-Azure`url-test`(🇰🇷.*韩.*Azure)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇰🇷 韩国-NHN`url-test`(🇰🇷.*韩.*NHN)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇰🇷 韩国-KT`url-test`(🇰🇷.*韩KT)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇰🇷 韩国-Others`url-test`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇰🇷 韩国-延迟最低`url-test`[]🇰🇷 韩国-Azure`https://cp.cloudflare.com/generate_204`180,,60
+🇰🇷 韩国-轮询`fallback`[]🇰🇷 韩国-延迟最低`[]🇰🇷 韩国-Azure`https://cp.cloudflare.com/generate_204`180,,60
+🇩🇪 德国-TL`url-test`(🇩🇪.*德.*TL)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🇩🇪 德国-GIA`url-test`(🇩🇪.*德.*GIA)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+🇩🇪 德国-延迟最低`url-test`[]🇩🇪 德国-TL`https://cp.cloudflare.com/generate_204`180,,60
+🇩🇪 德国-轮询`fallback`[]🇩🇪 德国-延迟最低`[]🇩🇪 德国-TL`https://cp.cloudflare.com/generate_204`180,,60
+;🇦🇺 澳大利亚-延迟最低`url-test`(🇦🇺.*悉尼AWS)`[]REJECT`https://cp.cloudflare.com/generate_204`180,,60
+;🍄 低倍率节点`url-test`(\(倍率:0\))`https://cp.cloudflare.com/generate_204`180,,60
+🔄 延迟最低`url-test`[]🇺🇲 美国-延迟最低`[]🇭🇰 香港-延迟最低`[]🇹🇼 台湾-HiNet`[]🇹🇼 台湾-Seednet`[]🇯🇵 日本-延迟最低`[]🇷🇺 俄罗斯-延迟最低`[]🇩🇪 德国-延迟最低`[]🍱 Unpopular Area`[]🇸🇬 新加坡-延迟最低`[]🇰🇷 韩国-延迟最低`[]🇬🇧 英国`https://cp.cloudflare.com/generate_204`180,,60
+🍱 Unpopular Area`url-test`(🇩🇪)`(🇬🇧)`(🇸🇬)`(🇰🇷)`(🇹🇷)`(🇵🇭)`(🇮🇪)`(🇫🇷)`(🇮🇳)`(🇨🇦)`https://cp.cloudflare.com/generate_204`180,,60
+🎯 直连服务`select`[]DIRECT
+🍥 政府网站`select`[]🎯 直连服务
+⛔️ 广告服务`select`[]REJECT`[]🎯 直连服务
+⏰ 时间校准`select`[]🎯 直连服务
