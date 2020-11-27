@@ -9,7 +9,7 @@ bind-address: '*'
 mode: rule
 log-level: {{ default(global.clash.log_level, "info") }}
 ipv6: true
-external-controller: {{ local.clash.api_port}}
+external-controller: {{ default(global.clash.api_port, "9090")}}
 #external-ui: folder
 
 secret: ''
@@ -134,6 +134,7 @@ wifi-access-http-port = 8838
 wifi-access-socks5-port = 8839
 external-controller-access = 6170@0.0.0.0:6155
 skip-proxy = 10.0.0.0/8, 127.0.0.0/8, 169.254.0.0/16, 192.0.2.0/24, 192.168.0.0/16, 198.51.100.0/24, 224.0.0.0/4, *.local, localhostlocal,::ffff:0:0:0:0/1,::ffff:128:0:0:0/1
+bypass-tun = 192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
 exclude-simple-hostnames = true
 tls-provider = openssl
 force-http-engine-hosts = 122.14.246.33, 175.102.178.52, mobile-api2011.elong.com
@@ -167,7 +168,7 @@ keyword-filter=(null)
 [MITM]
 
 [Script]
-http-request https?:\/\/.*\.iqiyi\.com\/.*authcookie= script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/iQIYI-DailyBonus/iQIYI_GetCookie.js
+http-request https?:\/\/.*\.iqiyi\.com\/.*authcookie= script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
 {% endif %}
 {% if request.target == "loon" %}
@@ -194,9 +195,10 @@ enable = true
 ^https?:\/\/(www.)?(g|google)\.cn https://www.google.com 302
 
 [Remote Rewrite]
+https://raw.githubusercontent.com/Loon0x00/LoonExampleConfig/master/Rewrite/AutoRewrite_Example.list,auto
 
 [MITM]
-hostname =
+hostname = *.example.com,*.sample.com
 enable = true
 skip-server-cert-verify = true
 #ca-p12 =
