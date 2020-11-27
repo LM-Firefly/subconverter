@@ -1,6 +1,7 @@
 ## 🥥 DNS
 ## > DNS
 DOMAIN,dns.alidns.com
+DOMAIN,doh.pub
 DOMAIN,cloudflare-dns.com
 DOMAIN,dns.cloudflare.com
 DOMAIN,chrome.cloudflare-dns.com

@@ -944,7 +944,6 @@ DOMAIN-SUFFIX,img01.taotaosou.cn
 DOMAIN-SUFFIX,uat1.bfsspadserver.8le8le.com
 DOMAIN-SUFFIX,zzy1.quyaoya.com
 DOMAIN-SUFFIX,zzy.quyaoya.com
-DOMAIN-SUFFIX,issuecdn.baidupcs.com
 DOMAIN-SUFFIX,dcps.nuomi.com
 DOMAIN-SUFFIX,log.nuomi.com
 DOMAIN-SUFFIX,1.allyes.com.cn
@@ -1127,7 +1126,6 @@ DOMAIN-SUFFIX,market.21cn.com
 DOMAIN-SUFFIX,shows.21cn.com
 DOMAIN-SUFFIX,analytics.21cn.com
 ## > 中国联通-ads
-DOMAIN-SUFFIX,smartad.10010.com
 DOMAIN-SUFFIX,bjdnserror1.wo.com.cn
 DOMAIN-SUFFIX,bjdnserror2.wo.com.cn
 DOMAIN-SUFFIX,bjdnserror3.wo.com.cn
@@ -46895,7 +46893,6 @@ DOMAIN-SUFFIX,witneygazette-gb.witneygazette.co.uk
 DOMAIN-SUFFIX,witstandfridge.com
 DOMAIN-SUFFIX,wityamdog.com
 DOMAIN-SUFFIX,wiwapaxo.xyz
-DOMAIN-SUFFIX,wixsite.com
 DOMAIN-SUFFIX,wiyun.com
 DOMAIN-SUFFIX,wiywlvkwwwrms.com
 DOMAIN-SUFFIX,wizhumpgyros.com
@@ -50326,10 +50323,3 @@ DOMAIN-KEYWORD,epochtimes
 DOMAIN-KEYWORD,fenxi
 DOMAIN-KEYWORD,logger
 DOMAIN-KEYWORD,traffic
-## > Crack
-# >> Connectify
-DOMAIN-SUFFIX,updates.connectify.me
-DOMAIN-SUFFIX,activate.connectify.me
-DOMAIN-SUFFIX,d1.connectify.me
-DOMAIN-SUFFIX,d2.connectify.me
-DOMAIN-SUFFIX,d3.connectify.me
