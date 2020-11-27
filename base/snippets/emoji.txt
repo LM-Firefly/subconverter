@@ -1,6 +1,7 @@
 ;Rule to add emojis. Supports regular expression.
 ;Format: Remark_Search_Pattern,emoji
 (?i:Bandwidth|expire|流量|时间|应急|过期),🏳️‍🌈
+(NetEaseMusic|网易云音乐|网易云解锁),🎶
 (Ascension|阿森松),🇦🇨
 (Dubai|迪拜),🇦🇪
 (AR|阿根廷|Argentina),🇦🇷
@@ -41,4 +42,3 @@
 (ZA|Africa|南非),🇿🇦
 (?i:TW|Taiwan|CHT|HiNet|台.*(?!▷)|台北|台中|新北|彰化|[^-]台),🇹🇼
 (?i:CN|China|回国|中.*(?!▷)|苏.*(?!▷)|京.*(?!▷)|沪.*(?!▷)|穗.*(?!▷)|深(?!▷|港)|杭.*(?!▷)|徐.*(?!▷)|青.*(?!▷)|甬.*(?!▷)|镇.*(?!▷)|禅.*(?!▷)|蓉.*(?!▷)|江苏|北京|上海|广州|深圳|杭州|常州|徐州|青岛|宁波|镇江|成都|back),🇨🇳
-(NetEaseMusic|网易云音乐|网易云解锁),🎶
