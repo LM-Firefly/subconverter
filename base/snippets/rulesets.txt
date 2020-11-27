@@ -5,6 +5,7 @@
 ;rules/
 
 🥥 DNS Improvement,surge:rules/Special/DNS.list,10800
+☠️ 软件验证,surge:rules/Special/App-Activation.list,10800
 ⛔️ 广告服务,surge:rules/Adblock/Adblock.list,10800
 ⏰ 时间校准,surge:rules/Special/NTP-Service.list,10800
 🍎 苹果服务,surge:rules/Apple.list,10800

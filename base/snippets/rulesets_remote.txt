@@ -1,4 +1,5 @@
 🥥 DNS Improvement,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DNS.list,10800
+☠️ 软件验证,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/App-Activation.list,10800
 ⛔️ 广告服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list,10800
 ⏰ 时间校准,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/NTP-Service.list,10800
 🍎 苹果服务,surge:https://raw.githubusercontent.com/LM-Firefly/Rules/master/Apple.list,10800
