@@ -184,6 +184,13 @@ DOMAIN-SUFFIX,sign.new
 ## >> Typekit
 DOMAIN-SUFFIX,typekit.com
 DOMAIN-SUFFIX,typekit.net
+## > Akamai
+DOMAIN-SUFFIX,akamai.com
+DOMAIN-SUFFIX,akamai.net
+DOMAIN-SUFFIX,akamaized.net
+DOMAIN-SUFFIX,akamaiedge.net
+DOMAIN-SUFFIX,akamaihd.net
+DOMAIN-SUFFIX,akamaistream.net
 ## > Amazon
 DOMAIN-SUFFIX,a2z.com
 DOMAIN-SUFFIX,aboutamazon.cn
@@ -198,6 +205,9 @@ DOMAIN-SUFFIX,aboutamazon.in
 DOMAIN-SUFFIX,aboutamazon.it
 DOMAIN-SUFFIX,aboutamazon.jp
 DOMAIN-SUFFIX,aboutamazon.pl
+DOMAIN-SUFFIX,acmvalidations.com
+DOMAIN-SUFFIX,acmvalidationsaws.com
+DOMAIN-SUFFIX,aesworkshops.com
 DOMAIN-SUFFIX,alexa.com
 DOMAIN-SUFFIX,alexafund.cn
 DOMAIN-SUFFIX,alexafund.com.cn
@@ -229,6 +239,9 @@ DOMAIN-SUFFIX,amazon.red
 DOMAIN-SUFFIX,amazon.sg
 DOMAIN-SUFFIX,amazonalexavoxcon.com
 DOMAIN-SUFFIX,amazonauthorinsights.com
+DOMAIN-SUFFIX,amazonaws-china.com
+DOMAIN-SUFFIX,amazonaws.com
+DOMAIN-SUFFIX,amazonaws.tv
 DOMAIN-SUFFIX,amazonbusiness.cn
 DOMAIN-SUFFIX,amazonbusiness.com.cn
 DOMAIN-SUFFIX,amazonbusiness.org
@@ -257,12 +270,36 @@ DOMAIN-SUFFIX,amazonsdi.com
 DOMAIN-SUFFIX,amazonstudiosguilds.com
 DOMAIN-SUFFIX,amazontrust.com
 DOMAIN-SUFFIX,amazonvideodirect.com
+DOMAIN-SUFFIX,amazonworkdocs.cn
+DOMAIN-SUFFIX,amazonworkdocs.com
+DOMAIN-SUFFIX,amazonworkdocs.com.cn
+DOMAIN-SUFFIX,amplifyapp.com
+DOMAIN-SUFFIX,amplifyframework.com
 DOMAIN-SUFFIX,amzn.com
 DOMAIN-SUFFIX,amzn.to
 DOMAIN-SUFFIX,amznl.com
 DOMAIN-SUFFIX,assoc-amazon.cn
 DOMAIN-SUFFIX,associates-amazon.com
+DOMAIN-SUFFIX,aws-iot-hackathon.com
+DOMAIN-SUFFIX,awsautopilot.com
+DOMAIN-SUFFIX,awsautoscaling.com
+DOMAIN-SUFFIX,awsbraket.com
+DOMAIN-SUFFIX,awscommandlineinterface.com
+DOMAIN-SUFFIX,awsedstart.com
+DOMAIN-SUFFIX,awseducate.com
+DOMAIN-SUFFIX,awseducate.net
+DOMAIN-SUFFIX,awseducate.org
+DOMAIN-SUFFIX,awsloft-johannesburg.com
+DOMAIN-SUFFIX,awsloft-stockholm.com
+DOMAIN-SUFFIX,awssecworkshops.com
+DOMAIN-SUFFIX,awsstatic.com
+DOMAIN-SUFFIX,awsthinkbox.com
+DOMAIN-SUFFIX,awstrust.com
+DOMAIN-SUFFIX,cdkworkshop.com
+DOMAIN-SUFFIX,cloudfront.net
+DOMAIN-SUFFIX,containersonaws.com
 DOMAIN-SUFFIX,createspace.com
+DOMAIN-SUFFIX,elasticbeanstalk.com
 DOMAIN-SUFFIX,gameon-masters.com
 DOMAIN-SUFFIX,gdansk-amazon.com
 DOMAIN-SUFFIX,images-amazon.com
@@ -271,6 +308,7 @@ DOMAIN-SUFFIX,primeday.com.cn
 DOMAIN-SUFFIX,primeday.info
 DOMAIN-SUFFIX,siege-amazon.com
 DOMAIN-SUFFIX,ssl-images-amazon.com
+DOMAIN-SUFFIX,thinkboxsoftware.com
 DOMAIN-SUFFIX,ueberamazon.de
 DOMAIN-SUFFIX,yamaxun.cn
 DOMAIN-SUFFIX,yamaxun.com
@@ -1300,6 +1338,13 @@ DOMAIN-SUFFIX,canonproprinters.com
 DOMAIN-SUFFIX,change.org
 ## > Chinapower
 DOMAIN-SUFFIX,chinapower.csis.org
+## > CHT (中华电信)
+DOMAIN-SUFFIX,cht.com.tw
+## >> HiNet
+DOMAIN-SUFFIX,hinet.net
+## >> Litv
+DOMAIN-SUFFIX,litv.tv
+DOMAIN,litvfreemobile-hichannel.cdn.hinet.net
 ## > Cisco
 DOMAIN-SUFFIX,.cisco
 DOMAIN-SUFFIX,academynetriders.com
@@ -1423,6 +1468,27 @@ DOMAIN-SUFFIX,webex.com.mx
 DOMAIN-SUFFIX,webex.de
 DOMAIN-SUFFIX,webex.es
 DOMAIN-SUFFIX,webex.fr
+## > Cloudflare
+DOMAIN-SUFFIX,cloudflare-dns.com
+DOMAIN-SUFFIX,cloudflare-ipfs.com
+DOMAIN-SUFFIX,cloudflare.com
+DOMAIN-SUFFIX,cloudflare.net
+DOMAIN-SUFFIX,cloudflareapps.com
+DOMAIN-SUFFIX,cloudflarebolt.com
+DOMAIN-SUFFIX,cloudflareclient.com
+DOMAIN-SUFFIX,cloudflareinsights.com
+DOMAIN-SUFFIX,cloudflareok.com
+DOMAIN-SUFFIX,cloudflareresolve.com
+DOMAIN-SUFFIX,cloudflaressl.com
+DOMAIN-SUFFIX,cloudflarestatus.com
+DOMAIN-SUFFIX,cloudflarestream.com
+DOMAIN-SUFFIX,cloudflaretest.com
+DOMAIN-SUFFIX,one.one.one
+DOMAIN-SUFFIX,one.one.one.one
+DOMAIN-SUFFIX,trycloudflare.com
+DOMAIN-SUFFIX,videodelivery.net
+DOMAIN-SUFFIX,warp.plus
+DOMAIN-SUFFIX,workers.dev
 ## > Comodo
 DOMAIN-SUFFIX,comodo.com
 DOMAIN-SUFFIX,comodoca.com
@@ -3336,6 +3402,10 @@ DOMAIN-SUFFIX,deepl.com
 ## > Linkedin
 DOMAIN-SUFFIX,linkedin.com
 DOMAIN-SUFFIX,licdn.com
+## > Live Person
+DOMAIN-SUFFIX,liveperson.com
+DOMAIN-SUFFIX,liveperson.net
+DOMAIN-SUFFIX,lpsnmedia.net
 ## > Logitech
 DOMAIN-SUFFIX,logi.com
 DOMAIN-SUFFIX,logicool.co.jp
@@ -4541,6 +4611,7 @@ DOMAIN-SUFFIX,unsplash.com
 DOMAIN-SUFFIX,now.sh
 DOMAIN-SUFFIX,vercel-analytics.com
 DOMAIN-SUFFIX,vercel-dns.com
+DOMAIN-SUFFIX,vercel-insights.com
 DOMAIN-SUFFIX,vercel-status.com
 DOMAIN-SUFFIX,vercel.app
 DOMAIN-SUFFIX,vercel.com
@@ -4587,6 +4658,15 @@ DOMAIN-SUFFIX,verisign.tw
 DOMAIN-SUFFIX,verisign.us
 DOMAIN-SUFFIX,verisign.vn
 DOMAIN-SUFFIX,verisigninc.com
+## > Verizon
+DOMAIN-SUFFIX,verizon.com
+DOMAIN-SUFFIX,verizon.net
+DOMAIN-SUFFIX,verizonbusiness.com
+DOMAIN-SUFFIX,verizondigitalmedia.com
+DOMAIN-SUFFIX,verizonmedia.com
+DOMAIN-SUFFIX,verizonwireless.com
+DOMAIN-SUFFIX,vzw.com
+DOMAIN-SUFFIX,yourdigitalrebatecenter.com
 ## > VISA
 DOMAIN-SUFFIX,visa.be
 DOMAIN-SUFFIX,visa.ca
@@ -5716,7 +5796,6 @@ DOMAIN-SUFFIX,alwaysdata.net
 DOMAIN-SUFFIX,alwaysvpn.com
 DOMAIN-SUFFIX,am730.com.hk
 DOMAIN-SUFFIX,amazon.co
-DOMAIN-SUFFIX,amazonaws.com
 DOMAIN-SUFFIX,america.gov
 DOMAIN-SUFFIX,american.edu
 DOMAIN-SUFFIX,americangreencard.com
@@ -7486,7 +7565,6 @@ DOMAIN-SUFFIX,himalayan-foundation.org
 DOMAIN-SUFFIX,himalayanglacier.com
 DOMAIN-SUFFIX,himemix.com
 DOMAIN-SUFFIX,himemix.net
-DOMAIN-SUFFIX,hinet.net
 DOMAIN-SUFFIX,hitbtc.com
 DOMAIN-SUFFIX,hitomi.la
 DOMAIN-SUFFIX,hiwifi.com
@@ -10318,8 +10396,6 @@ DOMAIN-SUFFIX,venetianmacao.com
 DOMAIN-SUFFIX,venturebeat.com
 DOMAIN-SUFFIX,ventureswell.com
 DOMAIN-SUFFIX,veoh.com
-DOMAIN-SUFFIX,verizon.net
-DOMAIN-SUFFIX,verizonwireless.com
 DOMAIN-SUFFIX,vermonttibet.org
 DOMAIN-SUFFIX,versavpn.com
 DOMAIN-SUFFIX,verybs.com
@@ -10422,7 +10498,6 @@ DOMAIN-SUFFIX,vtunnel.com
 DOMAIN-SUFFIX,vuku.cc
 DOMAIN-SUFFIX,vultr.com
 DOMAIN-SUFFIX,vultryhw.com
-DOMAIN-SUFFIX,vzw.com
 DOMAIN-SUFFIX,w.sns.ly
 DOMAIN-SUFFIX,w3.org
 DOMAIN-SUFFIX,w3schools.com

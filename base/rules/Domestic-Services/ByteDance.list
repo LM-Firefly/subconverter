@@ -197,3 +197,11 @@ DOMAIN-SUFFIX,xiguashipin.net
 DOMAIN-SUFFIX,xiguavideo.cn
 DOMAIN-SUFFIX,xiguavideo.net
 IP-CIDR,114.246.10.65/32,no-resolve
+##>> 吉云互动
+DOMAIN-SUFFIX,bdurl.net
+DOMAIN-SUFFIX,jiyunhudong.cn
+DOMAIN-SUFFIX,jiyunhudong.com
+DOMAIN-SUFFIX,jiyunhudong.net
+DOMAIN-SUFFIX,nhlink.cn
+DOMAIN-SUFFIX,nhurl.cn
+DOMAIN-SUFFIX,zjurl.cn

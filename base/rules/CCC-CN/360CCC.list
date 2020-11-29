@@ -1,23 +1,4 @@
 # 360云
-DOMAIN-SUFFIX,qhcdn-lb.com
-DOMAIN-SUFFIX,360tpcdn.com
-DOMAIN-SUFFIX,qihucdn.com
-DOMAIN-SUFFIX,qihucdn.cn
-DOMAIN-SUFFIX,360tpcdn.cn
-DOMAIN-SUFFIX,360qhcdn.com
-DOMAIN-SUFFIX,qiyuns3.com
-DOMAIN-SUFFIX,qiyuns3.cn
-DOMAIN-SUFFIX,qihu-lb.com
-DOMAIN-SUFFIX,safe-lb.com
-DOMAIN-SUFFIX,qhcdn.com
-DOMAIN-SUFFIX,qh-lb.com
-DOMAIN-SUFFIX,os-lb.com
-DOMAIN-SUFFIX,qss-lb.com
-DOMAIN-SUFFIX,360imgcdn.com
-DOMAIN-SUFFIX,360dlcdn.com
-DOMAIN-SUFFIX,qh-dl.com
-DOMAIN-SUFFIX,qh-cdn.com
-DOMAIN-SUFFIX,qhdlcdn.com
 IP-CIDR,101.197.0.0/16,no-resolve
 IP-CIDR,101.198.0.0/17,no-resolve
 IP-CIDR,101.198.128.0/24,no-resolve
