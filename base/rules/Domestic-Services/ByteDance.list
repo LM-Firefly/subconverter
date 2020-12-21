@@ -182,6 +182,18 @@ DOMAIN-SUFFIX,panplayable-toutiao-b.com
 DOMAIN-SUFFIX,panplayable-toutiao.com
 DOMAIN-SUFFIX,pglstatp-toutiao-b.com
 DOMAIN-SUFFIX,pglstatp-toutiao.com
+## >> 掘金
+DOMAIN-SUFFIX,juejin.im
+DOMAIN-SUFFIX,xitu.io
+DOMAIN-SUFFIX,p1-juejin.byteimg.com
+DOMAIN-SUFFIX,p2-juejin.byteimg.com
+DOMAIN-SUFFIX,p3-juejin.byteimg.com
+DOMAIN-SUFFIX,p4-juejin.byteimg.com
+DOMAIN-SUFFIX,p5-juejin.byteimg.com
+DOMAIN-SUFFIX,p6-juejin.byteimg.com
+DOMAIN-SUFFIX,p7-juejin.byteimg.com
+DOMAIN-SUFFIX,p8-juejin.byteimg.com
+DOMAIN-SUFFIX,p9-juejin.byteimg.com
 ## >> 头条日报
 DOMAIN-SUFFIX,ribaoapi.com
 DOMAIN-SUFFIX,ribaocdn.com

@@ -16,10 +16,17 @@ secret: ''
 #interface-name: en0
 {% if exists("request.clash.dns") %}
 {% if request.clash.dns == "cfw" %}
+tun:
+  enable: true
+  stack: gvisor # only gvisor
+  dns-hijack:
+    - 198.18.0.2:53 # when `fake-ip-range` is 198.18.0.1/16, should hijack 198.18.0.2:53
+  macOS-auto-route: true # auto set global route for Windows
+  macOS-auto-detect-interface: true # auto detect interface, conflict with `interface-name`
 hosts:
 dns:
   enable: true
-  listen: 0.0.0.0:53
+#  listen: 0.0.0.0:53
   ipv6: true
 {% endif %}
 {% if request.clash.dns == "cfa" %}
@@ -33,9 +40,6 @@ dns:
   ipv6: true
 {% endif %}
 {% else %}
-tun:
-  enable: true
-  stack: system # or gvisor
 hosts:
 dns:
   enable: true
@@ -46,10 +50,11 @@ dns:
   # Specify IP addresses only
   default-nameserver:
     - 223.5.5.5
-    - 8.8.8.8
+    - 119.29.29.29
   enhanced-mode: fake-ip # redir-host #fake-ip
-  fake-ip-range: 198.18.0.1/16
+#  fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
+    # === LAN ===
     - '*.lan'
     - '*.localdomain'
     - '*.example'
@@ -58,29 +63,74 @@ dns:
     - '*.test'
     - '*.local'
     - '*.home.arpa'
+    # === Linksys Wireless Router ===
+    - '*.linksys.com'
+    - '*.linksyssmartwifi.com'
+    # === ASUS Router ===
     - '*.router.asus.com'
+    # === Apple Software Update Service ===
+    - 'swscan.apple.com'
+    - 'mesu.apple.com'
+    # === Windows 10 Connnect Detection ===
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - 'msftconnecttest.com'
+    - 'msftncsi.com'
+    # === Google ===
+    - 'lens.l.google.com'
+    - 'stun.l.google.com'
+    ## Golang
+    - 'proxy.golang.org'
+    # === NTP Service ===
+    - 'time.*.com'
+    - 'time.*.gov'
+    - 'time.*.edu.cn'
+    - 'time.*.apple.com'
+    - 'time1.*.com'
+    - 'time2.*.com'
+    - 'time3.*.com'
+    - 'time4.*.com'
+    - 'time5.*.com'
+    - 'time6.*.com'
+    - 'time7.*.com'
+    - 'ntp.*.com'
+    - 'ntp1.*.com'
+    - 'ntp2.*.com'
+    - 'ntp3.*.com'
+    - 'ntp4.*.com'
+    - 'ntp5.*.com'
+    - 'ntp6.*.com'
+    - 'ntp7.*.com'
+    - '*.time.edu.cn'
+    - '*.ntp.org.cn'
+    - '+.pool.ntp.org'
+    - 'time1.cloud.tencent.com'
+    # === Game Service ===
+    ## Nintendo Switch
+    - '+.srv.nintendo.net'
+    ## Sony PlayStation
+    - '+.stun.playstation.net'
+    ## Microsoft Xbox
+    - 'xbox.*.microsoft.com'
+    - 'xnotify.xboxlive.com'
+    # === Other ===
+    ## QQ Quick Login
     - 'localhost.ptlogin2.qq.com'
     - 'localhost.sec.qq.com'
-    - 'msftconnecttest.com'
-    - '*.msftconnecttest.com'
-    - 'msftncsi.com'
-    - '*.msftncsi.com'
+    ## STUN Server
+    - 'stun.*.*'
+    - 'stun.*.*.*'
     - '+.stun.*.*'
     - '+.stun.*.*.*'
     - '+.stun.*.*.*.*'
-    - 'lens.l.google.com'
-    - 'stun.l.google.com'
-    - '*.n.n.srv.nintendo.net'
-    - '.apple.*'
-    - '+.foo.com'
-    - 'xnotify.xboxlive.com'
   nameserver:
     - 223.5.5.5
     - 119.29.29.29
+    - https://doh.pub/dns-query
     - https://doh.rixcloud.dev/dns-query
     - https://dns.alidns.com/dns-query
     - https://cloudflare-dns.com/dns-query
-    - https://dns.google/dns-query
+#    - https://dns.google/dns-query
     - https://doh.opendns.com/dns-query
     - https://dns.twnic.tw/dns-query
 #    - https://dns.quad9.net/dns-query
@@ -116,8 +166,10 @@ dns:
     geoip: true # default
     ipcidr: # ips in these subnets will be considered polluted
       - 0.0.0.0/32
+      - 100.64.0.0/10
       - 127.0.0.0/8
       - 240.0.0.0/4
+      - 255.255.255.255/32
 
 {% endif %}
 {% if request.target == "surge" %}
@@ -134,7 +186,6 @@ wifi-access-http-port = 8838
 wifi-access-socks5-port = 8839
 external-controller-access = 6170@0.0.0.0:6155
 skip-proxy = 10.0.0.0/8, 127.0.0.0/8, 169.254.0.0/16, 192.0.2.0/24, 192.168.0.0/16, 198.51.100.0/24, 224.0.0.0/4, *.local, localhostlocal,::ffff:0:0:0:0/1,::ffff:128:0:0:0/1
-bypass-tun = 192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
 exclude-simple-hostnames = true
 tls-provider = openssl
 force-http-engine-hosts = 122.14.246.33, 175.102.178.52, mobile-api2011.elong.com
@@ -168,7 +219,7 @@ keyword-filter=(null)
 [MITM]
 
 [Script]
-http-request https?:\/\/.*\.iqiyi\.com\/.*authcookie= script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
+http-request https?:\/\/.*\.iqiyi\.com\/.*authcookie= script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/iQIYI-DailyBonus/iQIYI_GetCookie.js
 
 {% endif %}
 {% if request.target == "loon" %}
@@ -195,10 +246,9 @@ enable = true
 ^https?:\/\/(www.)?(g|google)\.cn https://www.google.com 302
 
 [Remote Rewrite]
-https://raw.githubusercontent.com/Loon0x00/LoonExampleConfig/master/Rewrite/AutoRewrite_Example.list,auto
 
 [MITM]
-hostname = *.example.com,*.sample.com
+hostname =
 enable = true
 skip-server-cert-verify = true
 #ca-p12 =

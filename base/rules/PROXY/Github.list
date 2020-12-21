@@ -2,6 +2,7 @@
 DOMAIN-SUFFIX,dependabot.com
 DOMAIN-SUFFIX,ghcr.io
 DOMAIN-SUFFIX,git.io
+DOMAIN-SUFFIX,github-avatars.oss-cn-hongkong.aliyuncs.com
 DOMAIN-SUFFIX,github.blog
 DOMAIN-SUFFIX,github.com
 DOMAIN-SUFFIX,github.community
@@ -11,12 +12,13 @@ DOMAIN-SUFFIX,githubapp.com
 DOMAIN-SUFFIX,githubassets.com
 DOMAIN-SUFFIX,githubhackathon.com
 DOMAIN-SUFFIX,githubstatus.com
+DOMAIN-SUFFIX,githubuniverse.com
 DOMAIN-SUFFIX,githubusercontent.com
 DOMAIN-SUFFIX,rawgit.com
 DOMAIN-SUFFIX,rawgithub.com
-DOMAIN-SUFFIX,github-avatars.oss-cn-hongkong.aliyuncs.com
 ## >> Atom
 DOMAIN-SUFFIX,atom.io
+DOMAIN-SUFFIX,github-atom-io-herokuapp-com.freetls.fastly.net
 ## >> Npmjs
 DOMAIN-SUFFIX,npmjs.com
 DOMAIN-SUFFIX,npm.community

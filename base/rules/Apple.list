@@ -425,7 +425,11 @@ DOMAIN-SUFFIX,applemusic.hamburg
 DOMAIN-SUFFIX,applemusic.wang
 DOMAIN-SUFFIX,applemusicconnect.com
 DOMAIN-SUFFIX,applemusicfestival.com
+DOMAIN-SUFFIX,audio.itunes.apple.com
+DOMAIN-SUFFIX,blobstore.apple.com
 DOMAIN-SUFFIX,musickit.net
+DOMAIN-SUFFIX,mvod.itunes.apple.com
+DOMAIN-SUFFIX,streamingaudio.itunes.apple.com
 DOMAIN-SUFFIX,wwwapplemusic.com
 ## >> Apple News
 DOMAIN-SUFFIX,apple.comscoreresearch.com
