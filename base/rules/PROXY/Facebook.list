@@ -26,8 +26,9 @@ DOMAIN-SUFFIX,ip6.static.sl-reverse.com
 DOMAIN-SUFFIX,cdninstagram.com
 DOMAIN-SUFFIX,igcdn.com
 DOMAIN-SUFFIX,igsonar.com
-DOMAIN-SUFFIX,instagram.com
+DOMAIN-SUFFIX,instagr.am
 DOMAIN-SUFFIX,instagram-press.com
+DOMAIN-SUFFIX,instagram.com
 # >> Oculus
 DOMAIN-SUFFIX,oculus.com
 DOMAIN-SUFFIX,oculuscdn.com

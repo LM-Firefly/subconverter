@@ -1,15 +1,15 @@
 {% if request.target == "clash" or request.target == "clashr" %}
 
-mixed-port: {{ default(global.clash.http_port, "8888") }}
-socks-port: {{ default(global.clash.socks_port, "8890") }}
+mixed-port: {{ local.clash.mixed_port }}
+redir-port: {{ local.clash.redir_port}}
 #authentication:
 #  - "firefly:WJ960923"
-allow-lan: {{ default(global.clash.allow_lan, "true") }}
+allow-lan: {{ local.clash.allow_lan }}
 bind-address: '*'
 mode: rule
-log-level: {{ default(global.clash.log_level, "info") }}
+log-level: {{ local.clash.log_level }}
 ipv6: true
-external-controller: {{ default(global.clash.api_port, "9090")}}
+external-controller: {{ local.clash.api_port}}
 #external-ui: folder
 
 secret: ''
@@ -23,6 +23,7 @@ tun:
     - 198.18.0.2:53 # when `fake-ip-range` is 198.18.0.1/16, should hijack 198.18.0.2:53
   macOS-auto-route: true # auto set global route for Windows
   macOS-auto-detect-interface: true # auto detect interface, conflict with `interface-name`
+#interface-name: WLAN
 hosts:
 dns:
   enable: true

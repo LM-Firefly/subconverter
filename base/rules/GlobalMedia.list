@@ -174,9 +174,10 @@ DOMAIN-SUFFIX,adobedtm.com
 DOMAIN-SUFFIX,adventuresbydisney.com
 DOMAIN-SUFFIX,babble.com
 DOMAIN-SUFFIX,babyzone.com
-DOMAIN-SUFFIX,bam.nr-date.net
+DOMAIN-SUFFIX,bam.nr-data.net
 DOMAIN-SUFFIX,bamgrid.com
 DOMAIN-SUFFIX,braze.com
+DOMAIN-SUFFIX,cdn.optimizely.com
 DOMAIN-SUFFIX,cdn.registerdisney.go.com
 DOMAIN-SUFFIX,cdn.unid.go.com
 DOMAIN-SUFFIX,conviva.com
@@ -571,16 +572,28 @@ DOMAIN-SUFFIX,bentobox.tv
 DOMAIN-SUFFIX,kicu.tv
 DOMAIN-SUFFIX,ktvu.com
 DOMAIN-SUFFIX,myfoxsanfran.com
+## > friDay
+DOMAIN-SUFFIX,fetnet.net
+DOMAIN-SUFFIX,friday.tw
 ## > HBO NOW & HBO GO HKG
+USER-AGENT,HBO%20NOW*
+USER-AGENT,HBOMAX*
 DOMAIN-SUFFIX,cinemax.com
 DOMAIN-SUFFIX,forthethrone.com
 DOMAIN-SUFFIX,hbo.com
 DOMAIN-SUFFIX,hboasia.com
+DOMAIN-SUFFIX,hboasia1-i.akamaihd.net
+DOMAIN-SUFFIX,hboasia2-i.akamaihd.net
+DOMAIN-SUFFIX,hboasia3-i.akamaihd.net
+DOMAIN-SUFFIX,hboasia4-i.akamaihd.net
+DOMAIN-SUFFIX,hboasia5-i.akamaihd.net
+DOMAIN-SUFFIX,hbogeo.cust.footprint.net
 DOMAIN-SUFFIX,hbogo.com
 DOMAIN-SUFFIX,hbogoasia.com
 DOMAIN-SUFFIX,hbogoasia.hk
 DOMAIN-SUFFIX,hbomax.com
 DOMAIN-SUFFIX,hbonow.com
+DOMAIN-SUFFIX,manifest.prod.boltdns.net
 DOMAIN-SUFFIX,maxgo.com
 DOMAIN-SUFFIX,now-ashare.com
 DOMAIN-SUFFIX,now-tv.com
@@ -589,17 +602,10 @@ DOMAIN-SUFFIX,nowe.com
 DOMAIN-SUFFIX,players.brightcove.net
 DOMAIN-SUFFIX,youboranqs01.com
 DOMAIN-SUFFIX,bcbolthboa-a.akamaihd.net
-DOMAIN-SUFFIX,hboasia1-i.akamaihd.net
-DOMAIN-SUFFIX,hboasia2-i.akamaihd.net
-DOMAIN-SUFFIX,hboasia3-i.akamaihd.net
-DOMAIN-SUFFIX,hboasia4-i.akamaihd.net
-DOMAIN-SUFFIX,hboasia5-i.akamaihd.net
-DOMAIN-SUFFIX,hbogeo.cust.footprint.net
 DOMAIN-SUFFIX,dai3fd1oh325y.cloudfront.net
-DOMAIN-SUFFIX,manifest.prod.boltdns.net
+DOMAIN-SUFFIX,s3-ap-southeast-1.amazonaws.com
 DOMAIN-SUFFIX,cf-images.ap-southeast-1.prod.boltdns.net
 DOMAIN-SUFFIX,execute-api.ap-southeast-1.amazonaws.com
-DOMAIN-SUFFIX,s3-ap-southeast-1.amazonaws.com
 ## > Huffpost
 DOMAIN-SUFFIX,huffingtonpost.ca
 DOMAIN-SUFFIX,huffingtonpost.co.uk
@@ -634,7 +640,9 @@ DOMAIN-SUFFIX,hu1u.com
 DOMAIN-SUFFIX,huloo.cc
 DOMAIN-SUFFIX,huloo.tv
 DOMAIN-SUFFIX,hulu.com
+DOMAIN-SUFFIX,hulu.hb.omtrdc.net
 DOMAIN-SUFFIX,hulu.jp
+DOMAIN-SUFFIX,hulu.sc.omtrdc.net
 DOMAIN-SUFFIX,hulu.tv
 DOMAIN-SUFFIX,hulu.us
 DOMAIN-SUFFIX,huluaction.com
@@ -668,6 +676,7 @@ DOMAIN-SUFFIX,myhulu.com
 DOMAIN-SUFFIX,originalhulu.com
 DOMAIN-SUFFIX,payhulu.com
 DOMAIN-SUFFIX,registerhulu.com
+DOMAIN-SUFFIX,streaks.jp
 DOMAIN-SUFFIX,thehulubraintrust.com
 DOMAIN-SUFFIX,wwwhuluplus.com
 ## > 华文电视
@@ -713,13 +722,13 @@ DOMAIN-SUFFIX,daumpotplayer.com
 ## > Kantv
 DOMAIN-SUFFIX,imkan.tv
 ## > KKBOX
+DOMAIN-SUFFIX,kfs.io
+DOMAIN-SUFFIX,kk.stream
 DOMAIN-SUFFIX,kkbox.com
 DOMAIN-SUFFIX,kkbox.com.tw
-DOMAIN-SUFFIX,kfs.io
-## > KKTV
+DOMAIN-SUFFIX,kktix.com
 DOMAIN-SUFFIX,kktv.com.tw
 DOMAIN-SUFFIX,kktv.me
-DOMAIN,kktv-theater.kk.stream
 ## > Litv
 DOMAIN-SUFFIX,litv.tv
 DOMAIN,litvfreemobile-hichannel.cdn.hinet.net
@@ -746,6 +755,8 @@ DOMAIN-SUFFIX,my5.tv
 DOMAIN,d349g9zuie06uo.cloudfront.net
 ## > MyTV SUPER
 DOMAIN-SUFFIX,mytvsuper.com
+DOMAIN-SUFFIX,mytvsuperlimited.hb.omtrdc.net
+DOMAIN-SUFFIX,mytvsuperlimited.sc.omtrdc.net
 DOMAIN-SUFFIX,tvb.com
 ## > Niconico
 DOMAIN-SUFFIX,dmc.nico
@@ -766,26 +777,22 @@ DOMAIN-SUFFIX,nypost.com
 DOMAIN-SUFFIX,nypost.help
 DOMAIN-SUFFIX,nypostreprints.com
 ## > NY Times
-DOMAIN,d1f1eryiqyjs0r.cloudfront.net
-DOMAIN,d3lar09xbwlsge.cloudfront.net
-DOMAIN,d3q1qj9jzsu8nw.cloudfront.net
+DOMAIN-SUFFIX,d1f1eryiqyjs0r.cloudfront.net
+DOMAIN-SUFFIX,d3lar09xbwlsge.cloudfront.net
+DOMAIN-SUFFIX,d3q1qj9jzsu8nw.cloudfront.net
 DOMAIN-SUFFIX,dc8xl0ndzn2cb.cloudfront.net
-DOMAIN-SUFFIX,a1.nyt.com
-DOMAIN-SUFFIX,int.nyt.com
-DOMAIN-SUFFIX,s1.nyt.com
-DOMAIN-SUFFIX,static01.nyt.com
-DOMAIN-SUFFIX,typeface.nyt.com
-DOMAIN-SUFFIX,nytchina.com
-DOMAIN-SUFFIX,nytco.com
-DOMAIN-SUFFIX,nytimg.com
-DOMAIN-SUFFIX,userapi.nytlog.com
-DOMAIN-SUFFIX,cn.nytstyle.com
-DOMAIN-SUFFIX,nytlog.com
-DOMAIN-SUFFIX,nytimes.com
-DOMAIN-SUFFIX,nytcn.me
-DOMAIN-SUFFIX,tynt.com
-DOMAIN-SUFFIX,nytstyle.com
 DOMAIN-SUFFIX,nyt.com
+DOMAIN-SUFFIX,nyt.net
+DOMAIN-SUFFIX,nytchina.com
+DOMAIN-SUFFIX,nytcn.me
+DOMAIN-SUFFIX,nytco.com
+DOMAIN-SUFFIX,nyti.ms
+DOMAIN-SUFFIX,nytimes.com
+DOMAIN-SUFFIX,nytimg.com
+DOMAIN-SUFFIX,nytlog.com
+DOMAIN-SUFFIX,nytstyle.com
+DOMAIN-SUFFIX,timestalks.com
+DOMAIN-SUFFIX,tynt.com
 ## > Pandora
 DOMAIN-SUFFIX,pandora.com
 DOMAIN-SUFFIX,p-cdn.us

@@ -1,4 +1,5 @@
 ## >> Apple Music
+DOMAIN-SUFFIX,aod.itunes.apple.com
 DOMAIN-SUFFIX,applemusic.berlin
 DOMAIN-SUFFIX,applemusic.com
 DOMAIN-SUFFIX,applemusic.com.au
@@ -6,6 +7,7 @@ DOMAIN-SUFFIX,applemusic.hamburg
 DOMAIN-SUFFIX,applemusic.wang
 DOMAIN-SUFFIX,applemusicconnect.com
 DOMAIN-SUFFIX,applemusicfestival.com
+DOMAIN-SUFFIX,audio-ssl.itunes.apple.com
 DOMAIN-SUFFIX,audio.itunes.apple.com
 DOMAIN-SUFFIX,blobstore.apple.com
 DOMAIN-SUFFIX,musickit.net
@@ -20,6 +22,10 @@ DOMAIN-SUFFIX,applenews.berlin
 DOMAIN-SUFFIX,applenews.hamburg
 DOMAIN-SUFFIX,applenews.tv
 DOMAIN-SUFFIX,applenewsformat.com
+DOMAIN-SUFFIX,news-assets.apple.com
+DOMAIN-SUFFIX,news-client.apple.com
+DOMAIN-SUFFIX,news-edge.apple.com
+DOMAIN-SUFFIX,news-events.apple.com
 ## >> Apple TV
 DOMAIN-SUFFIX,appletv.com
 DOMAIN-SUFFIX,appletv.fr
@@ -27,6 +33,10 @@ DOMAIN-SUFFIX,appletv.wang
 DOMAIN-SUFFIX,appletv4.cn
 DOMAIN-SUFFIX,appletv4.com.cn
 DOMAIN-SUFFIX,appletvapp.apple
+DOMAIN-SUFFIX,hls-amt.itunes.apple.com
+DOMAIN-SUFFIX,hls.itunes.apple.com
+DOMAIN-SUFFIX,play-edge.itunes.apple.com
+DOMAIN-SUFFIX,tv.apple.com
 ## >> iBook
 DOMAIN-SUFFIX,i-book.com
 DOMAIN-SUFFIX,i-book.net

@@ -520,6 +520,29 @@ DOMAIN-SUFFIX,bluedgames.com
 DOMAIN-SUFFIX,bldimg.com
 DOMAIN-SUFFIX,budimg.cn
 DOMAIN-SUFFIX,bldlive.com
+## > Bloomberg
+DOMAIN-SUFFIX,bloomberg.co.kr
+DOMAIN-SUFFIX,bloomberg.com
+DOMAIN-SUFFIX,bloomberg.com.br
+DOMAIN-SUFFIX,bloomberg.fm
+DOMAIN-SUFFIX,bloomberg.tv
+DOMAIN-SUFFIX,bloombergapps.com
+DOMAIN-SUFFIX,bloombergarcade.com
+DOMAIN-SUFFIX,bloombergbeta.com
+DOMAIN-SUFFIX,blpprofessional.com
+DOMAIN-SUFFIX,bmia.org
+DOMAIN-SUFFIX,bnef.com
+DOMAIN-SUFFIX,businessweek.com
+DOMAIN-SUFFIX,businessweekmag.com
+DOMAIN-SUFFIX,bwbx.io
+DOMAIN-SUFFIX,citylab.com
+DOMAIN-SUFFIX,gotraffic.net
+DOMAIN-SUFFIX,londonmithraeum.com
+DOMAIN-SUFFIX,neweconomyforum.com
+DOMAIN-SUFFIX,newenergyfinance.com
+DOMAIN-SUFFIX,quicktake.video
+DOMAIN-SUFFIX,techatbloomberg.com
+DOMAIN-SUFFIX,tictoc.video
 ## > BMW
 DOMAIN-SUFFIX,.bmw
 DOMAIN-SUFFIX,approvedusedbmw.com
@@ -1848,6 +1871,12 @@ DOMAIN-SUFFIX,entermediadb.org
 ## > Entrust
 DOMAIN-SUFFIX,entrust.net
 DOMAIN-SUFFIX,entrustdatacard.com
+## > Espn
+DOMAIN-SUFFIX,espn.com
+DOMAIN-SUFFIX,espn.net
+DOMAIN-SUFFIX,espncdn.com
+DOMAIN-SUFFIX,espnqa.com
+DOMAIN-SUFFIX,watchespn.com
 ## > Facebook
 DOMAIN-SUFFIX,fb.com
 DOMAIN-SUFFIX,fb.me
@@ -1876,8 +1905,9 @@ DOMAIN-SUFFIX,ip6.static.sl-reverse.com
 DOMAIN-SUFFIX,cdninstagram.com
 DOMAIN-SUFFIX,igcdn.com
 DOMAIN-SUFFIX,igsonar.com
-DOMAIN-SUFFIX,instagram.com
+DOMAIN-SUFFIX,instagr.am
 DOMAIN-SUFFIX,instagram-press.com
+DOMAIN-SUFFIX,instagram.com
 # >> Oculus
 DOMAIN-SUFFIX,oculus.com
 DOMAIN-SUFFIX,oculuscdn.com
@@ -1925,6 +1955,9 @@ DOMAIN-SUFFIX,faststone.org
 DOMAIN-SUFFIX,neulion.com
 DOMAIN-SUFFIX,icntv.xyz
 DOMAIN-SUFFIX,flzbcdn.xyz
+## > FetNet
+DOMAIN-SUFFIX,fetnet.net
+DOMAIN-SUFFIX,friday.tw
 ## > FlipBoard
 DOMAIN-SUFFIX,flipboard.com
 DOMAIN-SUFFIX,flipchina.cn
@@ -1935,6 +1968,32 @@ DOMAIN-SUFFIX,fortawesome.com
 DOMAIN-SUFFIX,ftchinese.com
 ## > Getcomposer
 DOMAIN-SUFFIX,getcomposer.org
+## > Gettyimages
+DOMAIN-SUFFIX,gettyimages.ae
+DOMAIN-SUFFIX,gettyimages.at
+DOMAIN-SUFFIX,gettyimages.be
+DOMAIN-SUFFIX,gettyimages.ca
+DOMAIN-SUFFIX,gettyimages.ch
+DOMAIN-SUFFIX,gettyimages.co.jp
+DOMAIN-SUFFIX,gettyimages.co.nz
+DOMAIN-SUFFIX,gettyimages.co.uk
+DOMAIN-SUFFIX,gettyimages.com
+DOMAIN-SUFFIX,gettyimages.com.au
+DOMAIN-SUFFIX,gettyimages.com.br
+DOMAIN-SUFFIX,gettyimages.com.mx
+DOMAIN-SUFFIX,gettyimages.de
+DOMAIN-SUFFIX,gettyimages.dk
+DOMAIN-SUFFIX,gettyimages.es
+DOMAIN-SUFFIX,gettyimages.fi
+DOMAIN-SUFFIX,gettyimages.fr
+DOMAIN-SUFFIX,gettyimages.hk
+DOMAIN-SUFFIX,gettyimages.ie
+DOMAIN-SUFFIX,gettyimages.in
+DOMAIN-SUFFIX,gettyimages.it
+DOMAIN-SUFFIX,gettyimages.nl
+DOMAIN-SUFFIX,gettyimages.no
+DOMAIN-SUFFIX,gettyimages.pt
+DOMAIN-SUFFIX,gettyimages.se
 ## > Gigabyte
 DOMAIN-SUFFIX,aorus.com
 DOMAIN-SUFFIX,aoruszone.cn
@@ -5160,6 +5219,13 @@ DOMAIN-SUFFIX,zeebiz.com
 DOMAIN-SUFFIX,zeeentertainment.com
 DOMAIN-SUFFIX,zeenews.com
 DOMAIN-SUFFIX,zeenews-fonts.s3.amazonaws.com
+## > Zendesk
+DOMAIN-SUFFIX,outbound.io
+DOMAIN-SUFFIX,zdassets.com
+DOMAIN-SUFFIX,zdusercontent.com
+DOMAIN-SUFFIX,zendesk.com
+DOMAIN-SUFFIX,zndsk.com
+DOMAIN-SUFFIX,zopim.com
 ## > Zoho
 DOMAIN-SUFFIX,zoho.com
 DOMAIN-SUFFIX,zohomerchandise.com
@@ -6139,7 +6205,6 @@ DOMAIN-SUFFIX,blogtd.net
 DOMAIN-SUFFIX,blogtd.org
 DOMAIN-SUFFIX,bloodshed.net
 DOMAIN-SUFFIX,bloomberg.cn
-DOMAIN-SUFFIX,bloomberg.com
 DOMAIN-SUFFIX,bloomberg.de
 DOMAIN-SUFFIX,bloombergview.com
 DOMAIN-SUFFIX,bloomfortune.com
@@ -6225,7 +6290,6 @@ DOMAIN-SUFFIX,busayari.com
 DOMAIN-SUFFIX,businessinsider.com
 DOMAIN-SUFFIX,businessinsider.com.au
 DOMAIN-SUFFIX,businesstoday.com.tw
-DOMAIN-SUFFIX,businessweek.com
 DOMAIN-SUFFIX,busu.org
 DOMAIN-SUFFIX,busytrade.com
 DOMAIN-SUFFIX,buugaa.com
@@ -6233,7 +6297,6 @@ DOMAIN-SUFFIX,buzzhand.com
 DOMAIN-SUFFIX,buzzhand.net
 DOMAIN-SUFFIX,buzzorange.com
 DOMAIN-SUFFIX,bvpn.com
-DOMAIN-SUFFIX,bwbx.io
 DOMAIN-SUFFIX,bwgyhw.com
 DOMAIN-SUFFIX,bwh1.net
 DOMAIN-SUFFIX,bwsj.hk
@@ -7244,7 +7307,6 @@ DOMAIN-SUFFIX,freewww.info
 DOMAIN-SUFFIX,freexinwen.com
 DOMAIN-SUFFIX,freeyellow.com
 DOMAIN-SUFFIX,freeyoutubeproxy.net
-DOMAIN-SUFFIX,friday.tw
 DOMAIN-SUFFIX,frienddeck.com
 DOMAIN-SUFFIX,frienddy.com
 DOMAIN-SUFFIX,friendfeed-media.com
@@ -7373,7 +7435,6 @@ DOMAIN-SUFFIX,getsocialscope.com
 DOMAIN-SUFFIX,getsync.com
 DOMAIN-SUFFIX,gettoby.com
 DOMAIN-SUFFIX,gettrials.com
-DOMAIN-SUFFIX,gettyimages.com
 DOMAIN-SUFFIX,getuploader.com
 DOMAIN-SUFFIX,gfbv.de
 DOMAIN-SUFFIX,gfgold.com.hk
