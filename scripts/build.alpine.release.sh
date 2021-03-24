@@ -19,18 +19,19 @@ cd ..
 git clone https://github.com/ftk/quickjspp --depth=1
 cd quickjspp
 cmake -DCMAKE_BUILD_TYPE=Release .
-make -j4
-install -m644 quickjs/libquickjs.a /usr/lib
-install -m644 quickjs/quickjs.h quickjs/quickjs-libc.h /usr/include/quickjs
-install -m644 quickjspp.hpp /usr/include
+make quickjs -j2
+install -m644 quickjs/libquickjs.a /usr/lib/
+install -d /usr/include/quickjs/
+install -m644 quickjs/quickjs.h quickjs/quickjs-libc.h /usr/include/quickjs/
+install -m644 quickjspp.hpp /usr/include/
 cd ..
 
 git clone https://github.com/PerMalmberg/libcron --depth=1
 cd libcron
 git submodule update --init
 cmake -DCMAKE_BUILD_TYPE=Release .
-make -j4
-install -m644 libcron/out/Release/liblibcron.a /usr/lib
+make libcron -j2
+install -m644 libcron/out/Release/liblibcron.a /usr/lib/
 install -d /usr/include/libcron/
 install -m644 libcron/include/libcron/* /usr/include/libcron/
 install -d /usr/include/date/
@@ -41,7 +42,7 @@ export PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 cmake -DCMAKE_BUILD_TYPE=Release .
 make -j2
 rm subconverter
-g++ -o base/subconverter $(find CMakeFiles/subconverter.dir/src/ -name "*.o")  -static -lpcre2-8 -levent -lyaml-cpp -L/usr/lib64 -lcurl -lmbedtls -lmbedcrypto -lmbedx509 -lz -lduktape -lduktape_module -O3 -s  
+g++ -o base/subconverter $(find CMakeFiles/subconverter.dir/src/ -name "*.o")  -static -lpcre2-8 -levent -lyaml-cpp -L/usr/lib64 -lcurl -lmbedtls -lmbedcrypto -lmbedx509 -lz -lquickjs -llibcron -O3 -s  
 
 cd base
 chmod +rx subconverter
