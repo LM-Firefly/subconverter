@@ -413,8 +413,10 @@ DOMAIN-SUFFIX,wowsgame.cn
 DOMAIN-SUFFIX,360wzb.cn
 DOMAIN-SUFFIX,360wzb.com
 ## > 36kr
+DOMAIN-SUFFIX,36dianping.com
 DOMAIN-SUFFIX,36kr.com
 DOMAIN-SUFFIX,36krcdn.com
+DOMAIN-SUFFIX,36krcnd.com
 ## > 3dm
 DOMAIN-SUFFIX,3dmgame.com
 ## > 3type
@@ -448,24 +450,24 @@ DOMAIN-SUFFIX,aihero100.com
 DOMAIN-SUFFIX,tuijianxitong.cn
 DOMAIN-SUFFIX,v1zhushou.com
 ## > 51Job
-DOMAIN-SUFFIX,51laiqiang.com
-DOMAIN-SUFFIX,51miduoduo.com
-DOMAIN-SUFFIX,wuyoudagong.com
-DOMAIN-SUFFIX,51mdd.com
-DOMAIN-SUFFIX,coolping.com
-DOMAIN-SUFFIX,myyjs.com
-DOMAIN-SUFFIX,yingjiesheng.org
-DOMAIN-SUFFIX,xinghua.org.cn
 DOMAIN-SUFFIX,51hr.com
-DOMAIN-SUFFIX,ibmcampus.com
-DOMAIN-SUFFIX,51jobcdn.com
-DOMAIN-SUFFIX,yingjiesheng.net
 DOMAIN-SUFFIX,51ideal.com
-DOMAIN-SUFFIX,maketion.com
 DOMAIN-SUFFIX,51jingying.com
-DOMAIN-SUFFIX,yingjiesheng.com
 DOMAIN-SUFFIX,51job.com
+DOMAIN-SUFFIX,51jobcdn.com
+DOMAIN-SUFFIX,51laiqiang.com
+DOMAIN-SUFFIX,51mdd.com
+DOMAIN-SUFFIX,51miduoduo.com
+DOMAIN-SUFFIX,coolping.com
 DOMAIN-SUFFIX,correlation-one.cn
+DOMAIN-SUFFIX,ibmcampus.com
+DOMAIN-SUFFIX,maketion.com
+DOMAIN-SUFFIX,myyjs.com
+DOMAIN-SUFFIX,wuyoudagong.com
+DOMAIN-SUFFIX,xinghua.org.cn
+DOMAIN-SUFFIX,yingjiesheng.com
+DOMAIN-SUFFIX,yingjiesheng.net
+DOMAIN-SUFFIX,yingjiesheng.org
 DOMAIN-SUFFIX,zhiding.com.cn
 ## > 56 网
 DOMAIN-SUFFIX,56.com
@@ -533,51 +535,46 @@ DOMAIN-SUFFIX,zhuancorp.com
 DOMAIN-SUFFIX,zhuanspirit.com
 DOMAIN-SUFFIX,zhuanzhuan.com
 DOMAIN-SUFFIX,zhuan-zhuan.cn
-## > AcFun
-DOMAIN-SUFFIX,acfun.cn
-DOMAIN-SUFFIX,acfun.com
-DOMAIN-SUFFIX,acfun.tv
-DOMAIN-SUFFIX,aixifan.com
 ## > 爱发电
 DOMAIN-SUFFIX,afdian.net
 DOMAIN-SUFFIX,afdiancdn.com
 ## > 爱范儿
-DOMAIN-SUFFIX,ifanr.com
-DOMAIN-SUFFIX,ifanrx.com
-DOMAIN-SUFFIX,ifanr.in
-DOMAIN-SUFFIX,爱范儿.com
-DOMAIN-SUFFIX,tyqian.com
-DOMAIN-SUFFIX,ifanrprod.cn
-DOMAIN-SUFFIX,ifanrprod.net
-DOMAIN-SUFFIX,ifanrprod.com
-DOMAIN-SUFFIX,ifdesigninc.cn
-DOMAIN-SUFFIX,ifanr.cn
-DOMAIN-SUFFIX,socialbasecustomercontent.com
-DOMAIN-SUFFIX,socialbaseusercontent.com
-DOMAIN-SUFFIX,menhu.io
-DOMAIN-SUFFIX,weimen.hu
-DOMAIN-SUFFIX,mindstore.io
-DOMAIN-SUFFIX,triorder.com
-DOMAIN-SUFFIX,jmp.gd
-DOMAIN-SUFFIX,xiaoma.io
-DOMAIN-SUFFIX,wuzhii.com
-DOMAIN-SUFFIX,wantwu.com
-DOMAIN-SUFFIX,bitbe.at
 DOMAIN-SUFFIX,01hub.com
-DOMAIN-SUFFIX,coolbuy.com
-DOMAIN-SUFFIX,xiaoapp.io
-DOMAIN-SUFFIX,minapp.com
-DOMAIN-SUFFIX,minshop.com
-DOMAIN-SUFFIX,dongchehui.net
-DOMAIN-SUFFIX,ifdesignstudio.cn
-DOMAIN-SUFFIX,ifanrcloud.com
-DOMAIN-SUFFIX,zhixiaochengxu.com
-DOMAIN-SUFFIX,appsolution.cc
-DOMAIN-SUFFIX,socialbase.cn
 DOMAIN-SUFFIX,app.so
-DOMAIN-SUFFIX,ifanrusercontent.com
+DOMAIN-SUFFIX,appsolution.cc
+DOMAIN-SUFFIX,bitbe.at
+DOMAIN-SUFFIX,coolbuy.com
+DOMAIN-SUFFIX,dongchehui.net
 DOMAIN-SUFFIX,fabu.io
 DOMAIN-SUFFIX,haomaishe.com
+DOMAIN-SUFFIX,ifanr.cn
+DOMAIN-SUFFIX,ifanr.com
+DOMAIN-SUFFIX,ifanr.in
+DOMAIN-SUFFIX,ifanrcloud.com
+DOMAIN-SUFFIX,ifanrprod.cn
+DOMAIN-SUFFIX,ifanrprod.com
+DOMAIN-SUFFIX,ifanrprod.net
+DOMAIN-SUFFIX,ifanrusercontent.com
+DOMAIN-SUFFIX,ifanrx.com
+DOMAIN-SUFFIX,ifdesigninc.cn
+DOMAIN-SUFFIX,ifdesignstudio.cn
+DOMAIN-SUFFIX,jmp.gd
+DOMAIN-SUFFIX,menhu.io
+DOMAIN-SUFFIX,minapp.com
+DOMAIN-SUFFIX,mindstore.io
+DOMAIN-SUFFIX,minshop.com
+DOMAIN-SUFFIX,socialbase.cn
+DOMAIN-SUFFIX,socialbasecustomercontent.com
+DOMAIN-SUFFIX,socialbaseusercontent.com
+DOMAIN-SUFFIX,triorder.com
+DOMAIN-SUFFIX,tyqian.com
+DOMAIN-SUFFIX,wantwu.com
+DOMAIN-SUFFIX,weimen.hu
+DOMAIN-SUFFIX,wuzhii.com
+DOMAIN-SUFFIX,xiaoapp.io
+DOMAIN-SUFFIX,xiaoma.io
+DOMAIN-SUFFIX,zhixiaochengxu.com
+DOMAIN-SUFFIX,爱范儿.com
 ## > Agora 声网
 DOMAIN-SUFFIX,agora.io
 DOMAIN-SUFFIX,agoraio.cn
@@ -1208,14 +1205,8 @@ DOMAIN-SUFFIX,3839vc.com
 DOMAIN-SUFFIX,4399api.net
 DOMAIN-SUFFIX,4399biule.com
 DOMAIN-SUFFIX,4399er.com
-DOMAIN-SUFFIX,4399hhh.com
 DOMAIN-SUFFIX,4399inc.com
-DOMAIN-SUFFIX,4399mail.com
-DOMAIN-SUFFIX,4399sj.cn
-DOMAIN-SUFFIX,4399swf.com
 DOMAIN-SUFFIX,4399wanju.com
-DOMAIN-SUFFIX,4399youpai.com
-DOMAIN-SUFFIX,4399youxi.com
 DOMAIN-SUFFIX,4399yyy.com
 DOMAIN-SUFFIX,5054399.com
 DOMAIN-SUFFIX,5054399.net
@@ -1224,19 +1215,28 @@ DOMAIN-SUFFIX,71acg.net
 DOMAIN-SUFFIX,appeeres.com
 DOMAIN-SUFFIX,bx1k.com
 DOMAIN-SUFFIX,i3839.com
-DOMAIN-SUFFIX,ihykb.com
 DOMAIN-SUFFIX,img4399.com
-DOMAIN-SUFFIX,mail4399.com
-DOMAIN-SUFFIX,me4399.com
-DOMAIN-SUFFIX,my4399.com
 DOMAIN-SUFFIX,mysiteres.com
 DOMAIN-SUFFIX,nzsiteres.com
 DOMAIN-SUFFIX,tuer123.com
-DOMAIN-SUFFIX,wanwan4399.com
-DOMAIN-SUFFIX,we4399.com
 DOMAIN-SUFFIX,webgame163.com
 DOMAIN-SUFFIX,youba.com
 DOMAIN-SUFFIX,yxhhdl.com
+## >> 好游快爆
+DOMAIN-SUFFIX,3839video.com
+DOMAIN-SUFFIX,ihykb.com
+## >> 数据备份
+DOMAIN-SUFFIX,4399hhh.com
+DOMAIN-SUFFIX,4399mail.com
+DOMAIN-SUFFIX,4399sj.cn
+DOMAIN-SUFFIX,4399swf.com
+DOMAIN-SUFFIX,4399youpai.com
+DOMAIN-SUFFIX,4399youxi.com
+DOMAIN-SUFFIX,mail4399.com
+DOMAIN-SUFFIX,me4399.com
+DOMAIN-SUFFIX,my4399.com
+DOMAIN-SUFFIX,wanwan4399.com
+DOMAIN-SUFFIX,we4399.com
 ## > 彩云科技
 DOMAIN-SUFFIX,caiyunai.com
 DOMAIN-SUFFIX,caiyunapp.com
@@ -1521,6 +1521,21 @@ DOMAIN-SUFFIX,xiaojuchefu.cn
 DOMAIN-SUFFIX,xiaojukeji.com
 ## > 顶象
 DOMAIN-SUFFIX,dingxiang-inc.com
+## > 帝联网络
+DOMAIN-SUFFIX,acadn.cn
+DOMAIN-SUFFIX,acadn.com
+DOMAIN-SUFFIX,bbbcdns.com
+DOMAIN-SUFFIX,dlgslb.cn
+DOMAIN-SUFFIX,dlgslb.net
+DOMAIN-SUFFIX,dwion.com
+DOMAIN-SUFFIX,fastcdn.com
+DOMAIN-SUFFIX,fastcdn.com.cn
+DOMAIN-SUFFIX,flxdns.cn
+DOMAIN-SUFFIX,flxdns.com
+DOMAIN-SUFFIX,globalcdn.cn
+DOMAIN-SUFFIX,mcadn.cn
+DOMAIN-SUFFIX,tlgslb.cn
+DOMAIN-SUFFIX,tlgslb.com
 ## > 第一弹
 DOMAIN-SUFFIX,diyidan.com
 DOMAIN-SUFFIX,diyidan.net
@@ -2010,6 +2025,7 @@ DOMAIN-SUFFIX,cgbchina.cn
 DOMAIN-SUFFIX,cgbchina.com.cn
 DOMAIN-SUFFIX,gdb.com.cn
 ## > CITIC (中信银行)
+DOMAIN-SUFFIX,citic
 DOMAIN-SUFFIX,chinaamc.com
 DOMAIN-SUFFIX,citic-prudential.com.cn
 DOMAIN-SUFFIX,citic.com
@@ -2081,20 +2097,20 @@ DOMAIN-SUFFIX,icbcswiss.com
 DOMAIN-SUFFIX,icbkfs.com
 DOMAIN-SUFFIX,icbkus.com
 ## > PSBC (邮政储蓄)
+DOMAIN-SUFFIX,95580.net
 DOMAIN-SUFFIX,psbc.com
 DOMAIN-SUFFIX,psbcoa.com.cn
-DOMAIN-SUFFIX,95580.net
 ## > UnionPay (中国银联)
-DOMAIN-SUFFIX,chinaunionpay.com
 DOMAIN-SUFFIX,95516.com
+DOMAIN-SUFFIX,95516.net
+DOMAIN-SUFFIX,chinaunionpay.com
+DOMAIN-SUFFIX,chinaunionpay.com.cn
 DOMAIN-SUFFIX,chinaunionpay.net
-DOMAIN-SUFFIX,unionpay.net
 DOMAIN-SUFFIX,cup62.cn
 DOMAIN-SUFFIX,unionpay.com
-DOMAIN-SUFFIX,chinaunionpay.com.cn
-DOMAIN-SUFFIX,unionpaysecure.com
-DOMAIN-SUFFIX,95516.net
+DOMAIN-SUFFIX,unionpay.net
 DOMAIN-SUFFIX,unionpayintl.com
+DOMAIN-SUFFIX,unionpaysecure.com
 ## >> 银联电子支付
 DOMAIN-SUFFIX,airepay.net
 DOMAIN-SUFFIX,chinapay.cn
@@ -2182,9 +2198,11 @@ DOMAIN-SUFFIX,jianguoyun.com
 DOMAIN-SUFFIX,nutstore.net
 DOMAIN-SUFFIX,nutstorehq.com
 ## > 京东
+DOMAIN-SUFFIX,300hu.com
 DOMAIN-SUFFIX,360top.com
 DOMAIN-SUFFIX,blackdragon.com
 DOMAIN-SUFFIX,dao123.com
+DOMAIN-SUFFIX,jd-app.com
 DOMAIN-SUFFIX,jdbusiness.com
 DOMAIN-SUFFIX,jddapeigou.com
 DOMAIN-SUFFIX,jddebug.com
@@ -2197,6 +2215,8 @@ DOMAIN-SUFFIX,paidaojia.cn
 DOMAIN-SUFFIX,qianxun.com
 DOMAIN-SUFFIX,qingzhouip.com
 DOMAIN-SUFFIX,sgsic.com
+DOMAIN-SUFFIX,toplife.com
+DOMAIN-SUFFIX,wdfok.com
 ## >> 京东彩娱
 DOMAIN-SUFFIX,caiyu.com
 ## >> 京东大药房
@@ -2559,6 +2579,7 @@ DOMAIN-SUFFIX,kuaipandata.com
 ## >> WPS
 DOMAIN-SUFFIX,docer.com
 DOMAIN-SUFFIX,ixiede.com
+DOMAIN-SUFFIX,papocket.com
 DOMAIN-SUFFIX,qwps.cn
 DOMAIN-SUFFIX,qwps.com
 DOMAIN-SUFFIX,qwps.net
@@ -2770,6 +2791,9 @@ DOMAIN-SUFFIX,xoyobox.com
 DOMAIN-SUFFIX,xoyocdn.com
 DOMAIN-SUFFIX,xsjcs.cn
 DOMAIN-SUFFIX,xsjom.com
+## >> 澄迈云享智胜网络
+DOMAIN-SUFFIX,ks-live.com
+DOMAIN-SUFFIX,ksyunacc.cn
 ## > 金史密斯
 DOMAIN-SUFFIX,kingsmith.cn
 DOMAIN-SUFFIX,kingsmith.com.cn
@@ -2842,7 +2866,7 @@ DOMAIN-SUFFIX,ckd.im
 DOMAIN-SUFFIX,kd100.com
 DOMAIN-SUFFIX,kuaidi100.com
 DOMAIN-SUFFIX,kuaidilab.com
-## > 酷狗 & 酷我
+## > 酷狗
 DOMAIN-SUFFIX,gouwo.com
 DOMAIN-SUFFIX,kgimg.com
 DOMAIN-SUFFIX,kglink.cn
@@ -2854,106 +2878,109 @@ DOMAIN-SUFFIX,kugou.com
 DOMAIN-SUFFIX,kugou.net
 DOMAIN-SUFFIX,kugouipv6.com
 DOMAIN-SUFFIX,kumi.com
+## >> 说吧网
 DOMAIN-SUFFIX,shuoba.com
 DOMAIN-SUFFIX,shuoba.me
 DOMAIN-SUFFIX,shuoba.org
+## > 酷我
+DOMAIN-SUFFIX,tingkanbao.com
+DOMAIN-SUFFIX,kuwo.cn
+DOMAIN-SUFFIX,koowo.com
 DOMAIN-SUFFIX,2496.cn
 DOMAIN-SUFFIX,koowo.cn
-DOMAIN-SUFFIX,koowo.com
-DOMAIN-SUFFIX,kuwo.cn
 ## >> 酷狗 & 酷我 CIDR
-IP-CIDR,222.186.145.0/24,no-resolve
-IP-CIDR,222.245.77.0/24,no-resolve
-IP-CIDR,222.221.102.0/24,no-resolve
-IP-CIDR,222.77.96.0/24,no-resolve
+IP-CIDR,1.82.220.0/24,no-resolve
 IP-CIDR,14.17.80.0/24,no-resolve
-IP-CIDR,221.230.143.0/24,no-resolve
-IP-CIDR,221.234.42.0/24,no-resolve
-IP-CIDR,125.64.107.13/11,no-resolve
-IP-CIDR,113.219.132.0/24,no-resolve
-IP-CIDR,113.6.229.0/24,no-resolve
-IP-CIDR,113.200.121.0/24,no-resolve
-IP-CIDR,183.232.79.0/24,no-resolve
-IP-CIDR,183.131.168.0/24,no-resolve
-IP-CIDR,183.239.70.0/24,no-resolve
-IP-CIDR,183.232.74.0/24,no-resolve
-IP-CIDR,183.232.72.0/24,no-resolve
-IP-CIDR,183.213.23.0/24,no-resolve
-IP-CIDR,183.57.150.0/24,no-resolve
 IP-CIDR,27.195.145.0/24,no-resolve
 IP-CIDR,27.221.117.0/24,no-resolve
-IP-CIDR,118.123.233.0/24,no-resolve
-IP-CIDR,59.49.42.0/24,no-resolve
-IP-CIDR,59.63.80.0/24,no-resolve
-IP-CIDR,59.53.95.0/24,no-resolve
+IP-CIDR,36.25.241.0/24,no-resolve
+IP-CIDR,36.250.74.0/24,no-resolve
+IP-CIDR,59.34.229.0/24,no-resolve
+IP-CIDR,59.47.73.0/24,no-resolve
 IP-CIDR,59.48.165.0/24,no-resolve
-IP-CIDR,111.170.234.0/24,no-resolve
-IP-CIDR,111.178.233.0/24,no-resolve
+IP-CIDR,59.49.42.0/24,no-resolve
+IP-CIDR,59.53.95.0/24,no-resolve
+IP-CIDR,59.63.80.0/24,no-resolve
+IP-CIDR,61.48.115.0/24,no-resolve
+IP-CIDR,61.54.121.0/24,no-resolve
+IP-CIDR,61.54.7.0/24,no-resolve
+IP-CIDR,61.132.238.0/24,no-resolve
+IP-CIDR,61.136.167.0/24,no-resolve
+IP-CIDR,61.164.210.0/24,no-resolve
+IP-CIDR,61.241.123.0/24,no-resolve
+IP-CIDR,61.243.144.0/24,no-resolve
 IP-CIDR,111.11.31.0/24,no-resolve
 IP-CIDR,111.11.4.0/24,no-resolve
-IP-CIDR,122.228.233.0/24,no-resolve
+IP-CIDR,111.170.234.0/24,no-resolve
+IP-CIDR,111.178.233.0/24,no-resolve
+IP-CIDR,113.6.229.0/24,no-resolve
+IP-CIDR,113.200.121.0/24,no-resolve
+IP-CIDR,113.219.132.0/24,no-resolve
+IP-CIDR,118.123.233.0/24,no-resolve
+IP-CIDR,101.71.122.0/24,no-resolve
+IP-CIDR,103.215.143.0/24,no-resolve
+IP-CIDR,103.243.94.0/24,no-resolve
+IP-CIDR,104.27.168.0/24,no-resolve
+IP-CIDR,106.38.222.0/24,no-resolve
+IP-CIDR,106.39.193.0/24,no-resolve
+IP-CIDR,112.51.125.0/24,no-resolve
+IP-CIDR,112.65.92.0/24,no-resolve
+IP-CIDR,112.84.104.0/24,no-resolve
+IP-CIDR,112.90.228.0/24,no-resolve
+IP-CIDR,112.90.229.0/24,no-resolve
+IP-CIDR,112.91.129.0/24,no-resolve
+IP-CIDR,113.107.112.0/24,no-resolve
+IP-CIDR,115.223.24.0/24,no-resolve
+IP-CIDR,115.231.22.0/24,no-resolve
+IP-CIDR,115.231.37.0/24,no-resolve
+IP-CIDR,116.55.228.0/24,no-resolve
+IP-CIDR,119.147.184.0/24,no-resolve
+IP-CIDR,119.188.163.0/24,no-resolve
+IP-CIDR,120.199.78.0/24,no-resolve
 IP-CIDR,122.141.225.0/24,no-resolve
-IP-CIDR,61.132.238.0/24,no-resolve
-IP-CIDR,61.164.210.0/24,no-resolve
-IP-CIDR,61.54.7.0/24,no-resolve
-IP-CIDR,61.241.123.0/24,no-resolve
-IP-CIDR,61.54.121.0/24,no-resolve
-IP-CIDR,61.48.115.0/24,no-resolve
-IP-CIDR,61.243.144.0/24,no-resolve
-IP-CIDR,220.165.138.0/24,no-resolve
-IP-CIDR,218.95.139.0/24,no-resolve
-IP-CIDR,218.26.75.0/24,no-resolve
-IP-CIDR,218.61.106.0/24,no-resolve
-IP-CIDR,218.78.185.0/24,no-resolve
-IP-CIDR,157.255.76.0/24,no-resolve
-IP-CIDR,157.255.47.0/24,no-resolve
+IP-CIDR,122.228.233.0/24,no-resolve
+IP-CIDR,123.58.25.0/24,no-resolve
+IP-CIDR,123.66.30.0/24,no-resolve
+IP-CIDR,123.128.14.0/24,no-resolve
+IP-CIDR,124.124.232.0/24,no-resolve
+IP-CIDR,124.232.186.0/24,no-resolve
+IP-CIDR,125.64.107.13/11,no-resolve
+IP-CIDR,125.88.149.0/24,no-resolve
 IP-CIDR,139.215.187.0/24,no-resolve
 IP-CIDR,153.99.235.0/24,no-resolve
 IP-CIDR,153.101.64.0/24,no-resolve
-IP-CIDR,219.145.171.0/24,no-resolve
-IP-CIDR,219.144.78.0/24,no-resolve
-IP-CIDR,123.66.30.0/24,no-resolve
-IP-CIDR,123.58.25.0/24,no-resolve
-IP-CIDR,123.128.14.0/24,no-resolve
-IP-CIDR,103.243.94.0/24,no-resolve
-IP-CIDR,103.215.143.0/24,no-resolve
-IP-CIDR,163.177.19.0/24,no-resolve
-IP-CIDR,119.188.163.0/24,no-resolve
-IP-CIDR,115.231.37.0/24,no-resolve
-IP-CIDR,112.90.229.0/24,no-resolve
-IP-CIDR,112.91.129.0/24,no-resolve
-IP-CIDR,112.90.228.0/24,no-resolve
-IP-CIDR,120.199.78.0/24,no-resolve
-IP-CIDR,223.111.207.0/24,no-resolve
-IP-CIDR,223.111.183.0/24,no-resolve
-IP-CIDR,106.39.193.0/24,no-resolve
-IP-CIDR,106.38.222.0/24,no-resolve
-IP-CIDR,116.55.228.0/24,no-resolve
-IP-CIDR,124.232.186.0/24,no-resolve
-IP-CIDR,119.147.184.0/24,no-resolve
-IP-CIDR,125.88.149.0/24,no-resolve
-IP-CIDR,104.27.168.0/24,no-resolve
-IP-CIDR,222.218.87.0/24,no-resolve
-IP-CIDR,222.161.226.0/24,no-resolve
-IP-CIDR,115.223.24.0/24,no-resolve
-IP-CIDR,115.231.22.0/24,no-resolve
-IP-CIDR,221.180.192.0/24,no-resolve
-IP-CIDR,59.34.229.0/24,no-resolve
-IP-CIDR,59.47.73.0/24,no-resolve
-IP-CIDR,61.136.167.0/24,no-resolve
-IP-CIDR,36.250.74.0/24,no-resolve
-IP-CIDR,36.25.241.0/24,no-resolve
-IP-CIDR,113.107.112.0/24,no-resolve
-IP-CIDR,157.185.176.0/24,no-resolve
-IP-CIDR,157.185.187.0/24,no-resolve
-IP-CIDR,157.185.179.0/24,no-resolve
 IP-CIDR,157.185.172.0/24,no-resolve
-IP-CIDR,112.65.92.0/24,no-resolve
-IP-CIDR,112.84.104.0/24,no-resolve
-IP-CIDR,112.51.125.0/24,no-resolve
-IP-CIDR,124.124.232.0/24,no-resolve
-IP-CIDR,101.71.122.0/24,no-resolve
-IP-CIDR,1.82.220.0/24,no-resolve
+IP-CIDR,157.185.176.0/24,no-resolve
+IP-CIDR,157.185.179.0/24,no-resolve
+IP-CIDR,157.185.187.0/24,no-resolve
+IP-CIDR,157.255.47.0/24,no-resolve
+IP-CIDR,157.255.76.0/24,no-resolve
+IP-CIDR,163.177.19.0/24,no-resolve
+IP-CIDR,183.57.150.0/24,no-resolve
+IP-CIDR,183.131.168.0/24,no-resolve
+IP-CIDR,183.213.23.0/24,no-resolve
+IP-CIDR,183.232.72.0/24,no-resolve
+IP-CIDR,183.232.74.0/24,no-resolve
+IP-CIDR,183.232.79.0/24,no-resolve
+IP-CIDR,183.239.70.0/24,no-resolve
+IP-CIDR,218.26.75.0/24,no-resolve
+IP-CIDR,218.61.106.0/24,no-resolve
+IP-CIDR,218.78.185.0/24,no-resolve
+IP-CIDR,218.95.139.0/24,no-resolve
+IP-CIDR,219.144.78.0/24,no-resolve
+IP-CIDR,219.145.171.0/24,no-resolve
+IP-CIDR,220.165.138.0/24,no-resolve
+IP-CIDR,221.180.192.0/24,no-resolve
+IP-CIDR,221.230.143.0/24,no-resolve
+IP-CIDR,221.234.42.0/24,no-resolve
+IP-CIDR,222.77.96.0/24,no-resolve
+IP-CIDR,222.161.226.0/24,no-resolve
+IP-CIDR,222.186.145.0/24,no-resolve
+IP-CIDR,222.218.87.0/24,no-resolve
+IP-CIDR,222.221.102.0/24,no-resolve
+IP-CIDR,222.245.77.0/24,no-resolve
+IP-CIDR,223.111.183.0/24,no-resolve
+IP-CIDR,223.111.207.0/24,no-resolve
 ## > 库客数字音乐
 DOMAIN-SUFFIX,kuke.com
 DOMAIN-SUFFIX,kukey.com.cn
@@ -2962,100 +2989,126 @@ DOMAIN-SUFFIX,naxos.cn
 DOMAIN-SUFFIX,kkmh.com
 DOMAIN-SUFFIX,kuaikanmanhua.com
 ## > 快手
-DOMAIN-SUFFIX,kspkg.com
-DOMAIN-SUFFIX,kwaitv.com
-DOMAIN-SUFFIX,etoote.com
-DOMAIN-SUFFIX,kwaishou.cn
-DOMAIN-SUFFIX,kwailai.com
-DOMAIN-SUFFIX,666kuaishou.com
-DOMAIN-SUFFIX,etoote.net
-DOMAIN-SUFFIX,ksurl.cn
-DOMAIN-SUFFIX,kuaishouapp.net
-DOMAIN-SUFFIX,doutianshequ.com
-DOMAIN-SUFFIX,1gdoutian.com
-DOMAIN-SUFFIX,1mdoutian.com
-DOMAIN-SUFFIX,avec6ua79dc6.com
-DOMAIN-SUFFIX,svk3o97xmyid93.com
-DOMAIN-SUFFIX,xpsy3q9e5kr4.com
-DOMAIN-SUFFIX,r79xqa8r7e93.com
-DOMAIN-SUFFIX,vg89qeas3xagd.com
-DOMAIN-SUFFIX,opuzswk5tbt25.com
-DOMAIN-SUFFIX,qpmwg68cre9pci.com
-DOMAIN-SUFFIX,cwitxoakk98d.com
-DOMAIN-SUFFIX,er8gmvwi54p5x1.com
-DOMAIN-SUFFIX,fast666ioceywit93h8a.com
-DOMAIN-SUFFIX,aqvx8mcr392mv7.com
-DOMAIN-SUFFIX,eksoi7mwa4fa27.com
-DOMAIN-SUFFIX,gpxiv5kew4mvk.com
-DOMAIN-SUFFIX,tu54o7863tbf6.com
-DOMAIN-SUFFIX,po7ryumvkx34.com
-DOMAIN-SUFFIX,gqzewmsk8yma18.com
-DOMAIN-SUFFIX,meu95otw4967t.com
-DOMAIN-SUFFIX,wqzsc36ou356m.com
-DOMAIN-SUFFIX,gvcr9zaemdzh.com
-DOMAIN-SUFFIX,catuscdn.xyz
-DOMAIN-SUFFIX,catus.xyz
-DOMAIN-SUFFIX,kuaiapps.com
 DOMAIN-SUFFIX,gifshow.com
-DOMAIN-SUFFIX,kuaishou.com
-DOMAIN-SUFFIX,yximgs.com
 DOMAIN-SUFFIX,inkuai.com
-DOMAIN-SUFFIX,ro8qwpaikd4kx.com
-DOMAIN-SUFFIX,pqyvzr56aceitx.com
-DOMAIN-SUFFIX,x9gc3siwevbpc.com
-DOMAIN-SUFFIX,ssixvo9gaybkp5.com
-DOMAIN-SUFFIX,qq3xkm64kavh.com
-DOMAIN-SUFFIX,p4ws8zptrrdc6.com
-DOMAIN-SUFFIX,k8azeicxy4idx.com
-DOMAIN-SUFFIX,z4gwsoqmcvxt.com
-DOMAIN-SUFFIX,uw36gicu5xav.com
-DOMAIN-SUFFIX,mki7rxcwmfe7c.com
-DOMAIN-SUFFIX,y4rwk6v8s41kr.com
-DOMAIN-SUFFIX,mok8uptsmk19.com
-DOMAIN-SUFFIX,zvryuq7xg31x5g.com
-DOMAIN-SUFFIX,ca9ce6rv872ce1.com
-DOMAIN-SUFFIX,sxwao4zi6dgp.com
-DOMAIN-SUFFIX,c54sauo3y85m2g.com
-DOMAIN-SUFFIX,c8uixr96iv79.com
-DOMAIN-SUFFIX,ke6payux9q4pih.com
-DOMAIN-SUFFIX,m6tza3ip7x8zr1.com
 DOMAIN-SUFFIX,ksapisrv.com
-DOMAIN-SUFFIX,kwaizt.cn
-DOMAIN-SUFFIX,kwimgs.com
-DOMAIN-SUFFIX,kwaishouapp.com
+DOMAIN-SUFFIX,kspkg.com
+DOMAIN-SUFFIX,kuaiapps.com
+DOMAIN-SUFFIX,kuaishou.com
+DOMAIN-SUFFIX,kuaishouapp.cn
+DOMAIN-SUFFIX,kuaishouapp.com
+DOMAIN-SUFFIX,kuaishouapp.net
+DOMAIN-SUFFIX,kuaishoupay.com
+DOMAIN-SUFFIX,kwai666.com
+DOMAIN-SUFFIX,kwailai.cn
+DOMAIN-SUFFIX,kwailai.com
+DOMAIN-SUFFIX,kwaishou.cn
 DOMAIN-SUFFIX,kwaitalk.cn
 DOMAIN-SUFFIX,kwaitalk.com
-DOMAIN-SUFFIX,kwaizt.com
-DOMAIN-SUFFIX,kuaishouzt.com
-DOMAIN-SUFFIX,kuaishouzt.cn
-DOMAIN-SUFFIX,yiqixie.com
-DOMAIN-SUFFIX,yiqioffice.com
-DOMAIN-SUFFIX,yiqihuihui.com
-DOMAIN-SUFFIX,kwairpoewaum3s9z41.com
-DOMAIN-SUFFIX,kwaiesovc9xgzfcmt.com
-DOMAIN-SUFFIX,kwairia4qs5e76v52z.com
-DOMAIN-SUFFIX,kwaiymx64war5a7f.com
-DOMAIN-SUFFIX,kwaie65eu4gvs1943.com
-DOMAIN-SUFFIX,kwaiww7t3qi8x217.com
-DOMAIN-SUFFIX,kwaiekow98icxsp7fz.com
-DOMAIN-SUFFIX,kwairr9aw56vso581r.com
-DOMAIN-SUFFIX,kwaisczway7r4tz7m8.com
-DOMAIN-SUFFIX,kuai666kysktrxmwici27.com
-DOMAIN-SUFFIX,kuai666vs5aq9o3ytdgp.com
+DOMAIN-SUFFIX,kwaitv.cn
+DOMAIN-SUFFIX,kwaitv.com
+DOMAIN-SUFFIX,kwimgs.com
+DOMAIN-SUFFIX,yximgs.com
+DOMAIN-SUFFIX,yxixy.com
+## >> AcFun
+USER-AGENT,AcFun*
+DOMAIN-SUFFIX,acfun.cn
+DOMAIN-SUFFIX,acfun.com
+DOMAIN-SUFFIX,acfun.tv
+DOMAIN-SUFFIX,aixifan.com
+## >> 达佳互联
+DOMAIN-SUFFIX,kuai666aa8e43gomqhzeg.com
 DOMAIN-SUFFIX,kuai666e9rqs5wumk7at3.com
+DOMAIN-SUFFIX,kuai666gki3osg54rx7a.com
+DOMAIN-SUFFIX,kuai666gkq3semv1r34.com
+DOMAIN-SUFFIX,kuai666i4rmp7c5i16hb.com
+DOMAIN-SUFFIX,kuai666kysktrxmwici27.com
+DOMAIN-SUFFIX,kuai666m6vgmorxw77vb5.com
 DOMAIN-SUFFIX,kuai666ogv754urmpb4.com
 DOMAIN-SUFFIX,kuai666trqtauks5ht6x.com
-DOMAIN-SUFFIX,kuai666gkq3semv1r34.com
-DOMAIN-SUFFIX,kuai666gki3osg54rx7a.com
-DOMAIN-SUFFIX,kuai666m6vgmorxw77vb5.com
-DOMAIN-SUFFIX,kuai666aa8e43gomqhzeg.com
-DOMAIN-SUFFIX,kuai666i4rmp7c5i16hb.com
-DOMAIN-SUFFIX,kuaishoupay.com
-DOMAIN-SUFFIX,kwaicdnx.com
-DOMAIN-SUFFIX,ssscdn.com
-DOMAIN-SUFFIX,ssrcdn.com
+DOMAIN-SUFFIX,kuai666vs5aq9o3ytdgp.com
+DOMAIN-SUFFIX,kuaishouzt.cn
+DOMAIN-SUFFIX,kuaishouzt.com
 DOMAIN-SUFFIX,kwaicdn.com
+DOMAIN-SUFFIX,kwaicdnx.com
+DOMAIN-SUFFIX,kwaie65eu4gvs1943.com
+DOMAIN-SUFFIX,kwaiekow98icxsp7fz.com
+DOMAIN-SUFFIX,kwaiesovc9xgzfcmt.com
+DOMAIN-SUFFIX,kwairga8upiycbiv.com
+DOMAIN-SUFFIX,kwairia4qs5e76v52z.com
+DOMAIN-SUFFIX,kwairpoewaum3s9z41.com
+DOMAIN-SUFFIX,kwairr9aw56vso581r.com
+DOMAIN-SUFFIX,kwaisczway7r4tz7m8.com
+DOMAIN-SUFFIX,kwaishouapp.cn
+DOMAIN-SUFFIX,kwaishouapp.com
+DOMAIN-SUFFIX,kwaishouapp.net
+DOMAIN-SUFFIX,kwaiww7t3qi8x217.com
+DOMAIN-SUFFIX,kwaiymx64war5a7f.com
+DOMAIN-SUFFIX,kwaizt.cn
+DOMAIN-SUFFIX,kwaizt.com
 DOMAIN-SUFFIX,las-tech.org.cn
+DOMAIN-SUFFIX,ssrcdn.com
+DOMAIN-SUFFIX,ssscdn.com
+## >> 豆田社区
+DOMAIN-SUFFIX,1gdoutian.com
+DOMAIN-SUFFIX,1mdoutian.com
+DOMAIN-SUFFIX,doutianshequ.com
+## >> 华艺汇龙
+DOMAIN-SUFFIX,666kuaishou.com
+DOMAIN-SUFFIX,666kuaishou.net
+DOMAIN-SUFFIX,aqvx8mcr392mv7.com
+DOMAIN-SUFFIX,avec6ua79dc6.com
+DOMAIN-SUFFIX,catus.xyz
+DOMAIN-SUFFIX,catuscdn.xyz
+DOMAIN-SUFFIX,cwitxoakk98d.com
+DOMAIN-SUFFIX,eksoi7mwa4fa27.com
+DOMAIN-SUFFIX,er8gmvwi54p5x1.com
+DOMAIN-SUFFIX,fast666ioceywit93h8a.com
+DOMAIN-SUFFIX,gpxiv5kew4mvk.com
+DOMAIN-SUFFIX,gqzewmsk8yma18.com
+DOMAIN-SUFFIX,gvcr9zaemdzh.com
+DOMAIN-SUFFIX,ksurl.cn
+DOMAIN-SUFFIX,meu95otw4967t.com
+DOMAIN-SUFFIX,opuzswk5tbt25.com
+DOMAIN-SUFFIX,po7ryumvkx34.com
+DOMAIN-SUFFIX,pvacegurmbz3e.com
+DOMAIN-SUFFIX,qpmwg68cre9pci.com
+DOMAIN-SUFFIX,r79xqa8r7e93.com
+DOMAIN-SUFFIX,svk3o97xmyid93.com
+DOMAIN-SUFFIX,tu54o7863tbf6.com
+DOMAIN-SUFFIX,vg89qeas3xagd.com
+DOMAIN-SUFFIX,wqzsc36ou356m.com
+DOMAIN-SUFFIX,xpsy3q9e5kr4.com
+## >> 一起办公
+DOMAIN-SUFFIX,yiqihuihui.com
+DOMAIN-SUFFIX,yiqioffice.com
+DOMAIN-SUFFIX,yiqixie.com
+## >> 艺通网
+DOMAIN-SUFFIX,etoote.cn
+DOMAIN-SUFFIX,etoote.com
+DOMAIN-SUFFIX,etoote.com.cn
+DOMAIN-SUFFIX,etoote.net
+## >> 一笑科技
+DOMAIN-SUFFIX,c54sauo3y85m2g.com
+DOMAIN-SUFFIX,c8uixr96iv79.com
+DOMAIN-SUFFIX,ca9ce6rv872ce1.com
+DOMAIN-SUFFIX,gr3xuaov74khb.com
+DOMAIN-SUFFIX,k8azeicxy4idx.com
+DOMAIN-SUFFIX,ke6payux9q4pih.com
+DOMAIN-SUFFIX,m6tza3ip7x8zr1.com
+DOMAIN-SUFFIX,mki7rxcwmfe7c.com
+DOMAIN-SUFFIX,mok8uptsmk19.com
+DOMAIN-SUFFIX,p4ws8zptrrdc6.com
+DOMAIN-SUFFIX,pqyvzr56aceitx.com
+DOMAIN-SUFFIX,qq3xkm64kavh.com
+DOMAIN-SUFFIX,ro8qwpaikd4kx.com
+DOMAIN-SUFFIX,ssixvo9gaybkp5.com
+DOMAIN-SUFFIX,sxwao4zi6dgp.com
+DOMAIN-SUFFIX,uw36gicu5xav.com
+DOMAIN-SUFFIX,x9gc3siwevbpc.com
+DOMAIN-SUFFIX,y4rwk6v8s41kr.com
+DOMAIN-SUFFIX,z4gwsoqmcvxt.com
+DOMAIN-SUFFIX,zvryuq7xg31x5g.com
 ## > 快应用
 DOMAIN-SUFFIX,quickapp.cn
 ## > 旷视科技
@@ -3308,16 +3361,16 @@ DOMAIN-SUFFIX,withdata.cn
 DOMAIN-SUFFIX,withwinds.com
 DOMAIN-SUFFIX,xueto.com
 ## > 蘑菇街
-DOMAIN-SUFFIX,xdgogogo.com
 DOMAIN-SUFFIX,juangua.com
-DOMAIN-SUFFIX,styledata.cn
-DOMAIN-SUFFIX,meili-inc.com
-DOMAIN-SUFFIX,mogujielive.com
 DOMAIN-SUFFIX,linkeye.net
-DOMAIN-SUFFIX,uniny.com
+DOMAIN-SUFFIX,meili-inc.com
+DOMAIN-SUFFIX,mogu.com
 DOMAIN-SUFFIX,mogucdn.com
 DOMAIN-SUFFIX,mogujie.com
-DOMAIN-SUFFIX,mogu.com
+DOMAIN-SUFFIX,mogujielive.com
+DOMAIN-SUFFIX,styledata.cn
+DOMAIN-SUFFIX,uniny.com
+DOMAIN-SUFFIX,xdgogogo.com
 ## > 墨迹天气
 DOMAIN-SUFFIX,xiaomo.cn
 DOMAIN-SUFFIX,moweather.com
@@ -3408,7 +3461,9 @@ DOMAIN-SUFFIX,appgrub.com
 DOMAIN-SUFFIX,iapprank.com
 ## > OSChina
 DOMAIN-SUFFIX,gitee.com
+DOMAIN-SUFFIX,gitee.io
 DOMAIN-SUFFIX,oschina.net
+DOMAIN-SUFFIX,runjs.cn
 ## > 欧朋浏览器
 DOMAIN-SUFFIX,adbxb.cn
 DOMAIN-SUFFIX,adbxb.com
@@ -3466,9 +3521,9 @@ DOMAIN-SUFFIX,tipdim.org
 ## > 学院君
 DOMAIN-SUFFIX,xueyuanjun.com
 ## > 拼多多
+DOMAIN-SUFFIX,pddpic.com
 DOMAIN-SUFFIX,pinduoduo.com
 DOMAIN-SUFFIX,yangkeduo.com
-DOMAIN-SUFFIX,pddpic.com
 ## > PPTV
 DOMAIN-SUFFIX,g1d.net
 DOMAIN-SUFFIX,iptv.com.cn
@@ -3536,6 +3591,7 @@ DOMAIN-SUFFIX,qiniurs.com
 DOMAIN-SUFFIX,qiniutek.com
 DOMAIN-SUFFIX,qnfcdn.com
 DOMAIN-SUFFIX,qnlinking.com
+DOMAIN-SUFFIX,qnsdk.com
 DOMAIN-SUFFIX,qnssl.com
 DOMAIN-SUFFIX,qnydns.com
 DOMAIN-SUFFIX,qnydns.net
@@ -3704,6 +3760,10 @@ DOMAIN-SUFFIX,suningyunyou.cn
 DOMAIN-SUFFIX,suningyunyou.com
 DOMAIN-SUFFIX,wuliuyun.com
 DOMAIN-SUFFIX,yifubao.com
+## >> 阿里云盘
+DOMAIN-SUFFIX,alicloudccp.com
+DOMAIN-SUFFIX,aliyundrive.com
+DOMAIN-SUFFIX,aliyunpds.com
 ## >> Teambition
 DOMAIN-SUFFIX,jianliao.com
 DOMAIN-SUFFIX,project.ai
@@ -4363,8 +4423,11 @@ DOMAIN-SUFFIX,oywtv.com
 ## >> 虎牙
 DOMAIN-SUFFIX,huya.com
 DOMAIN-SUFFIX,huyagame.cn
+DOMAIN-SUFFIX,huyaos.com
+DOMAIN-SUFFIX,msstatic.com
 DOMAIN-SUFFIX,peiwanlu.com
 DOMAIN-SUFFIX,snapplay.com
+DOMAIN-SUFFIX,wanjiashow.com
 ## >> DNSPod
 DOMAIN-SUFFIX,dns.pub
 DOMAIN-SUFFIX,dnsapi.cn
@@ -4966,6 +5029,14 @@ DOMAIN-SUFFIX,lf126.net
 DOMAIN-SUFFIX,lf127.net
 DOMAIN-SUFFIX,lofter.com
 DOMAIN-SUFFIX,yaoluu.com
+## >> 网易卡搭
+DOMAIN-SUFFIX,163kada.com
+DOMAIN-SUFFIX,kada.com
+DOMAIN-SUFFIX,kada163.com
+## >> 网易云加速
+DOMAIN-SUFFIX,163jiasu.com
+DOMAIN-SUFFIX,163nasa.com
+DOMAIN-SUFFIX,ntes53.com
 ## >> 有道
 DOMAIN-SUFFIX,126.fm
 DOMAIN-SUFFIX,163.fm
@@ -4985,6 +5056,11 @@ DOMAIN-SUFFIX,ytiny.cn
 DOMAIN-SUFFIX,feng.com
 DOMAIN-SUFFIX,fengimg.com
 DOMAIN-SUFFIX,wfdata.club
+## > 微至云动
+DOMAIN-SUFFIX,dicom365.com
+DOMAIN-SUFFIX,dycom365.com
+DOMAIN-SUFFIX,wedcm.com
+DOMAIN-SUFFIX,weiyunyingxiang.com
 ## > 问卷星
 DOMAIN-SUFFIX,sojump.com
 DOMAIN-SUFFIX,wjx.cn
@@ -5347,6 +5423,7 @@ DOMAIN-SUFFIX,xuanyaodang.net
 DOMAIN-SUFFIX,yblxyp.cn
 DOMAIN-SUFFIX,youmengchuangxiang.com
 ## > 友盟
+DOMAIN-SUFFIX,cnzz.com
 DOMAIN-SUFFIX,mobmore.com
 DOMAIN-SUFFIX,um0.cn
 DOMAIN-SUFFIX,um1.cn
@@ -5488,6 +5565,7 @@ DOMAIN-SUFFIX,yfdurl20.com
 ## > 云帆加速
 DOMAIN-SUFFIX,cdndns2.cn
 DOMAIN-SUFFIX,cdndns2.net
+DOMAIN-SUFFIX,cdnnodedns.cn
 DOMAIN-SUFFIX,mogecloud.cn
 DOMAIN-SUFFIX,mogecloud.com
 DOMAIN-SUFFIX,mogecloud.net
@@ -5498,6 +5576,7 @@ DOMAIN-SUFFIX,wertalk.com
 DOMAIN-SUFFIX,yfcalc.com
 DOMAIN-SUFFIX,yfcdn.cn
 DOMAIN-SUFFIX,yfcdn.net
+DOMAIN-SUFFIX,yfcloud.com
 DOMAIN-SUFFIX,yfcloud.io
 DOMAIN-SUFFIX,yfcloud.work
 DOMAIN-SUFFIX,yfdts.net
@@ -5510,7 +5589,6 @@ DOMAIN-SUFFIX,yunfancdn.cn
 DOMAIN-SUFFIX,yunfancdn.com
 DOMAIN-SUFFIX,yunfancdn.com.cn
 DOMAIN-SUFFIX,yunfancdn.net
-DOMAIN-SUFFIX,yfcloud.com
 ## >> 云帆Cache
 DOMAIN-SUFFIX,yfcache.cn
 DOMAIN-SUFFIX,yfcache.com
@@ -5634,29 +5712,40 @@ DOMAIN-SUFFIX,ctexcel.com.hk
 DOMAIN-SUFFIX,ctexcel.fr
 DOMAIN-SUFFIX,ctexcel.us
 ## > 中国联通
+DOMAIN-SUFFIX,chinaunicom.com.cn
+DOMAIN-SUFFIX,chinaunicom.com.hk
+DOMAIN-SUFFIX,chinaunicomglobal.com
+DOMAIN-SUFFIX,cuecp.cn
+DOMAIN-SUFFIX,gnoc.com.cn
+DOMAIN-SUFFIX,mychinaunicom.com
+## >> 沃门户
+DOMAIN-SUFFIX,wo.cn
+DOMAIN-SUFFIX,wo.com.cn
+## >> 中国联通5G应用创新联盟生态社区
+DOMAIN-SUFFIX,cu5gaia.cn
+DOMAIN-SUFFIX,cu5gaia.com
+## >> 中国联通采购与招标网
+DOMAIN-SUFFIX,chinaunicombidding.cn
+DOMAIN-SUFFIX,cupb.cn
+## >> 中国联通企业门户
+DOMAIN-SUFFIX,chinaunicom.cn
+DOMAIN-SUFFIX,chinaunicom.com
+## >> 中国联通网上营业厅
 DOMAIN-SUFFIX,10010.cn
 DOMAIN-SUFFIX,10010.com
 DOMAIN-SUFFIX,10010.com.cn
+DOMAIN-SUFFIX,10010.net
+## >> 中国联通广东分公司
 DOMAIN-SUFFIX,17wo.cn
-DOMAIN-SUFFIX,chinaunicom.cn
-DOMAIN-SUFFIX,chinaunicom.com
-DOMAIN-SUFFIX,chinaunicom.com.cn
-DOMAIN-SUFFIX,chinaunicom.com.hk
-DOMAIN-SUFFIX,chinaunicombidding.cn
-DOMAIN-SUFFIX,chinaunicomglobal.com
-DOMAIN-SUFFIX,cuecp.cn
-DOMAIN-SUFFIX,data.mob.com
 DOMAIN-SUFFIX,e-engine.com.cn
 DOMAIN-SUFFIX,gd10010.cn
 DOMAIN-SUFFIX,gd116114.net.cn
 DOMAIN-SUFFIX,gd165.com
-DOMAIN-SUFFIX,gnoc.com.cn
-DOMAIN-SUFFIX,mychinaunicom.com
 DOMAIN-SUFFIX,unicomgd.com
 DOMAIN-SUFFIX,unimip.cn
 DOMAIN-SUFFIX,wo-link.tech
-DOMAIN-SUFFIX,wo.com.cn
-# >> 招联金融
+DOMAIN-SUFFIX,wom186.com
+## >> 招联金融
 DOMAIN-SUFFIX,mucfc.com
 IP-CIDR,113.200.56.63/32,no-resolve
 ## > 中国移动
@@ -5968,6 +6057,7 @@ DOMAIN-SUFFIX,panplayable-toutiao.com
 DOMAIN-SUFFIX,pglstatp-toutiao-b.com
 DOMAIN-SUFFIX,pglstatp-toutiao.com
 ## >> 掘金
+DOMAIN-SUFFIX,juejin.cn
 DOMAIN-SUFFIX,juejin.im
 DOMAIN-SUFFIX,xitu.io
 DOMAIN-SUFFIX,p1-juejin.byteimg.com
@@ -6408,7 +6498,6 @@ DOMAIN-SUFFIX,anzhixiao.com
 DOMAIN-SUFFIX,anzhuoxs.com
 DOMAIN-SUFFIX,aoyuge.com
 DOMAIN-SUFFIX,apache.org
-DOMAIN-SUFFIX,crisp.chat
 DOMAIN-SUFFIX,termius.com
 DOMAIN-SUFFIX,zhuishushenqi.com
 DOMAIN-SUFFIX,yueduyun.com
@@ -6919,7 +7008,6 @@ DOMAIN-SUFFIX,gongxiangcj.com
 DOMAIN-SUFFIX,gongzicp.com
 DOMAIN-SUFFIX,goodread.com
 DOMAIN-SUFFIX,govtz.com
-DOMAIN-SUFFIX,gravatar.com
 DOMAIN-SUFFIX,gree.com
 DOMAIN-SUFFIX,greenxiazai.com
 DOMAIN-SUFFIX,growingio.com

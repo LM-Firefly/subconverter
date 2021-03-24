@@ -83,6 +83,14 @@ DOMAIN-SUFFIX,lf126.net
 DOMAIN-SUFFIX,lf127.net
 DOMAIN-SUFFIX,lofter.com
 DOMAIN-SUFFIX,yaoluu.com
+## >> 网易卡搭
+DOMAIN-SUFFIX,163kada.com
+DOMAIN-SUFFIX,kada.com
+DOMAIN-SUFFIX,kada163.com
+## >> 网易云加速
+DOMAIN-SUFFIX,163jiasu.com
+DOMAIN-SUFFIX,163nasa.com
+DOMAIN-SUFFIX,ntes53.com
 ## >> 有道
 DOMAIN-SUFFIX,126.fm
 DOMAIN-SUFFIX,163.fm

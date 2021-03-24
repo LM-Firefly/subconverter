@@ -1,14 +1,14 @@
 ## > UnionPay (中国银联)
-DOMAIN-SUFFIX,chinaunionpay.com
 DOMAIN-SUFFIX,95516.com
+DOMAIN-SUFFIX,95516.net
+DOMAIN-SUFFIX,chinaunionpay.com
+DOMAIN-SUFFIX,chinaunionpay.com.cn
 DOMAIN-SUFFIX,chinaunionpay.net
-DOMAIN-SUFFIX,unionpay.net
 DOMAIN-SUFFIX,cup62.cn
 DOMAIN-SUFFIX,unionpay.com
-DOMAIN-SUFFIX,chinaunionpay.com.cn
-DOMAIN-SUFFIX,unionpaysecure.com
-DOMAIN-SUFFIX,95516.net
+DOMAIN-SUFFIX,unionpay.net
 DOMAIN-SUFFIX,unionpayintl.com
+DOMAIN-SUFFIX,unionpaysecure.com
 ## >> 银联电子支付
 DOMAIN-SUFFIX,airepay.net
 DOMAIN-SUFFIX,chinapay.cn

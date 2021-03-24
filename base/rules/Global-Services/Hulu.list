@@ -5,7 +5,6 @@ DOMAIN-SUFFIX,callhulu.com
 DOMAIN-SUFFIX,cws-hulu.conviva.com
 DOMAIN-SUFFIX,findyourlimits.com
 DOMAIN-SUFFIX,freehulu.com
-DOMAIN-SUFFIX,happyon.jp
 DOMAIN-SUFFIX,hooloo.tv
 DOMAIN-SUFFIX,hoolu.com
 DOMAIN-SUFFIX,hoolu.tv
@@ -14,7 +13,6 @@ DOMAIN-SUFFIX,huloo.cc
 DOMAIN-SUFFIX,huloo.tv
 DOMAIN-SUFFIX,hulu.com
 DOMAIN-SUFFIX,hulu.hb.omtrdc.net
-DOMAIN-SUFFIX,hulu.jp
 DOMAIN-SUFFIX,hulu.sc.omtrdc.net
 DOMAIN-SUFFIX,hulu.tv
 DOMAIN-SUFFIX,hulu.us
@@ -49,6 +47,12 @@ DOMAIN-SUFFIX,myhulu.com
 DOMAIN-SUFFIX,originalhulu.com
 DOMAIN-SUFFIX,payhulu.com
 DOMAIN-SUFFIX,registerhulu.com
-DOMAIN-SUFFIX,streaks.jp
 DOMAIN-SUFFIX,thehulubraintrust.com
 DOMAIN-SUFFIX,wwwhuluplus.com
+# >> HuluJapan
+DOMAIN-SUFFIX,happyon.jp
+DOMAIN-SUFFIX,hjholdings.jp
+DOMAIN-SUFFIX,hulu.jp
+DOMAIN-SUFFIX,prod.hjholdings.tv
+DOMAIN-SUFFIX,streaks.jp
+DOMAIN-SUFFIX,yb.uncn.jp

@@ -37,9 +37,6 @@ DOMAIN-SUFFIX,appleswift.com
 DOMAIN-SUFFIX,swift.org
 DOMAIN-SUFFIX,swiftui.cn
 DOMAIN-SUFFIX,swiftui.com.cn
-## >> Unity
-DOMAIN-SUFFIX,unity.com
-DOMAIN-SUFFIX,unity3d.com
 ## >> WebKit
 DOMAIN-SUFFIX,webkit.org
 DOMAIN-SUFFIX,webkitgtk.org

@@ -82,20 +82,33 @@ DOMAIN-SUFFIX,gamer.com.tw
 DOMAIN,gamer-cds.cdn.hinet.net
 DOMAIN,gamer2-cds.cdn.hinet.net
 ## > BBC
-DOMAIN-SUFFIX,bbc.co.uk
-DOMAIN-SUFFIX,bbci.co.uk
+USER-AGENT,BBCiPlayer*
+DOMAIN-SUFFIX,bbc
 DOMAIN-SUFFIX,bbc.co
+DOMAIN-SUFFIX,bbc.co.uk
 DOMAIN-SUFFIX,bbc.com
 DOMAIN-SUFFIX,bbc.in
-DOMAIN-SUFFIX,bbci.co
+DOMAIN-SUFFIX,bbc.net.uk
 DOMAIN-SUFFIX,bbcchinese.com
 DOMAIN-SUFFIX,bbcfmt.hs.llnwd.net
-DOMAIN,vod-dash-uk-live.akamaized.net
-DOMAIN,vod-thumb-uk-live.akamaized.net
-DOMAIN,vod-dash-uk-live.bbcfmt.hs.llnwd.net
-DOMAIN,vod-thumb-uk-live.bbcfmt.hs.llnwd.net
+DOMAIN-SUFFIX,bbcfmt.s.llnwi.net
+DOMAIN-SUFFIX,bbci.co
+DOMAIN-SUFFIX,bbci.co.uk
+DOMAIN-SUFFIX,bbcmedia.co.uk
+DOMAIN-SUFFIX,bbcverticals.com
+DOMAIN-SUFFIX,bidi.net.uk
 DOMAIN,aod-dash-uk-live.akamaized.net
 DOMAIN,aod-hls-uk-live.akamaized.net
+DOMAIN,vod-dash-uk-live.akamaized.net
+DOMAIN,vod-dash-uk-live.bbcfmt.hs.llnwd.net
+DOMAIN,vod-dash-ww-live.akamaized.net
+DOMAIN,vod-dash-ww-live.bbcfmt.s.llnwi.net
+DOMAIN,vod-hls-uk-live.akamaized.net
+DOMAIN,vod-sub-uk-live.akamaized.net
+DOMAIN,vod-thumb-uk-live.akamaized.net
+DOMAIN,vod-thumb-uk-live.bbcfmt.hs.llnwd.net
+DOMAIN,vod-thumb-ww-live.akamaized.net
+DOMAIN,vod-thumb-ww-live.bbcfmt.s.llnwi.net
 DOMAIN-KEYWORD,bbcfmt
 DOMAIN-KEYWORD,uk-live
 ## > BoXun
@@ -107,28 +120,39 @@ DOMAIN-SUFFIX,i-cable.com
 ## > CBS
 DOMAIN-SUFFIX,cbs
 DOMAIN-SUFFIX,cbs.com
-DOMAIN-SUFFIX,cbsaavideo.com
 DOMAIN-SUFFIX,cbscorporation.com
-DOMAIN-SUFFIX,cbsi.com
 DOMAIN-SUFFIX,cbsi.video
 DOMAIN-SUFFIX,cbsiam.com
 DOMAIN-SUFFIX,cbsig.net
 DOMAIN-SUFFIX,cbsimg.net
 DOMAIN-SUFFIX,cbsinteractive.com
 DOMAIN-SUFFIX,cbsistatic.com
-DOMAIN-SUFFIX,cbsivideo.com
 DOMAIN-SUFFIX,cbsnews.com
 DOMAIN-SUFFIX,cbspressexpress.com
 DOMAIN-SUFFIX,cbssports.com
 DOMAIN-SUFFIX,cbsstatic.com
+DOMAIN-SUFFIX,cbsstore.com
 DOMAIN-SUFFIX,cbssvideo.com
-DOMAIN-SUFFIX,showtime
+DOMAIN-SUFFIX,cbstelevisioncity.com
 DOMAIN-SUFFIX,viacbs.com
 DOMAIN-SUFFIX,viacom.com
 DOMAIN-SUFFIX,viacomcbs.com
 DOMAIN-SUFFIX,viacomcbspressexpress.com
+## >> CBS Radio
+DOMAIN-SUFFIX,cbsradio.com
 ## >> Paramount
+USER-AGENT,PPlus*
+DOMAIN-SUFFIX,cbsaavideo.com
+DOMAIN-SUFFIX,cbsi.com
+DOMAIN-SUFFIX,cbsi.live.ott.irdeto.com
+DOMAIN-SUFFIX,cbsivideo.com
+DOMAIN-SUFFIX,cbsplaylistserver.aws.syncbak.com
+DOMAIN-SUFFIX,cbsservice.aws.syncbak.com
 DOMAIN-SUFFIX,paramount.com
+DOMAIN-SUFFIX,paramountplus.com
+DOMAIN-SUFFIX,pplusstatic.com
+## >> ShowTime
+DOMAIN-SUFFIX,showtime.com
 ## > CNBC
 DOMAIN-SUFFIX,cnbc.com
 DOMAIN-SUFFIX,cnbcfm.com
@@ -136,6 +160,11 @@ DOMAIN-SUFFIX,nbcuni.com
 DOMAIN-SUFFIX,nbcudigitaladops.com
 ## > CNN
 DOMAIN-SUFFIX,cnn.com
+DOMAIN-SUFFIX,cnn.io
+DOMAIN-SUFFIX,cnn.it
+DOMAIN-SUFFIX,cnnarabic.com
+DOMAIN-SUFFIX,cnnlabs.com
+DOMAIN-SUFFIX,cnnmoney.ch
 ## > Dailymotion
 DOMAIN-SUFFIX,dailymotion.com
 DOMAIN-SUFFIX,dmcdn.net
@@ -169,6 +198,15 @@ DOMAIN-KEYWORD,voddazn
 ## > Deezer
 DOMAIN-SUFFIX,deezer.com
 DOMAIN-SUFFIX,dzcdn.net
+## > Discovery Plus
+User-Agent,DPlus*
+DOMAIN-SUFFIX,content-ause1-ur-discovery1.uplynk.com
+DOMAIN-SUFFIX,disco-api.com
+DOMAIN-SUFFIX,discoveryplus.com
+DOMAIN-SUFFIX,fwmrm.net
+DOMAIN-SUFFIX,getblueshift.com
+DOMAIN-SUFFIX,litix.io
+DOMAIN-SUFFIX,mobile-collector.newrelic.com
 ## > Disney
 DOMAIN-SUFFIX,adobedtm.com
 DOMAIN-SUFFIX,adventuresbydisney.com
@@ -307,12 +345,13 @@ DOMAIN-SUFFIX,natgeomaps.com
 DOMAIN-SUFFIX,nationalgeographic.com
 DOMAIN-SUFFIX,nationalgeographicpartners.com
 DOMAIN-SUFFIX,ngeo.com
-## > EncoreTVB
-DOMAIN-SUFFIX,encoretvb.com
-DOMAIN-SUFFIX,content.jwplatform.com
-DOMAIN-SUFFIX,videos-f.jwpsrv.com
-DOMAIN,edge.api.brightcove.com
-DOMAIN,bcbolt446c5271-a.akamaihd.net
+## > E-Hentai Gallery
+DOMAIN-SUFFIX,e-hentai.org
+DOMAIN-SUFFIX,ehgt.org
+DOMAIN-SUFFIX,ehwiki.org
+DOMAIN-SUFFIX,exhentai.org
+DOMAIN-SUFFIX,hath.network
+DOMAIN-SUFFIX,hentaiverse.org
 ## > Fox
 DOMAIN-SUFFIX,.fox
 DOMAIN-SUFFIX,cdn-fox-networks-group-green.akamaized.net
@@ -632,7 +671,6 @@ DOMAIN-SUFFIX,callhulu.com
 DOMAIN-SUFFIX,cws-hulu.conviva.com
 DOMAIN-SUFFIX,findyourlimits.com
 DOMAIN-SUFFIX,freehulu.com
-DOMAIN-SUFFIX,happyon.jp
 DOMAIN-SUFFIX,hooloo.tv
 DOMAIN-SUFFIX,hoolu.com
 DOMAIN-SUFFIX,hoolu.tv
@@ -641,7 +679,6 @@ DOMAIN-SUFFIX,huloo.cc
 DOMAIN-SUFFIX,huloo.tv
 DOMAIN-SUFFIX,hulu.com
 DOMAIN-SUFFIX,hulu.hb.omtrdc.net
-DOMAIN-SUFFIX,hulu.jp
 DOMAIN-SUFFIX,hulu.sc.omtrdc.net
 DOMAIN-SUFFIX,hulu.tv
 DOMAIN-SUFFIX,hulu.us
@@ -676,9 +713,15 @@ DOMAIN-SUFFIX,myhulu.com
 DOMAIN-SUFFIX,originalhulu.com
 DOMAIN-SUFFIX,payhulu.com
 DOMAIN-SUFFIX,registerhulu.com
-DOMAIN-SUFFIX,streaks.jp
 DOMAIN-SUFFIX,thehulubraintrust.com
 DOMAIN-SUFFIX,wwwhuluplus.com
+# >> HuluJapan
+DOMAIN-SUFFIX,happyon.jp
+DOMAIN-SUFFIX,hjholdings.jp
+DOMAIN-SUFFIX,hulu.jp
+DOMAIN-SUFFIX,prod.hjholdings.tv
+DOMAIN-SUFFIX,streaks.jp
+DOMAIN-SUFFIX,yb.uncn.jp
 ## > 华文电视
 DOMAIN-SUFFIX,5itv.tv
 DOMAIN-SUFFIX,ocnttv.com
@@ -753,11 +796,10 @@ DOMAIN-SUFFIX,mtg.now.com
 DOMAIN-SUFFIX,channel5.com
 DOMAIN-SUFFIX,my5.tv
 DOMAIN,d349g9zuie06uo.cloudfront.net
-## > MyTV SUPER
-DOMAIN-SUFFIX,mytvsuper.com
-DOMAIN-SUFFIX,mytvsuperlimited.hb.omtrdc.net
-DOMAIN-SUFFIX,mytvsuperlimited.sc.omtrdc.net
-DOMAIN-SUFFIX,tvb.com
+## > Naver TV
+USER-AGENT,Naver%20TV*
+DOMAIN-SUFFIX,naver.com
+DOMAIN-SUFFIX,smartmediarep.com
 ## > Niconico
 DOMAIN-SUFFIX,dmc.nico
 DOMAIN-SUFFIX,nicodic.jp
@@ -854,7 +896,9 @@ DOMAIN,sonyliveevents-nonssai.akamaized.net
 DOMAIN-SUFFIX,sndcdn.com
 DOMAIN-SUFFIX,soundcloud.com
 ## > Spotify
+DOMAIN-SUFFIX,audio-ak-spotify-com.akamaized.net
 DOMAIN-SUFFIX,byspotify.com
+DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net
 DOMAIN-SUFFIX,pscdn.co
 DOMAIN-SUFFIX,scdn.co
 DOMAIN-SUFFIX,spoti.fi
@@ -874,9 +918,11 @@ IP-CIDR,35.186.224.47/32,no-resolve
 DOMAIN-SUFFIX,skyking.com.tw
 DOMAIN,hamifans.emome.net
 ## > TIDAL
-DOMAIN-SUFFIX,tidal.com
+USER-AGENT,TIDAL*dia
 DOMAIN-SUFFIX,tidal-cms.s3.amazonaws.com
+DOMAIN-SUFFIX,tidal.com
 DOMAIN-SUFFIX,tidalhifi.com
+DOMAIN-SUFFIX,wimpmusic.com
 ## > TikTok
 USER-AGENT,TikTok*
 DOMAIN-KEYWORD,-tiktokcdn-com
@@ -894,6 +940,37 @@ DOMAIN-SUFFIX,tik-tokapi.com
 DOMAIN-SUFFIX,tiktok.com
 DOMAIN-SUFFIX,tiktokcdn.com
 DOMAIN-SUFFIX,tiktokv.com
+## > TVB
+DOMAIN-SUFFIX,bigbigchannel.com.hk
+DOMAIN-SUFFIX,bigbigshop.com
+DOMAIN-SUFFIX,tvb.com
+DOMAIN-SUFFIX,tvb.com.au
+DOMAIN-SUFFIX,tvbanywhere.com
+DOMAIN-SUFFIX,tvbanywhere.com.sg
+DOMAIN-SUFFIX,tvbc.com.cn
+DOMAIN-SUFFIX,tvbeventpower.com.hk
+DOMAIN-SUFFIX,tvbusa.com
+DOMAIN-SUFFIX,tvbweekly.com
+DOMAIN-SUFFIX,tvmedia.net.au
+## >> EncoreTVB
+DOMAIN-SUFFIX,encoretvb.com
+DOMAIN-SUFFIX,content.jwplatform.com
+DOMAIN-SUFFIX,videos-f.jwpsrv.com
+DOMAIN,edge.api.brightcove.com
+DOMAIN,bcbolt446c5271-a.akamaihd.net
+## >> MyTV SUPER
+USER-AGENT,mytv*
+DOMAIN-SUFFIX,mytvsuper.com
+DOMAIN-SUFFIX,mytvsuperlimited.hb.omtrdc.net
+DOMAIN-SUFFIX,mytvsuperlimited.sc.omtrdc.net
+## > TVER
+USER-AGENT,TVer-Release*
+DOMAIN-SUFFIX,dogatch.jp
+DOMAIN-SUFFIX,edge.api.brightcove.com
+DOMAIN-SUFFIX,gorin.jp
+DOMAIN-SUFFIX,screens-lab.jp
+DOMAIN-SUFFIX,tver.co.jp
+DOMAIN-SUFFIX,tver.jp
 ## > Vidol TV
 DOMAIN-SUFFIX,vidol.tv
 ## > Viki
@@ -928,9 +1005,9 @@ DOMAIN-SUFFIX,viu.tv
 DOMAIN-SUFFIX,viu.now.com
 DOMAIN-SUFFIX,cognito-identity.us-east-1.amazonaws.com
 DOMAIN-SUFFIX,mobileanalytics.us-east-1.amazonaws.com
-DOMAIN,d1k2us671qcoau.cloudfront.net
-DOMAIN,d2anahhhmp1ffz.cloudfront.net
-DOMAIN,dfp6rglgjqszk.cloudfront.net
+DOMAIN-SUFFIX,d1k2us671qcoau.cloudfront.net
+DOMAIN-SUFFIX,d2anahhhmp1ffz.cloudfront.net
+DOMAIN-SUFFIX,dfp6rglgjqszk.cloudfront.net
 ## > VOA
 DOMAIN-SUFFIX,amerikaninsesi.com
 DOMAIN-SUFFIX,amerikaninsesi.org

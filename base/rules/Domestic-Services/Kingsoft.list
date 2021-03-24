@@ -80,6 +80,7 @@ DOMAIN-SUFFIX,kuaipandata.com
 ## >> WPS
 DOMAIN-SUFFIX,docer.com
 DOMAIN-SUFFIX,ixiede.com
+DOMAIN-SUFFIX,papocket.com
 DOMAIN-SUFFIX,qwps.cn
 DOMAIN-SUFFIX,qwps.com
 DOMAIN-SUFFIX,qwps.net
@@ -291,3 +292,6 @@ DOMAIN-SUFFIX,xoyobox.com
 DOMAIN-SUFFIX,xoyocdn.com
 DOMAIN-SUFFIX,xsjcs.cn
 DOMAIN-SUFFIX,xsjom.com
+## >> 澄迈云享智胜网络
+DOMAIN-SUFFIX,ks-live.com
+DOMAIN-SUFFIX,ksyunacc.cn

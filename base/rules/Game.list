@@ -505,6 +505,7 @@ DOMAIN-SUFFIX,steamcdn-a.akamaihd.net
 DOMAIN-SUFFIX,steamcommunity-a.akamaihd.net
 DOMAIN-SUFFIX,steamcommunity.com
 DOMAIN-SUFFIX,steamcontent.com
+DOMAIN-SUFFIX,steamcontent.tnkjmec.com
 DOMAIN-SUFFIX,steamgames.com
 DOMAIN-SUFFIX,steampowered.com
 DOMAIN-SUFFIX,steampowered.com.8686c.com
@@ -533,6 +534,7 @@ DOMAIN-SUFFIX,uplaypc-s-ubisoft.cdn.ubi.com
 DOMAIN-SUFFIX,forzamotorsport.net
 DOMAIN-SUFFIX,forzaracingchampionship.com
 DOMAIN-SUFFIX,forzarc.com
+DOMAIN-SUFFIX,gamepass.com
 DOMAIN-SUFFIX,msgamestudios.com
 DOMAIN-SUFFIX,orithegame.com
 DOMAIN-SUFFIX,renovacionxboxlive.com
@@ -554,6 +556,7 @@ DOMAIN-SUFFIX,xboxone.co
 DOMAIN-SUFFIX,xboxone.com
 DOMAIN-SUFFIX,xboxone.eu
 DOMAIN-SUFFIX,xboxplayanywhere.com
+DOMAIN-SUFFIX,xboxservices.com
 DOMAIN-SUFFIX,xboxstudios.com
 DOMAIN-SUFFIX,xbx.lv
 ## >> Mojang
