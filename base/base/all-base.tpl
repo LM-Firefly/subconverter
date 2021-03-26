@@ -14,8 +14,21 @@ external-controller: {{ default(global.clash.api_port, "9090")}}
 
 secret: ''
 #interface-name: en0
+profile:
+  # open tracing exporter API
+  tracing: true
 {% if exists("request.clash.dns") %}
-{% if request.clash.dns == "cfw" %}
+{% if request.clash.dns == "tap" %}
+ipv6: true
+#interface-name: WLAN
+hosts:
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  ipv6: true
+{% endif %}
+{% if request.clash.dns == "tun" %}
+ipv6: false
 tun:
   enable: true
   stack: gvisor # only gvisor
@@ -28,9 +41,10 @@ hosts:
 dns:
   enable: true
 #  listen: 0.0.0.0:53
-  ipv6: true
+  ipv6: false
 {% endif %}
 {% if request.clash.dns == "cfa" %}
+ipv6: false
 tun:
   enable: true
   stack: system # or gvisor
@@ -38,7 +52,7 @@ hosts:
 dns:
   enable: true
   listen: 127.0.0.1:1053
-  ipv6: true
+  ipv6: false
 {% endif %}
 {% else %}
 hosts:
@@ -127,39 +141,45 @@ dns:
   nameserver:
     - 223.5.5.5
     - 119.29.29.29
-    - https://doh.pub/dns-query
-    - https://doh.rixcloud.dev/dns-query
     - https://dns.alidns.com/dns-query
-    - https://cloudflare-dns.com/dns-query
+    - https://i.233py.com/dns-query
+    - https://doh.pub/dns-query
+    - https://dns.pub/dns-query
+    - https://dns.cfiec.net/dns-query
+    - https://dns.rubyfish.cn/dns-query
+#    - https://cdn-doh.ssnm.xyz/dns-query
+#    - tls://dns.233py.com
+#    - https://dns.233py.com/dns-query
+#    - https://dns.twnic.tw/dns-query
+#    - https://dns-unfiltered.adguard.com/dns-query
+#    - https://doh.opendns.com/dns-query
+#    - https://cloudflare-dns.com/dns-query
 #    - https://dns.google/dns-query
-    - https://doh.opendns.com/dns-query
-    - https://dns.twnic.tw/dns-query
 #    - https://dns.quad9.net/dns-query
 #    - https://doh.qis.io/dns-query
 #    - https://doh.powerdns.org
 #    - 101.101.101.101
 #    - tcp://119.29.107.85:9090
 #    - https://doh.dns.sb/dns-query
-#    - https://dns.rubyfish.cn/dns-query
-#    - https://sdns.233py.com/dns-query
-#    - https://edns.233py.com/dns-query
 #    - tls://cloudflare-dns.com:853
 #    - tls://dns.google:853
 #    - tls://dns-tls.qis.io:853
   fallback:
-#    - https://dns.alidns.com/dns-query
+    - https://doh.dns.sb/dns-query
     - https://dns.twnic.tw/dns-query
-    - https://dns.quad9.net/dns-query
-    - https://cloudflare-dns.com/dns-query
-    - https://dns.google/dns-query
-    - https://doh.qis.io/dns-query
     - https://doh.opendns.com/dns-query
-    - https://doh.powerdns.org
+    - https://dns.233py.com/dns-query
+    - https://public.dns.iij.jp/dns-query
+#    - https://doh.qis.io/dns-query
+#    - https://dns-unfiltered.adguard.com/dns-query
+#    - https://dns.quad9.net/dns-query
+#    - https://cdn-doh.ssnm.xyz/dns-query
+#    - https://dns.google/dns-query
+#    - https://cloudflare-dns.com/dns-query
 #    - tcp://1.1.1.1
+#    - https://dns.alidns.com/dns-query
 #    - https://doh.dns.sb/dns-query
 #    - https://dns.rubyfish.cn/dns-query
-#    - https://sdns.233py.com/dns-query
-#    - https://edns.233py.com/dns-query
 #    - tls://cloudflare-dns.com:853
 #    - tls://dns.google:853
 #    - tls://dns-tls.qis.io:853
@@ -199,6 +219,8 @@ hide-crashlytics-request=1
 hide-udp=0
 keyword-filter-type=(null)
 keyword-filter=(null)
+
+[Proxy]
 
 [Proxy Group]
 
