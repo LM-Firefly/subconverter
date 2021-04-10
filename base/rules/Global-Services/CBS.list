@@ -32,5 +32,7 @@ DOMAIN-SUFFIX,cbsservice.aws.syncbak.com
 DOMAIN-SUFFIX,paramount.com
 DOMAIN-SUFFIX,paramountplus.com
 DOMAIN-SUFFIX,pplusstatic.com
+## >> Pluto TV
+DOMAIN-SUFFIX,pluto.tv
 ## >> ShowTime
 DOMAIN-SUFFIX,showtime.com

@@ -8,6 +8,12 @@ DOMAIN-SUFFIX,mychinaunicom.com
 ## >> 沃门户
 DOMAIN-SUFFIX,wo.cn
 DOMAIN-SUFFIX,wo.com.cn
+## >> 沃支付
+DOMAIN-SUFFIX,unicompayment.cn
+DOMAIN-SUFFIX,unicompayment.com
+DOMAIN-SUFFIX,unicompayment.net
+DOMAIN-SUFFIX,unicompayment.org
+DOMAIN-SUFFIX,wobaif.com
 ## >> 中国联通5G应用创新联盟生态社区
 DOMAIN-SUFFIX,cu5gaia.cn
 DOMAIN-SUFFIX,cu5gaia.com

@@ -101,6 +101,11 @@ DOMAIN-SUFFIX,zjcdn.com
 DOMAIN-SUFFIX,zjgslb.com
 ## >> Baike
 DOMAIN-SUFFIX,baike.com
+## >> 锤子商城
+DOMAIN-SUFFIX,smartisan.cn
+DOMAIN-SUFFIX,smartisan.com
+DOMAIN-SUFFIX,smartisanos.cn
+DOMAIN-SUFFIX,smartisanos.com
 ## >> 抖音
 DOMAIN-SUFFIX,amemv.cn
 DOMAIN-SUFFIX,amemv.com

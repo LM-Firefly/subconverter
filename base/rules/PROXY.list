@@ -2072,7 +2072,7 @@ DOMAIN-SUFFIX,globalsign.net
 DOMAIN-SUFFIX,globalsign.nl
 ## > Godaddy
 DOMAIN-SUFFIX,godaddy.com
-## > 🙈 Google
+## 🙈 Google
 ## >> AMP
 DOMAIN-SUFFIX,amp.dev
 DOMAIN-SUFFIX,ampproject.com
@@ -4775,6 +4775,7 @@ DOMAIN-SUFFIX,telegramdownload.com
 DOMAIN-SUFFIX,telesco.pe
 DOMAIN-SUFFIX,graph.org
 PROCESS-NAME,Telegram.exe
+PROCESS-NAME,nekox.messenger
 PROCESS-NAME,org.telegram.messenger
 ## > Telegram CIDR
 IP-CIDR,91.108.4.0/22,no-resolve
@@ -4945,6 +4946,7 @@ DOMAIN-SUFFIX,vercel-insights.com
 DOMAIN-SUFFIX,vercel-status.com
 DOMAIN-SUFFIX,vercel.app
 DOMAIN-SUFFIX,vercel.com
+DOMAIN-SUFFIX,vercel.link
 DOMAIN-SUFFIX,zeit-world.co.uk
 DOMAIN-SUFFIX,zeit-world.com
 DOMAIN-SUFFIX,zeit-world.net
