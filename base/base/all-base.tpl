@@ -55,6 +55,7 @@ dns:
   ipv6: false
 {% endif %}
 {% else %}
+ipv6: true
 hosts:
 dns:
   enable: true
