@@ -15,6 +15,10 @@ external-controller: {{ default(global.clash.api_port, "9090")}}
 secret: ''
 #interface-name: en0
 profile:
+  # store the `select` results in $HOME/.cache
+  # when two different configurations have groups with the same name, the selected values are shared
+  # set false if you don't want this behavior
+  store-selected: true
   # open tracing exporter API
   tracing: true
 {% if exists("request.clash.dns") %}
