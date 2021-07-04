@@ -35,7 +35,7 @@ dns:
 ipv6: false
 tun:
   enable: true
-  stack: gvisor # only gvisor
+  stack: system # or gvisor
   dns-hijack:
     - 198.18.0.2:53 # when `fake-ip-range` is 198.18.0.1/16, should hijack 198.18.0.2:53
   macOS-auto-route: true # auto set global route for Windows
@@ -152,6 +152,7 @@ dns:
     - https://dns.pub/dns-query
     - https://dns.cfiec.net/dns-query
     - https://dns.rubyfish.cn/dns-query
+    - https://doh.mullvad.net/dns-query
 #    - https://cdn-doh.ssnm.xyz/dns-query
 #    - tls://dns.233py.com
 #    - https://dns.233py.com/dns-query
@@ -175,6 +176,7 @@ dns:
     - https://doh.opendns.com/dns-query
     - https://dns.233py.com/dns-query
     - https://public.dns.iij.jp/dns-query
+    - https://doh.mullvad.net/dns-query
 #    - https://doh.qis.io/dns-query
 #    - https://dns-unfiltered.adguard.com/dns-query
 #    - https://dns.quad9.net/dns-query

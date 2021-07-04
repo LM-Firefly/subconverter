@@ -25,7 +25,7 @@ common:
   append_proxy_type: false
 
 userinfo:
-  stream_rule: 
+  stream_rule:
   - {match: "^剩余流量：(.*?)\\|总流量：(.*)$", replace: "total=$2&left=$1"}
   - {match: "^剩余流量：(.*?) (.*)$", replace: "total=$1&left=$2"}
   - {match: "^Bandwidth: (.*?)/(.*)$", replace: "used=$1&total=$2"}
@@ -90,7 +90,7 @@ rulesets:
 
 proxy_groups:
   custom_proxy_group:
-#  - {name: UrlTest, type: url-test, rule: [".*"], url: http://www.gstatic.com/generate_204, interval: 300, tolerance: 100, timeout: 5}
+#  - {name: UrlTest, type: url-test, rule: [".*"], url: https://cp.cloudflare.com, interval: 300, tolerance: 100, timeout: 5}
 #  - {name: Proxy, type: select, rule: [".*"]}
 #  - {name: group1, type: select, rule: ["!!GROUPID=0"]}
 #  - {name: v2ray, type: select, rule: ["!!GROUP=V2RayProvider"]}
@@ -105,7 +105,7 @@ template:
   - {key: clash.socks_port, value: 7891}
   - {key: clash.allow_lan, value: true}
   - {key: clash.log_level, value: info}
-  
+
 aliases:
   - {uri: /v, target: /version}
   - {uri: /clash, target: "/sub?target=clash"}
