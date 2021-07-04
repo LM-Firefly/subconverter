@@ -1,4 +1,5 @@
 ## > Spotify
+PROCESS-NAME,com.spotify.music
 USER-AGENT,Spotify*
 DOMAIN-SUFFIX,audio-ak-spotify-com.akamaized.net
 DOMAIN-SUFFIX,byspotify.com

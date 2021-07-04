@@ -1,5 +1,6 @@
 ## 📺 哔哩哔哩
 ## > Bilibili
+PROCESS-NAME,tv.danmaku.bili
 USER-AGENT,*bili*
 DOMAIN-SUFFIX,acg.tv
 DOMAIN-SUFFIX,acgvideo.com
@@ -25,6 +26,8 @@ DOMAIN-SUFFIX,bilibilipay.com
 DOMAIN-SUFFIX,biligame.cn
 DOMAIN-SUFFIX,biligame.com
 DOMAIN-SUFFIX,biligame.net
+DOMAIN-SUFFIX,biligo.com
+DOMAIN-SUFFIX,biliintl.com
 DOMAIN-SUFFIX,biliplus.com
 DOMAIN-SUFFIX,bilivideo.cn
 DOMAIN-SUFFIX,bilivideo.com
@@ -40,6 +43,7 @@ DOMAIN-SUFFIX,im9.com
 DOMAIN-SUFFIX,mcbbs.net
 DOMAIN-SUFFIX,mincdn.com
 DOMAIN-SUFFIX,sharejoytech.com
+DOMAIN-SUFFIX,upos-bstar-mirrorakam.akamaized.net
 DOMAIN-SUFFIX,upos-hz-mirrorakam.akamaized.net
 DOMAIN-SUFFIX,uposdash-302-bilivideo.yfcdn.net
 DOMAIN-SUFFIX,yo9.com

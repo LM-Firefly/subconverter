@@ -1,11 +1,11 @@
 ## > Disney
+PROCESS-NAME,com.disney.disneyplus
 USER-AGENT,Disney+*
 DOMAIN-SUFFIX,adobedtm.com
 DOMAIN-SUFFIX,adventuresbydisney.com
 DOMAIN-SUFFIX,babble.com
 DOMAIN-SUFFIX,babyzone.com
 DOMAIN-SUFFIX,bam.nr-data.net
-DOMAIN-SUFFIX,bamgrid.com
 DOMAIN-SUFFIX,braze.com
 DOMAIN-SUFFIX,cdn.optimizely.com
 DOMAIN-SUFFIX,cdn.registerdisney.go.com
@@ -112,15 +112,24 @@ DOMAIN-SUFFIX,thestationbymaker.com
 DOMAIN-SUFFIX,thisispolaris.com
 DOMAIN-SUFFIX,watchdisneyfe.com
 ## >> ABC
+PROCESS-NAME,com.disney.datg.videoplatforms.android.abc
 DOMAIN-SUFFIX,abc-studios.com
 DOMAIN-SUFFIX,abc.com
 DOMAIN-SUFFIX,edgedatg.com
+## >> Bamtech
+DOMAIN-SUFFIX,bamgrid.com
+DOMAIN-SUFFIX,dmed.technology
 ## >> Espn
+DOMAIN-SUFFIX,dtci.co
+DOMAIN-SUFFIX,dtci.technology
+DOMAIN-SUFFIX,espn.co.uk
 DOMAIN-SUFFIX,espn.com
-DOMAIN-SUFFIX,espn.hb.omtrdc.net
+DOMAIN-SUFFIX,espn.net
 DOMAIN-SUFFIX,espncdn.com
-DOMAIN-SUFFIX,espndotcom.tt.omtrdc.net
+DOMAIN-SUFFIX,espnqa.com
 DOMAIN-SUFFIX,watchespn.com
+DOMAIN-SUFFIX,espn.hb.omtrdc.net
+DOMAIN-SUFFIX,espndotcom.tt.omtrdc.net
 ## >> Marvel
 DOMAIN-SUFFIX,marvel.com
 DOMAIN-SUFFIX,marvel10thanniversary.com

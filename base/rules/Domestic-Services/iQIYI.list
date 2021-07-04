@@ -1,5 +1,6 @@
 ## 🥝 爱奇艺
 ## > 爱奇艺
+PROCESS-NAME,com.qiyi.video
 USER-AGENT,iQiYi*
 USER-AGENT,PPStream*
 USER-AGENT,QIYI*
@@ -25,7 +26,8 @@ DOMAIN-SUFFIX,qiyipic.com
 DOMAIN-SUFFIX,qy.com
 DOMAIN-SUFFIX,qy.net
 DOMAIN-SUFFIX,jiangbing.cn
-## >> 爱奇艺 国际站
+## >> iQIYI 国际站
+PROCESS-NAME,com.iqiyi.i18n
 DOMAIN-SUFFIX,iq.com
 ## >> PPS
 DOMAIN-SUFFIX,baiying.com

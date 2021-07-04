@@ -22,6 +22,7 @@ DOMAIN-SUFFIX,viacomcbspressexpress.com
 ## >> CBS Radio
 DOMAIN-SUFFIX,cbsradio.com
 ## >> Paramount
+PROCESS-NAME,com.cbs.app
 USER-AGENT,PPlus*
 DOMAIN-SUFFIX,cbsaavideo.com
 DOMAIN-SUFFIX,cbsi.com
@@ -35,4 +36,5 @@ DOMAIN-SUFFIX,pplusstatic.com
 ## >> Pluto TV
 DOMAIN-SUFFIX,pluto.tv
 ## >> ShowTime
+PROCESS-NAME,com.showtime.standalone
 DOMAIN-SUFFIX,showtime.com

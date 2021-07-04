@@ -40,6 +40,7 @@ DOMAIN-SUFFIX,xlyouxi.net
 DOMAIN-SUFFIX,xunlei.cn
 DOMAIN-SUFFIX,xunlei.com
 DOMAIN-SUFFIX,xunlei.net
+PROCESS-NAME,DownloadSDKServer.exe
 PROCESS-NAME,Thunder
 PROCESS-NAME,Thunder.exe
 ## >> 烽动CDN
@@ -239,7 +240,9 @@ DOMAIN,eddie4.nl
 DOMAIN,edu.uifr.ru
 DOMAIN,eliastre100.fr
 DOMAIN,elitezones.ro
+DOMAIN,empornium.is
 DOMAIN,empornium.me
+DOMAIN,empornium.sx
 DOMAIN,engplus.ru
 DOMAIN,et8.org
 DOMAIN,evening-badlands-6215.herokuapp.com
@@ -482,7 +485,6 @@ DOMAIN,seeders-paradise.org
 DOMAIN,servandroidkino.ru
 DOMAIN,shadowshq.eddie4.nl
 DOMAIN,shadowshq.yi.org
-DOMAIN,share.acgnx.se
 DOMAIN,share.camoe.cn
 DOMAIN,share.dmhy.me
 DOMAIN,share.dmhy.org
@@ -493,6 +495,7 @@ DOMAIN,siambit.org
 DOMAIN,siambit.org.php
 DOMAIN,sjtu.edu.cn
 DOMAIN,skyey2.com
+DOMAIN,skyeysnow.com
 DOMAIN,soulvoice.club
 DOMAIN,springsunday.net
 DOMAIN,storage.groupees.com
@@ -847,7 +850,7 @@ DOMAIN,zephir.monocul.us
 DOMAIN,zer0day.000webhostapp.com
 DOMAIN,zer0day.ch
 DOMAIN,zer0day.to
-DOMAIN-KEYWORD,tracker
+DOMAIN-KEYWORD,announce
 DOMAIN-KEYWORD,torrent
 IP-CIDR,5.2.79.22/32,no-resolve
 IP-CIDR,5.206.3.65/32,no-resolve

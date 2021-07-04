@@ -1,4 +1,5 @@
 ## > Twitch
+PROCESS-NAME,tv.twitch.android.app
 DOMAIN-SUFFIX,twitch.tv
 DOMAIN-SUFFIX,twitchcdn.net
 DOMAIN-SUFFIX,ttvnw.net

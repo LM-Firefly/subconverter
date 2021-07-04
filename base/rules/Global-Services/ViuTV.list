@@ -1,4 +1,5 @@
 ## > ViuTV
+PROCESS-NAME,com.vuclip.viu
 USER-AGENT,Viu*
 USER-AGENT,ViuTV*
 DOMAIN-SUFFIX,viu.com

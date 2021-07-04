@@ -1,4 +1,5 @@
 ## > Amazon Prime Video
+PROCESS-NAME,com.amazon.avod.thirdpartyclient
 USER-AGENT,InstantVideo.US*
 USER-AGENT,Prime%20Video*
 DOMAIN-SUFFIX,aiv-cdn.net
