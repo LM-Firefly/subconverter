@@ -1,0 +1,230 @@
+name: Update sub-web
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  # 自动取消其他运行中的workflow
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      ui-version: ${{ steps.web.outputs.ui-ver }}
+    env:
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+    steps:
+      - name: Setup timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: "Asia/Shanghai"
+      - uses: actions/checkout@v4.1.7
+        with:
+          submodules: "true"
+          token: ${{env.GIT_TOKEN}}
+      - name: Update sub-web
+        run: |
+          sudo rm -rf sub-web
+          sudo rm -rf base/sub-web
+          git clone https://github.com/LM-Firefly/sub-web.git
+      - name: Check sub-web commit
+        id: web
+        run: |
+          cd sub-web
+          echo "ui-ver=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Use Node.js 16
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: 16
+      - name: Get dependencies and build
+        run: |
+          cd sub-web
+          yarn install
+          yarn build
+      - name: Clean up
+        run: |
+          cd $GITHUB_WORKSPACE
+          mkdir temp
+          sudo cp -rf sub-web/dist/* temp/
+          mv temp base/sub-web
+          sudo rm -rf sub-web/*
+      - name: Update sub-web
+        uses: EndBug/add-and-commit@v9.1.4
+        with:
+          author_email: mail@example.com
+          default_author: github_actions
+          message: "Updated submodule sub-web to commit ${{ steps.web.outputs.ui-ver }} 🎉 "
+          add: "-A"
+        env:
+          token: ${{env.GIT_TOKEN}}
+
+  push-build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+    steps:
+      - name: Setup timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: "Asia/Shanghai"
+      - uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0
+          token: ${{env.GIT_TOKEN}}
+      - name: Github CI
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: actions/github-script@v7.0.1
+        with:
+          github-token: ${{env.GIT_TOKEN}}
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+            owner: context.repo.owner,
+            repo: 'subconverter',
+            workflow_id: 'build.yml',
+            ref: 'main',
+            });
+      - name: Publish Docker
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: actions/github-script@v7.0.1
+        with:
+          github-token: ${{env.GIT_TOKEN}}
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+            owner: context.repo.owner,
+            repo: 'subconverter',
+            workflow_id: 'docker.yml',
+            ref: 'main',
+            });
+
+#  build-changelog:
+#    needs: prepare
+#    runs-on: ubuntu-latest
+#    env:
+#      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+#      UI-VERSION: ${{ needs.prepare.outputs.ui-version }}
+#    steps:
+#      - name: Setup timezone
+#        uses: szenius/set-timezone@v2.0
+#        with:
+#          timezoneLinux: "Asia/Shanghai"
+#      - uses: actions/checkout@v4.1.7
+#        with:
+#          fetch-depth: 0
+#          token: ${{env.GIT_TOKEN}}
+#      - name: Build CHANGELOG
+#        id: build_changelog
+#        uses: mikepenz/release-changelog-builder-action@v3.6.0
+#        with:
+#          configurationJson: |
+#            {
+#                "template": "## *** 📜 CHANGELOG 📜 ***\n\n#${{steps.build_changelog.outputs.changelog}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
+#                "empty_content": "## *** 📜 CHANGELOG 📜 ***\n\n### Just have fun, nothing has changed.\n### * PS: The submodule sub-web'version is ${{ env.UI-VERSION }}",
+#                "categories": [
+#                    {
+#                        "title": "## 🚀 Features",
+#                        "labels": ["feature"],
+#                        "empty_template": "No Features, No Bug 🎉 🎉 🎉 "
+#                    },
+#                    {
+#                        "title": "## 🐛 Fixes",
+#                        "labels": ["fix"]
+#                    }
+#                ],
+#                "label_extractor": [
+#                    {
+#                        "pattern": "(.) (.+)",
+#                        "target": "$1",
+#                        "flags": "gu"
+#                    },
+#                    {
+#                        "pattern": "\\[Issue\\]",
+#                        "on_property": "title",
+#                        "method": "match"
+#                    }
+#                ],
+#                "duplicate_filter": {
+#                    "pattern": "\\[ABC-....\\]",
+#                    "on_property": "title",
+#                    "method": "match"
+#                },
+#                "transformers": [
+#                    {
+#                        "pattern": "[\\-\\*] (\\[(...|TEST|CI|SKIP)\\])( )?(.+?)\n(.+?[\\-\\*] )(.+)",
+#                        "target": "- $4\n  - $6"
+#                    }
+#                ],
+#                "max_tags_to_fetch": 10,
+#                "max_pull_requests": 40,
+#                "max_back_track_time_days": 90
+#            }
+#          ignorePreReleases: "false"
+#          owner: LM-Firefly
+#          repo: subconverter
+#          outputFile: "$GITHUB_WORKSPACE/CHANGELOG.md"
+#          token: ${{ env.GIT_TOKEN }}
+
+#      - name: Insert Changelog
+#        run: |
+#          echo "${{steps.build_changelog.outputs.changelog}}" >> $GITHUB_WORKSPACE/CHANGELOG.md
+#      - uses: actions/checkout@v4.1.7
+#        with:
+#          fetch-depth: 0
+#          token: ${{env.GIT_TOKEN}}
+#      - name: Insert Changelog
+#        uses: EndBug/add-and-commit@v9.1.4
+#        with:
+#          author_email: mail@example.com
+#          default_author: github_actions
+#          message: "Updated CHANGELOG.md"
+#          add: "-A"
+#        env:
+#          token: ${{env.GIT_TOKEN}}
+#  generate-changelog:
+#    needs: prepare
+#    runs-on: ubuntu-latest
+#    env:
+#      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+#    steps:
+#      - name: Setup timezone
+#        uses: szenius/set-timezone@v2.0
+#        with:
+#          timezoneLinux: "Asia/Shanghai"
+#      - uses: actions/checkout@v4.1.7
+#        with:
+#          fetch-depth: 0
+#          token: ${{env.GIT_TOKEN}}
+#      - uses: BobAnkh/auto-generate-changelog@v1.2.4
+#        with:
+#          REPO_NAME: "LM-Firefly/subconverter"
+#          ACCESS_token: ${{env.GIT_TOKEN}}
+#          PATH: "$GITHUB_WORKSPACE/CHANGELOG.md"
+#          COMMIT_MESSAGE: "update release notes"
+#          TYPE: "feat:Feature,fix:Bug Fixes,docs:Documentation,refactor:Refactor,perf:Performance Improvements"
+#          REGENERATE_COUNT: 1
+
+#  changelog-ci:
+#    needs: prepare
+#    runs-on: ubuntu-latest
+#    env:
+#      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+#      VER: ${{ needs.prepare.outputs.ver }}
+#    steps:
+#      - name: Setup timezone
+#        uses: szenius/set-timezone@v2.0
+#        with:
+#          timezoneLinux: "Asia/Shanghai"
+#      - uses: actions/checkout@v4.1.7
+#        with:
+#          fetch-depth: 0
+#          token: ${{env.GIT_TOKEN}}
+#      - uses: saadmk11/changelog-ci@v1.1.1
+#        with:
+#          changelog_filename: "$GITHUB_WORKSPACE/CHANGELOG.md"
+#          changelog_type: "commit_message"
+#          release_version: ${{ env.VER }}
+#          github_token: ${{ env.GIT_TOKEN }}

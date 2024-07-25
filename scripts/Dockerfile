@@ -1,11 +1,14 @@
-FROM alpine:3.16 AS builder
-LABEL maintainer="tindy.it@gmail.com"
+FROM alpine:3.18
+# FROM fireflylzh/subconverter:latest
+LABEL maintainer="firefly.lzh@gmail.com"
+# ADD https://github.com/LM-Firefly/subconverter/commits/main.atom cache_bust
 ARG THREADS="4"
-ARG SHA=""
+# ARG SHA=""
 
 # build minimized
 WORKDIR /
 RUN set -xe && \
+    apk add tzdata && ls /usr/share/zoneinfo && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && date && apk del tzdata && \
     apk add --no-cache --virtual .build-tools git g++ build-base linux-headers cmake python3 && \
     apk add --no-cache --virtual .build-deps curl-dev rapidjson-dev pcre2-dev yaml-cpp-dev && \
     git clone https://github.com/ftk/quickjspp --depth=1 && \
@@ -35,26 +38,33 @@ RUN set -xe && \
     cmake -DCMAKE_CXX_STANDARD=11 . && \
     make install -j $THREADS && \
     cd .. && \
-    git clone https://github.com/tindy2013/subconverter --depth=1 && \
+    git clone https://github.com/LM-Firefly/subconverter --depth=1 && \
     cd subconverter && \
-    [ -n "$SHA" ] && sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1-'"$SHA"'/' src/version.h;\
+#    [ -n "$SHA" ] && sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1-'"$SHA"'/' src/version.h;\
+    time=$(date +%y.%m%d.%H%M-) && sha=$(git rev-parse --short HEAD) && sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1-'"$time$sha"'/' src/version.h && \
     python3 -m ensurepip && \
     python3 -m pip install gitpython && \
     python3 scripts/update_rules.py -c scripts/rules_config.conf && \
     cmake -DCMAKE_BUILD_TYPE=Release . && \
-    make -j $THREADS
+    make -j $THREADS && \
+    mv subconverter /usr/bin && \
+    mv base ../ && \
+    cd .. && \
+    rm -rf subconverter quickjspp libcron toml11 /usr/lib/lib*.a /usr/include/* /usr/local/include/lib*.a /usr/local/include/* && \
+    apk add --no-cache --virtual subconverter-deps pcre2 libcurl yaml-cpp libevent && \
+    apk del .build-tools .build-deps
+
 
 # build final image
-FROM alpine:3.16
-LABEL maintainer="tindy.it@gmail.com"
-
-RUN apk add --no-cache --virtual subconverter-deps pcre2 libcurl yaml-cpp
-
-COPY --from=builder /subconverter/subconverter /usr/bin/
-COPY --from=builder /subconverter/base /base/
+#FROM alpine:latest
+#LABEL maintainer="firefly.lzh@gmail.com"
+#
+#RUN apk add --no-cache --virtual subconverter-deps pcre2 libcurl yaml-cpp
+#
+#COPY --from=builder /subconverter/subconverter /usr/bin/
+#COPY base/ /base/
 
 # set entry
 WORKDIR /base
-CMD subconverter
-
 EXPOSE 25500/tcp
+CMD subconverter
