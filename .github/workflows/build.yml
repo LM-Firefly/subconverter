@@ -36,7 +36,7 @@ jobs:
           echo "version=$(date +%y.%m%d.%H%M-)$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Build CHANGELOG
         id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@v5.0.0-a02
+        uses: mikepenz/release-changelog-builder-action@v5
         with:
           configurationJson: |
             {
