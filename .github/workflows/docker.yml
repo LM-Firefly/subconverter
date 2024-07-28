@@ -41,7 +41,7 @@ jobs:
       - name: Build and export
         id: build
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/amd64
           context: scripts/
@@ -60,7 +60,7 @@ jobs:
       - name: Build release and export
         id: build_rel
         if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/amd64
           context: scripts/
@@ -105,7 +105,7 @@ jobs:
       - name: Build and export
         id: build
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/386
           context: scripts/
@@ -124,7 +124,7 @@ jobs:
       - name: Build release and export
         id: build_rel
         if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/386
           context: scripts/
@@ -171,7 +171,7 @@ jobs:
       - name: Build and export
         id: build
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/arm/v7
           context: scripts/
@@ -191,7 +191,7 @@ jobs:
       - name: Build release and export
         id: build_rel
         if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/arm/v7
           context: scripts/
@@ -240,7 +240,7 @@ jobs:
       - name: Build and export
         id: build
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/arm64
           context: scripts/
@@ -260,7 +260,7 @@ jobs:
       - name: Build release and export
         id: build_rel
         if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.5.0
         with:
           platforms: linux/arm64
           context: scripts/
@@ -327,7 +327,7 @@ jobs:
       #          echo "sha_short=$(date +%y.%m%d.%H%M-)$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       #      - name: Docker buildx image and push on main branch
       #        if: github.ref == 'refs/heads/main'
-      #        uses: docker/build-push-action@v6.3.0
+      #        uses: docker/build-push-action@v6.5.0
       #        with:
       #          platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/386
       #          context: scripts/
@@ -355,7 +355,7 @@ jobs:
       #          docker image ls -a
       #      - name: Docker buildx image and push on release
       #        if: startsWith(github.ref, 'refs/tags/')
-      #        uses: docker/build-push-action@v6.3.0
+      #        uses: docker/build-push-action@v6.5.0
       #        with:
       #          platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/386
       #          context: scripts/
