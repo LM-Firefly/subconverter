@@ -306,7 +306,7 @@ jobs:
             [worker.oci]
               max-parallelism = 1
       - name: Download artifact
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@v4.1.8
         with:
           path: /tmp/images/
       #      - name: Load image
