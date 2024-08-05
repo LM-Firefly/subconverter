@@ -153,7 +153,7 @@ jobs:
       - name: Build
         run: docker run --rm -v $GITHUB_WORKSPACE:/root/workdir multiarch/alpine:${{ matrix.arch }}-latest-stable /bin/sh -c "apk add bash git nodejs npm && cd /root/workdir && chmod +x scripts/build.alpine.release.sh && bash scripts/build.alpine.release.sh"
       - name: Upload
-        uses: actions/upload-artifact@v4.3.4
+        uses: actions/upload-artifact@v4.3.5
         with:
           name: ${{ matrix.artifact }}.${{ env.VERSION }}
           path: subconverter/
@@ -205,7 +205,7 @@ jobs:
       - name: Build
         run: bash scripts/build.macos.release.sh
       - name: Upload
-        uses: actions/upload-artifact@v4.3.4
+        uses: actions/upload-artifact@v4.3.5
         with:
           name: ${{ matrix.artifact }}.${{ env.VERSION }}
           path: subconverter/
@@ -273,7 +273,7 @@ jobs:
       - name: Build
         run: bash scripts/build.windows.release.sh
       - name: Upload
-        uses: actions/upload-artifact@v4.3.4
+        uses: actions/upload-artifact@v4.3.5
         with:
           name: ${{ matrix.artifact }}.${{ env.VERSION }}
           path: subconverter/
