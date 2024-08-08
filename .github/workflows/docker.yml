@@ -73,7 +73,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: echo ${{ steps.build_rel.outputs.digest }} > /tmp/digest.txt
       - name: Upload artifact
-        uses: actions/upload-artifact@v4.3.5
+        uses: actions/upload-artifact@v4.3.6
         with:
           name: digest_amd64
           path: /tmp/digest.txt
@@ -137,7 +137,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: echo ${{ steps.build_rel.outputs.digest }} > /tmp/digest.txt
       - name: Upload artifact
-        uses: actions/upload-artifact@v4.3.5
+        uses: actions/upload-artifact@v4.3.6
         with:
           name: digest_386
           path: /tmp/digest.txt
@@ -206,7 +206,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: echo ${{ steps.build_rel.outputs.digest }} > /tmp/digest.txt
       - name: Upload artifact
-        uses: actions/upload-artifact@v4.3.5
+        uses: actions/upload-artifact@v4.3.6
         with:
           name: digest_armv7
           path: /tmp/digest.txt
@@ -275,7 +275,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: echo ${{ steps.build_rel.outputs.digest }} > /tmp/digest.txt
       - name: Upload artifact
-        uses: actions/upload-artifact@v4.3.5
+        uses: actions/upload-artifact@v4.3.6
         with:
           name: digest_arm64
           path: /tmp/digest.txt
