@@ -67,7 +67,7 @@ jobs:
         run: echo "sha_short=$(date +%y.%m%d.%H%M-)$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Build and export
         id: build
-        uses: docker/build-push-action@v6.5.0
+        uses: docker/build-push-action@v6.7.0
         with:
           platforms: ${{ matrix.platform }}
           context: scripts/
