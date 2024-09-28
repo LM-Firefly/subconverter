@@ -118,11 +118,6 @@ struct Proxy
     String TestUrl;
     String ClientId;
 
-    String Ports;
-    String Auth;
-    String Alpn;
-    String UpMbps;
-    String DownMbps;
     String Insecure;
     String Fingerprint;
     String OBFSPassword;
@@ -131,12 +126,29 @@ struct Proxy
     String ShortId;
     String Flow;
     bool FlowShow = false;
+
+    String Ports;
+    String Up;
+    uint32_t UpSpeed;
+    String Down;
+    uint32_t DownSpeed;
+    String Auth;
+    String SNI;
+    String Ca;
+    String CaStr;
+    String Alpn;
+    std::vector<String> AlpnList;
+    uint32_t RecvWindowConn;
+    uint32_t RecvWindow;
+    tribool DisableMtuDiscovery;
+    uint32_t HopInterval;
+    uint32_t CWND = 0;
+
     tribool DisableSni;
     tribool ReduceRtt;
     String UdpRelayMode = "native";
     uint16_t RequestTimeout = 15000;
     String token;
-    std::vector<String> AlpnList;
     String PacketEncoding;
 };
 

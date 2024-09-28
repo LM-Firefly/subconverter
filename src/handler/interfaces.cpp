@@ -3,7 +3,6 @@
 #include <mutex>
 #include <numeric>
 
-#include <inja.hpp>
 #include <yaml-cpp/yaml.h>
 
 #include "config/binding.h"
@@ -11,7 +10,6 @@
 #include "generator/config/ruleconvert.h"
 #include "generator/config/subexport.h"
 #include "generator/template/templates.h"
-#include "script/cron.h"
 #include "script/script_quickjs.h"
 #include "server/webserver.h"
 #include "utils/base64/base64.h"
@@ -24,9 +22,7 @@
 #include "utils/string.h"
 #include "utils/string_hash.h"
 #include "utils/system.h"
-#include "utils/system.h"
 #include "utils/urlencode.h"
-#include "utils/yamlcpp_extra.h"
 #include "interfaces.h"
 #include "multithread.h"
 #include "settings.h"
@@ -689,12 +685,14 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         */
         script_safe_runner(ext.js_runtime, ext.js_context, [&](qjs::Context &ctx)
                            {
-            try {
+            try
+            {
                 ctx.eval(filterScript);
-                auto filter = (std::function<bool(const Proxy &)>) ctx.eval("filter");
+                auto filter = (std::function<bool(const Proxy&)>) ctx.eval("filter");
                 nodes.erase(std::remove_if(nodes.begin(), nodes.end(), filter), nodes.end());
             }
-            catch (qjs::exception) {
+            catch(qjs::exception)
+            {
                 script_print_stack(ctx);
             } }, global.scriptCleanContext);
     }
