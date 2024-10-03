@@ -38,25 +38,34 @@ struct ProxyGroupConfig
 
     String TypeStr() const
     {
-        switch(Type)
+        switch (Type)
         {
-            case ProxyGroupType::Select: return "select";
-            case ProxyGroupType::URLTest: return "url-test";
-            case ProxyGroupType::LoadBalance: return "load-balance";
-            case ProxyGroupType::Fallback: return "fallback";
-            case ProxyGroupType::Relay: return "relay";
-            case ProxyGroupType::SSID: return "ssid";
-            case ProxyGroupType::Smart: return "smart";
+        case ProxyGroupType::Select:
+            return "select";
+        case ProxyGroupType::URLTest:
+            return "url-test";
+        case ProxyGroupType::LoadBalance:
+            return "load-balance";
+        case ProxyGroupType::Fallback:
+            return "fallback";
+        case ProxyGroupType::Relay:
+            return "relay";
+        case ProxyGroupType::SSID:
+            return "ssid";
+        case ProxyGroupType::Smart:
+            return "smart";
         }
         return "";
     }
 
     String StrategyStr() const
     {
-        switch(Strategy)
+        switch (Strategy)
         {
-            case BalanceStrategy::ConsistentHashing: return "consistent-hashing";
-            case BalanceStrategy::RoundRobin: return "round-robin";
+        case BalanceStrategy::ConsistentHashing:
+            return "consistent-hashing";
+        case BalanceStrategy::RoundRobin:
+            return "round-robin";
         }
         return "";
     }
