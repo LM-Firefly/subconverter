@@ -14,9 +14,9 @@ std::vector<std::string> split(const std::string &s, const std::string &separato
 {
     string_size bpos = 0, epos = s.find(separator);
     std::vector<std::string> result;
-    while(bpos < s.size())
+    while (bpos < s.size())
     {
-        if(epos == std::string::npos)
+        if (epos == std::string::npos)
             epos = s.size();
         result.push_back(s.substr(bpos, epos - bpos));
         bpos = epos + separator.size();
@@ -28,9 +28,9 @@ std::vector<std::string> split(const std::string &s, const std::string &separato
 void split(std::vector<std::string_view> &result, std::string_view s, char separator)
 {
     string_size bpos = 0, epos = s.find(separator);
-    while(bpos < s.size())
+    while (bpos < s.size())
     {
-        if(epos == std::string_view::npos)
+        if (epos == std::string_view::npos)
             epos = s.size();
         result.push_back(s.substr(bpos, epos - bpos));
         bpos = epos + 1;
@@ -48,26 +48,26 @@ std::vector<std::string_view> split(std::string_view s, char separator)
 std::string UTF8ToCodePoint(const std::string &data)
 {
     std::stringstream ss;
-    for(string_size i = 0; i < data.size(); i++)
+    for (string_size i = 0; i < data.size(); i++)
     {
         int charcode = data[i] & 0xff;
-        if((charcode >> 7) == 0)
+        if ((charcode >> 7) == 0)
         {
-            ss<<data[i];
+            ss << data[i];
         }
-        else if((charcode >> 5) == 6)
+        else if ((charcode >> 5) == 6)
         {
-            ss<<"\\u"<<std::hex<<((data[i + 1] & 0x3f) | (data[i] & 0x1f) << 6);
+            ss << "\\u" << std::hex << ((data[i + 1] & 0x3f) | (data[i] & 0x1f) << 6);
             i++;
         }
-        else if((charcode >> 4) == 14)
+        else if ((charcode >> 4) == 14)
         {
-            ss<<"\\u"<<std::hex<<((data[i + 2] & 0x3f) | (data[i + 1] & 0x3f) << 6 | (data[i] & 0xf) << 12);
+            ss << "\\u" << std::hex << ((data[i + 2] & 0x3f) | (data[i + 1] & 0x3f) << 6 | (data[i] & 0xf) << 12);
             i += 2;
         }
-        else if((charcode >> 3) == 30)
+        else if ((charcode >> 3) == 30)
         {
-            ss<<"\\u"<<std::hex<<((data[i + 3] & 0x3f) | (data[i + 2] & 0x3f) << 6 | (data[i + 1] & 0x3f) << 12 | (data[i] & 0x7) << 18);
+            ss << "\\u" << std::hex << ((data[i + 3] & 0x3f) | (data[i + 2] & 0x3f) << 6 | (data[i + 1] & 0x3f) << 12 | (data[i] & 0x7) << 18);
             i += 3;
         }
     }
@@ -77,25 +77,27 @@ std::string UTF8ToCodePoint(const std::string &data)
 std::string toLower(const std::string &str)
 {
     std::string result;
-    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c) { return std::tolower(c); });
+    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c)
+                   { return std::tolower(c); });
     return result;
 }
 
 std::string toUpper(const std::string &str)
 {
     std::string result;
-    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c) { return std::toupper(c); });
+    std::transform(str.begin(), str.end(), std::back_inserter(result), [](unsigned char c)
+                   { return std::toupper(c); });
     return result;
 }
 
 void processEscapeChar(std::string &str)
 {
     string_size pos = str.find('\\');
-    while(pos != std::string::npos)
+    while (pos != std::string::npos)
     {
-        if(pos == str.size())
+        if (pos == str.size())
             break;
-        switch(str[pos + 1])
+        switch (str[pos + 1])
         {
         case 'n':
             str.replace(pos, 2, "\n");
@@ -108,7 +110,7 @@ void processEscapeChar(std::string &str)
             break;
         default:
             /// ignore others for backward compatibility
-            //str.erase(pos, 1);
+            // str.erase(pos, 1);
             break;
         }
         pos = str.find('\\', pos + 1);
@@ -118,9 +120,9 @@ void processEscapeChar(std::string &str)
 void processEscapeCharReverse(std::string &str)
 {
     string_size pos = 0;
-    while(pos < str.size())
+    while (pos < str.size())
     {
-        switch(str[pos])
+        switch (str[pos])
         {
         case '\n':
             str.replace(pos, 1, "\\n");
@@ -143,11 +145,11 @@ int parseCommaKeyValue(const std::string &input, const std::string &separator, s
 {
     string_size bpos = 0, epos = input.find(separator);
     std::string kv;
-    while(bpos < input.size())
+    while (bpos < input.size())
     {
-        if(epos == std::string::npos)
+        if (epos == std::string::npos)
             epos = input.size();
-        else if(epos && input[epos - 1] == '\\')
+        else if (epos && input[epos - 1] == '\\')
         {
             kv += input.substr(bpos, epos - bpos - 1);
             kv += separator;
@@ -157,7 +159,7 @@ int parseCommaKeyValue(const std::string &input, const std::string &separator, s
         }
         kv += input.substr(bpos, epos - bpos);
         string_size eqpos = kv.find('=');
-        if(eqpos == std::string::npos)
+        if (eqpos == std::string::npos)
             result.emplace_back("{NONAME}", kv);
         else
             result.emplace_back(kv.substr(0, eqpos), kv.substr(eqpos + 1));
@@ -165,10 +167,10 @@ int parseCommaKeyValue(const std::string &input, const std::string &separator, s
         bpos = epos + 1;
         epos = input.find(separator, bpos);
     }
-    if(!kv.empty())
+    if (!kv.empty())
     {
         string_size eqpos = kv.find('=');
-        if(eqpos == std::string::npos)
+        if (eqpos == std::string::npos)
             result.emplace_back("{NONAME}", kv);
         else
             result.emplace_back(kv.substr(0, eqpos), kv.substr(eqpos + 1));
@@ -190,7 +192,7 @@ void trimSelfOf(std::string &str, char target, bool before, bool after)
     str.erase(0, pos);
 }
 
-std::string trimOf(const std::string& str, char target, bool before, bool after)
+std::string trimOf(const std::string &str, char target, bool before, bool after)
 {
     if (!before && !after)
         return str;
@@ -211,7 +213,7 @@ std::string trimOf(const std::string& str, char target, bool before, bool after)
     return str.substr(pos);
 }
 
-std::string trim(const std::string& str, bool before, bool after)
+std::string trim(const std::string &str, bool before, bool after)
 {
     return trimOf(str, ' ', before, after);
 }
@@ -225,16 +227,16 @@ std::string trimWhitespace(const std::string &str, bool before, bool after)
 {
     static std::string whitespaces(" \t\f\v\n\r");
     string_size bpos = 0, epos = str.size();
-    if(after)
+    if (after)
     {
         epos = str.find_last_not_of(whitespaces);
-        if(epos == std::string::npos)
+        if (epos == std::string::npos)
             return "";
     }
-    if(before)
+    if (before)
     {
         bpos = str.find_first_not_of(whitespaces);
-        if(bpos == std::string::npos)
+        if (bpos == std::string::npos)
             return "";
     }
     return str.substr(bpos, epos - bpos + 1);
@@ -242,7 +244,7 @@ std::string trimWhitespace(const std::string &str, bool before, bool after)
 
 std::string getUrlArg(const std::string &url, const std::string &request)
 {
-    //std::smatch result;
+    // std::smatch result;
     /*
     if (regex_search(url.cbegin(), url.cend(), result, std::regex(request + "=(.*?)&")))
     {
@@ -275,12 +277,12 @@ std::string getUrlArg(const std::string &url, const std::string &request)
     */
     std::string pattern = request + "=";
     std::string::size_type pos = url.size();
-    while(pos)
+    while (pos)
     {
         pos = url.rfind(pattern, pos);
-        if(pos != std::string::npos)
+        if (pos != std::string::npos)
         {
-            if(pos == 0 || url[pos - 1] == '&' || url[pos - 1] == '?')
+            if (pos == 0 || url[pos - 1] == '&' || url[pos - 1] == '?')
             {
                 pos += pattern.size();
                 return url.substr(pos, url.find('&', pos) - pos);
@@ -296,16 +298,16 @@ std::string getUrlArg(const std::string &url, const std::string &request)
 std::string getUrlArg(const string_multimap &args, const std::string &request)
 {
     auto it = args.find(request);
-    if(it != args.end())
+    if (it != args.end())
         return it->second;
     return "";
 }
 
 std::string replaceAllDistinct(std::string str, const std::string &old_value, const std::string &new_value)
 {
-    for(std::string::size_type pos(0); pos != std::string::npos; pos += new_value.length())
+    for (std::string::size_type pos(0); pos != std::string::npos; pos += new_value.length())
     {
-        if((pos = str.find(old_value, pos)) != std::string::npos)
+        if ((pos = str.find(old_value, pos)) != std::string::npos)
             str.replace(pos, old_value.length(), new_value);
         else
             break;
@@ -315,7 +317,7 @@ std::string replaceAllDistinct(std::string str, const std::string &old_value, co
 
 void removeUTF8BOM(std::string &data)
 {
-    if(data.compare(0, 3, "\xEF\xBB\xBF") == 0)
+    if (data.compare(0, 3, "\xEF\xBB\xBF") == 0)
         data = data.substr(3);
 }
 
@@ -363,7 +365,7 @@ std::string randomStr(int len)
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 61);
-    for(int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
         int r = dis(gen);
         if (r < 26)
@@ -384,7 +386,7 @@ std::string randomStr(int len)
 
 int to_int(const std::string &str, int def_value)
 {
-    if(str.empty())
+    if (str.empty())
         return def_value;
     /*
     int retval = 0;
@@ -402,9 +404,10 @@ int to_int(const std::string &str, int def_value)
 
 std::string join(const string_array &arr, const std::string &delimiter)
 {
-    if(arr.empty())
+    if (arr.empty())
         return "";
-    if(arr.size() == 1)
+    if (arr.size() == 1)
         return arr[0];
-    return std::accumulate(arr.begin() + 1, arr.end(), arr[0], [&](const std::string &a, const std::string &b) {return a + delimiter + b; });
+    return std::accumulate(arr.begin() + 1, arr.end(), arr[0], [&](const std::string &a, const std::string &b)
+                           { return a + delimiter + b; });
 }
