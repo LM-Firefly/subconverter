@@ -15,7 +15,7 @@ enum class RulesetType
 struct RulesetConfig
 {
     String Group;
-    //RulesetType Type = RulesetType::SurgeRuleset;
+    // RulesetType Type = RulesetType::SurgeRuleset;
     String Url;
     Integer Interval = 86400;
     bool operator==(const RulesetConfig &r) const
