@@ -20,7 +20,7 @@ std::string getTime(int type)
     snprintf(cMillis, 7, "%.6ld", (long)tv.tv_usec);
     lt = time(nullptr);
     struct tm *local = localtime(&lt);
-    switch(type)
+    switch (type)
     {
     case 1:
         format = "%Y%m%d-%H%M%S";
@@ -47,8 +47,7 @@ static std::string get_thread_name()
     lock.readLock();
     if (thread_names.find(id) != thread_names.end())
     {
-        defer(lock.readUnlock();)
-        return thread_names[id];
+        defer(lock.readUnlock();) return thread_names[id];
     }
     lock.readUnlock();
     lock.writeLock();
@@ -62,33 +61,31 @@ std::mutex log_mutex;
 
 void writeLog(int type, const std::string &content, int level)
 {
-    if(level > global.logLevel)
+    if (level > global.logLevel)
         return;
     std::lock_guard<std::mutex> lock(log_mutex);
     const char *levels[] = {"[FATL]", "[ERRO]", "[WARN]", "[INFO]", "[DEBG]", "[VERB]"};
-    std::cerr<<getTime(2)<<" ["<<getpid()<<" "<<get_thread_name()<<"]"<<levels[level % 6];
-    std::cerr<<" "<<content<<"\n";
+    std::cerr << getTime(2) << " [" << getpid() << " " << get_thread_name() << "]" << levels[level % 6];
+    std::cerr << " " << content << "\n";
 }
-
 
 #ifdef __GNUG__
 #include <cstdlib>
 #include <memory>
 #include <cxxabi.h>
 
-std::string demangle(const char* name)
+std::string demangle(const char *name)
 {
     int status = -4;
-    std::unique_ptr<char, void(*)(void*)> res {
+    std::unique_ptr<char, void (*)(void *)> res{
         abi::__cxa_demangle(name, nullptr, nullptr, &status),
-        std::free
-    };
+        std::free};
     return (status == 0) ? res.get() : name;
 }
 
 #else
 
-std::string demangle(const char* name)
+std::string demangle(const char *name)
 {
     return name;
 }

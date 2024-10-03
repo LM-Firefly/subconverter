@@ -19,7 +19,7 @@
 
 std::string parseProxy(const std::string &source);
 
-static const std::string qjs_require_module {R"(import * as std from 'std'
+static const std::string qjs_require_module{R"(import * as std from 'std'
 import * as os from 'os'
 
 let modules = {}
@@ -204,12 +204,12 @@ public:
     {
         headers.clear();
         string_array all_kv = split(data, "\r\n");
-        for(std::string &x : all_kv)
+        for (std::string &x : all_kv)
         {
             size_t pos_colon = x.find(':');
-            if(pos_colon == std::string::npos)
+            if (pos_colon == std::string::npos)
                 continue;
-            else if(pos_colon >= x.size() - 1)
+            else if (pos_colon >= x.size() - 1)
                 headers[x.substr(0, pos_colon)] = "";
             else
                 headers[x.substr(0, pos_colon)] = x.substr(pos_colon + 2, x.size() - pos_colon);
@@ -248,7 +248,7 @@ namespace qjs
         using string_icase_map = std::map<std::string, std::string, strICaseComp>;
     }
 
-    template<>
+    template <>
     struct js_traits<detail::string_icase_map>
     {
         static detail::string_icase_map unwrap(JSContext *ctx, JSValueConst v)
@@ -258,7 +258,7 @@ namespace qjs
             uint32_t len = 0;
             JS_GetOwnPropertyNames(ctx, &props, &len, v, JS_GPN_STRING_MASK | JS_GPN_ENUM_ONLY);
             props_begin = props;
-            while(len > 0)
+            while (len > 0)
             {
                 auto key = JS_AtomToCString(ctx, props->atom);
                 auto val = JS_GetProperty(ctx, v, props->atom);
@@ -278,7 +278,7 @@ namespace qjs
         {
             auto obj = JS_NewObject(ctx);
 
-            for(auto &kv : m)
+            for (auto &kv : m)
             {
                 auto value = JS_NewStringLen(ctx, kv.second.c_str(), kv.second.size());
                 JS_SetPropertyStr(ctx, obj, kv.first.c_str(), value);
@@ -287,7 +287,7 @@ namespace qjs
         }
     };
 
-    template<>
+    template <>
     struct js_traits<qjs_fetch_Headers>
     {
         static qjs_fetch_Headers unwrap(JSContext *ctx, JSValueConst v)
@@ -304,7 +304,7 @@ namespace qjs
         }
     };
 
-    template<>
+    template <>
     struct js_traits<qjs_fetch_Request>
     {
         static qjs_fetch_Request unwrap(JSContext *ctx, JSValueConst v)
@@ -320,7 +320,7 @@ namespace qjs
         }
     };
 
-    template<>
+    template <>
     struct js_traits<qjs_fetch_Response>
     {
         static JSValue wrap(JSContext *ctx, const qjs_fetch_Response &r) noexcept
@@ -337,7 +337,7 @@ namespace qjs
 
 static std::string makeDataURI(const std::string &content, bool shouldBase64 = false)
 {
-    if(shouldBase64)
+    if (shouldBase64)
         return "data:text/plain;base64," + base64Encode(content);
     else
         return "data:text/plain," + content;
@@ -347,7 +347,7 @@ static qjs_fetch_Response qjs_fetch(qjs_fetch_Request request)
 {
     qjs_fetch_Response response;
     http_method method;
-    switch(hash_(toUpper(request.method)))
+    switch (hash_(toUpper(request.method)))
     {
     case "GET"_hash:
         method = request.postdata.empty() ? HTTP_GET : HTTP_POST;
@@ -366,8 +366,8 @@ static qjs_fetch_Response qjs_fetch(qjs_fetch_Request request)
     }
 
     std::string response_headers;
-    FetchArgument argument {method, request.url, request.proxy, &request.postdata, &request.headers.headers, &request.cookies, 0};
-    FetchResult result {&response.status_code, &response.content, &response_headers, &response.cookies};
+    FetchArgument argument{method, request.url, request.proxy, &request.postdata, &request.headers.headers, &request.cookies, 0};
+    FetchResult result{&response.status_code, &response.content, &response_headers, &response.cookies};
 
     webGet(argument, result);
     response.headers.parse_from_string(response_headers);
@@ -393,7 +393,7 @@ void script_runtime_init(qjs::Runtime &runtime)
 int ShowMsgbox(const std::string &title, const std::string &content, uint16_t type = 0)
 {
 #ifdef _WIN32
-    if(!type)
+    if (!type)
         type = MB_ICONINFORMATION;
     return MessageBoxA(NULL, utf8ToACP(content).c_str(), utf8ToACP(title).c_str(), type);
 #else
@@ -401,22 +401,26 @@ int ShowMsgbox(const std::string &title, const std::string &content, uint16_t ty
 #endif // _WIN32
 }
 
-template<typename... Targs>
-struct Lambda {
-    template<typename Tret, typename T>
-    static Tret lambda_ptr_exec(Targs... args) {
-        return (Tret) (*(T*)fn<T>())(args...);
+template <typename... Targs>
+struct Lambda
+{
+    template <typename Tret, typename T>
+    static Tret lambda_ptr_exec(Targs... args)
+    {
+        return (Tret)(*(T *)fn<T>())(args...);
     }
 
-    template<typename Tret = void, typename Tfp = Tret(*)(Targs...), typename T>
-    static Tfp ptr(T& t) {
+    template <typename Tret = void, typename Tfp = Tret (*)(Targs...), typename T>
+    static Tfp ptr(T &t)
+    {
         fn<T>(&t);
-        return (Tfp) lambda_ptr_exec<Tret, T>;
+        return (Tfp)lambda_ptr_exec<Tret, T>;
     }
 
-    template<typename T>
-    static void* fn(void* new_fn = nullptr) {
-        static void* fn;
+    template <typename T>
+    static void *fn(void *new_fn = nullptr)
+    {
+        static void *fn;
         if (new_fn != nullptr)
             fn = new_fn;
         return fn;
@@ -501,7 +505,8 @@ int script_context_init(qjs::Context &context)
             .fun<&Proxy::KeepAlive>("KeepAlive")
             .fun<&Proxy::TestUrl>("TestUrl")
             .fun<&Proxy::ClientId>("ClientId");
-        context.global().add<&makeDataURI>("makeDataURI")
+        context.global()
+            .add<&makeDataURI>("makeDataURI")
             .add<&qjs_fetch>("fetch")
             .add<&base64Encode>("atob")
             .add<&base64Decode>("btoa")
@@ -522,11 +527,11 @@ int script_context_init(qjs::Context &context)
         globalThis.std = std
         globalThis.os = os
         import { require } from '<require>'
-        globalThis.require = require
-        )", "<import>", JS_EVAL_TYPE_MODULE);
+        globalThis.require = require)",
+                     "<import>", JS_EVAL_TYPE_MODULE);
         return 0;
     }
-    catch(qjs::exception&)
+    catch (qjs::exception &)
     {
         script_print_stack(context);
         return 1;
@@ -543,7 +548,7 @@ int script_cleanup(qjs::Context &context)
 void script_print_stack(qjs::Context &context)
 {
     auto exc = context.getException();
-    std::cerr << (std::string) exc << std::endl;
-    if((bool) exc["stack"])
-        std::cerr << (std::string) exc["stack"] << std::endl;
+    std::cerr << (std::string)exc << std::endl;
+    if ((bool)exc["stack"])
+        std::cerr << (std::string)exc["stack"] << std::endl;
 }
