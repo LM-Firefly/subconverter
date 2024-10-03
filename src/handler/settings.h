@@ -16,7 +16,7 @@
 
 struct Settings
 {
-    //common settings
+    // common settings
     std::string prefPath = "pref.ini", defaultExtConfig;
     string_array excludeRemarks, includeRemarks;
     RulesetConfigs customRulesets;
@@ -33,15 +33,15 @@ struct Settings
     long maxAllowedDownloadSize = 1048576L;
     string_map aliases;
 
-    //global variables for template
+    // global variables for template
     std::string templatePath = "templates";
     string_map templateVars;
 
-    //generator settings
+    // generator settings
     bool generatorMode = false;
     std::string generateProfiles;
 
-    //preferences
+    // preferences
     bool reloadConfOnRequest = false;
     RegexMatchConfigs renames, emojis;
     bool addEmoji = false, removeEmoji = false, appendType = false, filterDeprecated = true;
@@ -58,19 +58,18 @@ struct Settings
     std::string surgeBase, surfboardBase, mellowBase, quanBase, quanXBase, loonBase, SSSubBase, singBoxBase;
     std::string surgeSSRPath, quanXDevID;
 
-    //cache system
+    // cache system
     bool serveCacheOnFetchFail = false;
     int cacheSubscription = 60, cacheConfig = 300, cacheRuleset = 21600;
 
-    //limits
+    // limits
     size_t maxAllowedRulesets = 64, maxAllowedRules = 32768;
     bool scriptCleanContext = false;
 
-    //cron system
+    // cron system
     bool enableCron = false;
     CronTaskConfigs cronTasks;
 };
-
 
 struct ExternalConfig
 {
@@ -104,13 +103,13 @@ int loadExternalConfig(std::string &path, ExternalConfig &ext);
 template <class... Args>
 void parseGroupTimes(const std::string &src, Args... args)
 {
-    std::array<int*, sizeof...(args)> ptrs {args...};
+    std::array<int *, sizeof...(args)> ptrs{args...};
     string_size bpos = 0, epos = src.find(",");
-    for(int *x : ptrs)
+    for (int *x : ptrs)
     {
-        if(x != nullptr)
+        if (x != nullptr)
             *x = to_int(src.substr(bpos, epos - bpos), 0);
-        if(epos != src.npos)
+        if (epos != src.npos)
         {
             bpos = epos + 1;
             epos = src.find(",", bpos);

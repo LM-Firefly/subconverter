@@ -39,11 +39,9 @@ static httplib::Server::Handler makeHandler(const responseRoute &rr)
         Response resp;
         req.method = request.method;
         req.url = request.path;
-        for (auto &h: request.headers)
+        for (auto &h : request.headers)
         {
-            if (startsWith(h.first, "LOCAL_")
-            || startsWith(h.first, "REMOTE_")
-            || is_request_header_blacklisted(h.first))
+            if (startsWith(h.first, "LOCAL_") || startsWith(h.first, "REMOTE_") || is_request_header_blacklisted(h.first))
             {
                 continue;
             }
@@ -67,7 +65,7 @@ static httplib::Server::Handler makeHandler(const responseRoute &rr)
         }
         auto result = rr.rc(req, resp);
         response.status = resp.status_code;
-        for (auto &h: resp.headers)
+        for (auto &h : resp.headers)
         {
             response.set_header(h.first, h.second);
         }
@@ -83,7 +81,7 @@ static httplib::Server::Handler makeHandler(const responseRoute &rr)
 static std::string dump(const httplib::Headers &headers)
 {
     std::string s;
-    for (auto &x: headers)
+    for (auto &x : headers)
     {
         if (startsWith(x.first, "LOCAL_") || startsWith(x.first, "REMOTE_"))
             continue;
@@ -99,25 +97,26 @@ int WebServer::start_web_server_multi(listener_args *args)
     {
         switch (hash_(x.method))
         {
-            case "GET"_hash: case "HEAD"_hash:
-                server.Get(x.path, makeHandler(x));
-                break;
-            case "POST"_hash:
-                server.Post(x.path, makeHandler(x));
-                break;
-            case "PUT"_hash:
-                server.Put(x.path, makeHandler(x));
-                break;
-            case "DELETE"_hash:
-                server.Delete(x.path, makeHandler(x));
-                break;
-            case "PATCH"_hash:
-                server.Patch(x.path, makeHandler(x));
-                break;
+        case "GET"_hash:
+        case "HEAD"_hash:
+            server.Get(x.path, makeHandler(x));
+            break;
+        case "POST"_hash:
+            server.Post(x.path, makeHandler(x));
+            break;
+        case "PUT"_hash:
+            server.Put(x.path, makeHandler(x));
+            break;
+        case "DELETE"_hash:
+            server.Delete(x.path, makeHandler(x));
+            break;
+        case "PATCH"_hash:
+            server.Patch(x.path, makeHandler(x));
+            break;
         }
     }
     server.Options(R"(.*)", [&](const httplib::Request &req, httplib::Response &res)
-    {
+                   {
         auto path = req.path;
         std::string allowed;
         for (auto &rr : responses)
@@ -138,10 +137,9 @@ int WebServer::start_web_server_multi(listener_args *args)
         else
         {
             res.status = 404;
-        }
-    });
+        } });
     server.set_pre_routing_handler([&](const httplib::Request &req, httplib::Response &res)
-    {
+                                   {
         writeLog(0, "Accept connection from client " + req.remote_addr + ":" + std::to_string(req.remote_port), LOG_LEVEL_DEBUG);
         writeLog(0, "handle_cmd:    " + req.method + " handle_uri:    " + req.target, LOG_LEVEL_VERBOSE);
         writeLog(0, "handle_header: " + dump(req.headers), LOG_LEVEL_VERBOSE);
@@ -170,11 +168,11 @@ int WebServer::start_web_server_multi(listener_args *args)
         {
             res.set_header("Access-Control-Allow-Headers", req.get_header_value("Access-Control-Request-Headers"));
         }
-        return httplib::Server::HandlerResponse::Unhandled;
-    });
+        return httplib::Server::HandlerResponse::Unhandled; });
     for (auto &x : redirect_map)
     {
-        server.Get(x.first, [x](const httplib::Request &req, httplib::Response &res) {
+        server.Get(x.first, [x](const httplib::Request &req, httplib::Response &res)
+                   {
             auto arguments = req.params;
             auto query = x.second;
             auto pos = query.find('?');
@@ -187,11 +185,10 @@ int WebServer::start_web_server_multi(listener_args *args)
             {
                 query.pop_back();
             }
-            res.set_redirect(query);
-        });
+            res.set_redirect(query); });
     }
     server.set_exception_handler([](const httplib::Request &req, httplib::Response &res, const std::exception_ptr &e)
-    {
+                                 {
         try
         {
             if (e) std::rethrow_exception(e);
@@ -213,21 +210,19 @@ int WebServer::start_web_server_multi(listener_args *args)
         catch (...)
         {
             res.status = 500;
-        }
-    });
+        } });
     if (serve_file)
     {
         server.set_mount_point("/", serve_file_root);
     }
-    server.new_task_queue = [args] {
+    server.new_task_queue = [args]
+    {
         return new httplib::ThreadPool(args->max_workers);
     };
     server.bind_to_port(args->listen_address, args->port, 0);
 
     std::thread thread([&]()
-    {
-        server.listen_after_bind();
-    });
+                       { server.listen_after_bind(); });
 
     while (!SERVER_EXIT_FLAG)
     {
