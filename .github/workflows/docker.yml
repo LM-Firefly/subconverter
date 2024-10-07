@@ -47,7 +47,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.7.0
+        uses: docker/setup-buildx-action@v3.7.1
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
@@ -101,7 +101,7 @@ jobs:
           pattern: digest-*
           merge-multiple: true
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.7.0
+        uses: docker/setup-buildx-action@v3.7.1
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
