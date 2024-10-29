@@ -146,12 +146,23 @@ struct Proxy
     uint32_t HopInterval;
     uint32_t CWND = 0;
 
-    tribool DisableSni;
-    tribool ReduceRtt;
     String UdpRelayMode = "native";
     uint16_t RequestTimeout = 15000;
     String token;
     String PacketEncoding;
+
+    String Uuid;
+    String Ip;
+    String Heartbeatinterval;
+    String Disablesni;
+    String Reducertt;
+    String Requesttimeout;
+    String Udprelaymode;
+    String Congestioncontroller;
+    String Maxudprelaypacketsize;
+    String Fastopen;
+    String Maxopenstreams;
+    String Sni;
 };
 
 #define SS_DEFAULT_GROUP "SSProvider"
@@ -165,6 +176,6 @@ struct Proxy
 #define XRAY_DEFAULT_GROUP "XRayProvider"
 #define HYSTERIA_DEFAULT_GROUP "HysteriaProvider"
 #define HYSTERIA2_DEFAULT_GROUP "Hysteria2Provider"
-#define TUIC_DEFAULT_GROUP "TuicProvider"
+#define TUIC_DEFAULT_GROUP "TUICProvider"
 
 #endif // PROXY_H_INCLUDED
