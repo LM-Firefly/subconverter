@@ -43,7 +43,7 @@ jobs:
         with:
           timezoneLinux: 'Asia/Shanghai'
       - name: Checkout base
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
       - name: Set up Docker Buildx
@@ -129,7 +129,7 @@ jobs:
     env:
       GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
     steps:
-      - uses: actions/checkout@v4.2.1
+      - uses: actions/checkout@v4.2.2
       # https://github.com/marketplace/actions/push-to-ghcr
       - name: Build and publish a Docker image for ${{ github.repository }}
         uses: macbre/push-to-ghcr@master
