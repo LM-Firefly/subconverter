@@ -12,15 +12,19 @@
 #include "multithread.h"
 #include "settings.h"
 
-//multi-thread lock
+// multi-thread lock
 std::mutex gMutexConfigure;
 
 Settings global;
 
 extern WebServer webServer;
 
-const std::map<std::string, ruleset_type> RulesetTypes = {{"clash-domain:", RULESET_CLASH_DOMAIN}, {"clash-ipcidr:", RULESET_CLASH_IPCIDR}, {"clash-classic:", RULESET_CLASH_CLASSICAL}, \
-            {"quanx:", RULESET_QUANX}, {"surge:", RULESET_SURGE}};
+const std::map<std::string, ruleset_type> RulesetTypes = {
+    {"clash-domain:", RULESET_CLASH_DOMAIN},
+    {"clash-ipcidr:", RULESET_CLASH_IPCIDR},
+    {"clash-classic:", RULESET_CLASH_CLASSICAL},
+    {"quanx:", RULESET_QUANX},
+    {"surge:", RULESET_SURGE}};
 
 int importItems(string_array &target, bool scope_limit)
 {
@@ -28,9 +32,9 @@ int importItems(string_array &target, bool scope_limit)
     std::stringstream ss;
     std::string path, content, strLine;
     unsigned int itemCount = 0;
-    for(std::string &x : target)
+    for (std::string &x : target)
     {
-        if(x.find("!!import:") == std::string::npos)
+        if (x.find("!!import:") == std::string::npos)
         {
             result.emplace_back(x);
             continue;
@@ -40,24 +44,24 @@ int importItems(string_array &target, bool scope_limit)
 
         std::string proxy = parseProxy(global.proxyConfig);
 
-        if(fileExist(path))
+        if (fileExist(path))
             content = fileGet(path, scope_limit);
-        else if(isLink(path))
+        else if (isLink(path))
             content = webGet(path, proxy, global.cacheConfig);
         else
             writeLog(0, "File not found or not a valid URL: " + path, LOG_LEVEL_ERROR);
-        if(content.empty())
+        if (content.empty())
             return -1;
 
         ss << content;
         char delimiter = getLineBreak(content);
         std::string::size_type lineSize;
-        while(getline(ss, strLine, delimiter))
+        while (getline(ss, strLine, delimiter))
         {
             lineSize = strLine.size();
-            if(lineSize && strLine[lineSize - 1] == '\r') //remove line break
+            if (lineSize && strLine[lineSize - 1] == '\r') // remove line break
                 strLine.erase(--lineSize);
-            if(!lineSize || strLine[0] == ';' || strLine[0] == '#' || (lineSize >= 2 && strLine[0] == '/' && strLine[1] == '/')) //empty lines and comments are ignored
+            if (!lineSize || strLine[0] == ';' || strLine[0] == '#' || (lineSize >= 2 && strLine[0] == '/' && strLine[1] == '/')) // empty lines and comments are ignored
                 continue;
             result.emplace_back(std::move(strLine));
             itemCount++;
@@ -83,22 +87,22 @@ void importItems(std::vector<toml::value> &root, const std::string &import_key, 
     size_t count = 0;
 
     std::string proxy = parseProxy(global.proxyConfig);
-    while(iter != root.end())
+    while (iter != root.end())
     {
-        auto& table = iter->as_table();
-        if(table.find("import") == table.end())
+        auto &table = iter->as_table();
+        if (table.find("import") == table.end())
             newRoot.emplace_back(std::move(*iter));
         else
         {
             const std::string &path = toml::get<std::string>(table.at("import"));
             writeLog(0, "Trying to import items from " + path);
-            if(fileExist(path))
+            if (fileExist(path))
                 content = fileGet(path, scope_limit);
-            else if(isLink(path))
+            else if (isLink(path))
                 content = webGet(path, proxy, global.cacheConfig);
             else
                 writeLog(0, "File not found or not a valid URL: " + path, LOG_LEVEL_ERROR);
-            if(!content.empty())
+            if (!content.empty())
             {
                 auto items = parseToml(content, path);
                 auto list = toml::find<std::vector<toml::value>>(items, import_key);
@@ -114,24 +118,24 @@ void importItems(std::vector<toml::value> &root, const std::string &import_key, 
 
 void readRegexMatch(YAML::Node node, const std::string &delimiter, string_array &dest, bool scope_limit = true)
 {
-    for(auto && object : node)
+    for (auto &&object : node)
     {
         std::string script, url, match, rep, strLine;
         object["script"] >>= script;
-        if(!script.empty())
+        if (!script.empty())
         {
             dest.emplace_back("!!script:" + script);
             continue;
         }
         object["import"] >>= url;
-        if(!url.empty())
+        if (!url.empty())
         {
             dest.emplace_back("!!import:" + url);
             continue;
         }
         object["match"] >>= match;
         object["replace"] >>= rep;
-        if(!match.empty() && !rep.empty())
+        if (!match.empty() && !rep.empty())
             strLine = match + delimiter + rep;
         else
             continue;
@@ -142,17 +146,17 @@ void readRegexMatch(YAML::Node node, const std::string &delimiter, string_array 
 
 void readEmoji(YAML::Node node, string_array &dest, bool scope_limit = true)
 {
-    for(auto && object : node)
+    for (auto &&object : node)
     {
         std::string script, url, match, rep, strLine;
         object["script"] >>= script;
-        if(!script.empty())
+        if (!script.empty())
         {
             dest.emplace_back("!!script:" + script);
             continue;
         }
         object["import"] >>= url;
-        if(!url.empty())
+        if (!url.empty())
         {
             url = "!!import:" + url;
             dest.emplace_back(url);
@@ -160,7 +164,7 @@ void readEmoji(YAML::Node node, string_array &dest, bool scope_limit = true)
         }
         object["match"] >>= match;
         object["emoji"] >>= rep;
-        if(!match.empty() && !rep.empty())
+        if (!match.empty() && !rep.empty())
             strLine = match + "," + rep;
         else
             continue;
@@ -171,12 +175,12 @@ void readEmoji(YAML::Node node, string_array &dest, bool scope_limit = true)
 
 void readGroup(YAML::Node node, string_array &dest, bool scope_limit = true)
 {
-    for(YAML::Node && object : node)
+    for (YAML::Node &&object : node)
     {
         string_array tempArray;
         std::string name, type;
         object["import"] >>= name;
-        if(!name.empty())
+        if (!name.empty())
         {
             dest.emplace_back("!!import:" + name);
             continue;
@@ -190,20 +194,20 @@ void readGroup(YAML::Node node, string_array &dest, bool scope_limit = true)
         object["interval"] >>= interval;
         object["tolerance"] >>= tolerance;
         object["timeout"] >>= timeout;
-        for(std::size_t j = 0; j < object["rule"].size(); j++)
+        for (std::size_t j = 0; j < object["rule"].size(); j++)
             tempArray.emplace_back(safe_as<std::string>(object["rule"][j]));
-        switch(hash_(type))
+        switch (hash_(type))
         {
         case "select"_hash:
-            if(tempArray.size() < 3)
+            if (tempArray.size() < 3)
                 continue;
             break;
         case "ssid"_hash:
-            if(tempArray.size() < 4)
+            if (tempArray.size() < 4)
                 continue;
             break;
         default:
-            if(tempArray.size() < 3)
+            if (tempArray.size() < 3)
                 continue;
             tempArray.emplace_back(url);
             tempArray.emplace_back(interval + "," + timeout + "," + tolerance);
@@ -217,11 +221,11 @@ void readGroup(YAML::Node node, string_array &dest, bool scope_limit = true)
 
 void readRuleset(YAML::Node node, string_array &dest, bool scope_limit = true)
 {
-    for(auto && object : node)
+    for (auto &&object : node)
     {
         std::string strLine, name, url, group, interval;
         object["import"] >>= name;
-        if(!name.empty())
+        if (!name.empty())
         {
             dest.emplace_back("!!import:" + name);
             continue;
@@ -230,13 +234,13 @@ void readRuleset(YAML::Node node, string_array &dest, bool scope_limit = true)
         object["group"] >>= group;
         object["rule"] >>= name;
         object["interval"] >>= interval;
-        if(!url.empty())
+        if (!url.empty())
         {
             strLine = group + "," + url;
-            if(!interval.empty())
+            if (!interval.empty())
                 strLine += "," + interval;
         }
-        else if(!name.empty())
+        else if (!name.empty())
             strLine = group + ",[]" + name;
         else
             continue;
@@ -253,22 +257,25 @@ void refreshRulesets(RulesetConfigs &ruleset_list, std::vector<RulesetContent> &
 
     std::string proxy = parseProxy(global.proxyRuleset);
 
-    for(RulesetConfig &x : ruleset_list)
+    for (RulesetConfig &x : ruleset_list)
     {
         rule_group = x.Group;
         rule_url = x.Url;
         std::string::size_type pos = x.Url.find("[]");
-        if(pos != std::string::npos)
+        if (pos != std::string::npos)
         {
             writeLog(0, "Adding rule '" + rule_url.substr(pos + 2) + "," + rule_group + "'.", LOG_LEVEL_INFO);
-            rc = {rule_group, "", "", RULESET_SURGE, std::async(std::launch::async, [=](){return rule_url.substr(pos);}), 0};
+            rc = {rule_group, "", "", RULESET_SURGE, std::async(std::launch::async, [=]()
+                                                                { return rule_url.substr(pos); }),
+                  0};
         }
         else
         {
             ruleset_type type = RULESET_SURGE;
             rule_url_typed = rule_url;
-            auto iter = std::find_if(RulesetTypes.begin(), RulesetTypes.end(), [rule_url](auto y){ return startsWith(rule_url, y.first); });
-            if(iter != RulesetTypes.end())
+            auto iter = std::find_if(RulesetTypes.begin(), RulesetTypes.end(), [rule_url](auto y)
+                                     { return startsWith(rule_url, y.first); });
+            if (iter != RulesetTypes.end())
             {
                 rule_url.erase(0, iter->first.size());
                 type = iter->second;
@@ -289,37 +296,33 @@ void readYAMLConf(YAML::Node &node)
 
     section["api_mode"] >> global.APIMode;
     section["api_access_token"] >> global.accessToken;
-    if(section["default_url"].IsSequence())
+    if (section["default_url"].IsSequence())
     {
         section["default_url"] >> tempArray;
-        if(tempArray.size())
+        if (tempArray.size())
         {
             strLine = std::accumulate(std::next(tempArray.begin()), tempArray.end(), tempArray[0], [](std::string a, std::string b)
-            {
-                return std::move(a) + "|" + std::move(b);
-            });
+                                      { return std::move(a) + "|" + std::move(b); });
             global.defaultUrls = strLine;
             eraseElements(tempArray);
         }
     }
     global.enableInsert = safe_as<std::string>(section["enable_insert"]);
-    if(section["insert_url"].IsSequence())
+    if (section["insert_url"].IsSequence())
     {
         section["insert_url"] >> tempArray;
-        if(tempArray.size())
+        if (tempArray.size())
         {
             strLine = std::accumulate(std::next(tempArray.begin()), tempArray.end(), tempArray[0], [](std::string a, std::string b)
-            {
-                return std::move(a) + "|" + std::move(b);
-            });
+                                      { return std::move(a) + "|" + std::move(b); });
             global.insertUrls = strLine;
             eraseElements(tempArray);
         }
     }
     section["prepend_insert_url"] >> global.prependInsert;
-    if(section["exclude_remarks"].IsSequence())
+    if (section["exclude_remarks"].IsSequence())
         section["exclude_remarks"] >> global.excludeRemarks;
-    if(section["include_remarks"].IsSequence())
+    if (section["include_remarks"].IsSequence())
         section["include_remarks"] >> global.includeRemarks;
     global.filterScript = safe_as<bool>(section["enable_filter"]) ? safe_as<std::string>(section["filter_script"]) : "";
     section["base_path"] >> global.basePath;
@@ -340,17 +343,17 @@ void readYAMLConf(YAML::Node &node)
     section["proxy_subscription"] >> global.proxySubscription;
     section["reload_conf_on_request"] >> global.reloadConfOnRequest;
 
-    if(node["userinfo"].IsDefined())
+    if (node["userinfo"].IsDefined())
     {
         section = node["userinfo"];
-        if(section["stream_rule"].IsSequence())
+        if (section["stream_rule"].IsSequence())
         {
             readRegexMatch(section["stream_rule"], "|", tempArray, false);
             auto configs = INIBinding::from<RegexMatchConfig>::from_ini(tempArray, "|");
             safe_set_streams(configs);
             eraseElements(tempArray);
         }
-        if(section["time_rule"].IsSequence())
+        if (section["time_rule"].IsSequence())
         {
             readRegexMatch(section["time_rule"], "|", tempArray, false);
             auto configs = INIBinding::from<RegexMatchConfig>::from_ini(tempArray, "|");
@@ -359,7 +362,7 @@ void readYAMLConf(YAML::Node &node)
         }
     }
 
-    if(node["node_pref"].IsDefined())
+    if (node["node_pref"].IsDefined())
     {
         section = node["node_pref"];
         /*
@@ -381,7 +384,7 @@ void readYAMLConf(YAML::Node &node)
         section["singbox_add_clash_modes"] >> global.singBoxAddClashModes;
     }
 
-    if(section["rename_node"].IsSequence())
+    if (section["rename_node"].IsSequence())
     {
         readRegexMatch(section["rename_node"], "@", tempArray, false);
         auto configs = INIBinding::from<RegexMatchConfig>::from_ini(tempArray, "@");
@@ -389,7 +392,7 @@ void readYAMLConf(YAML::Node &node)
         eraseElements(tempArray);
     }
 
-    if(node["managed_config"].IsDefined())
+    if (node["managed_config"].IsDefined())
     {
         section = node["managed_config"];
         section["write_managed_config"] >> global.writeManagedConfig;
@@ -399,18 +402,18 @@ void readYAMLConf(YAML::Node &node)
         section["quanx_device_id"] >> global.quanXDevID;
     }
 
-    if(node["surge_external_proxy"].IsDefined())
+    if (node["surge_external_proxy"].IsDefined())
     {
         node["surge_external_proxy"]["surge_ssr_path"] >> global.surgeSSRPath;
         node["surge_external_proxy"]["resolve_hostname"] >> global.surgeResolveHostname;
     }
 
-    if(node["emojis"].IsDefined())
+    if (node["emojis"].IsDefined())
     {
         section = node["emojis"];
         section["add_emoji"] >> global.addEmoji;
         section["remove_old_emoji"] >> global.removeEmoji;
-        if(section["rules"].IsSequence())
+        if (section["rules"].IsSequence())
         {
             readEmoji(section["rules"], tempArray, false);
             auto configs = INIBinding::from<RegexMatchConfig>::from_ini(tempArray, ",");
@@ -420,11 +423,11 @@ void readYAMLConf(YAML::Node &node)
     }
 
     const char *rulesets_title = node["rulesets"].IsDefined() ? "rulesets" : "ruleset";
-    if(node[rulesets_title].IsDefined())
+    if (node[rulesets_title].IsDefined())
     {
         section = node[rulesets_title];
         section["enabled"] >> global.enableRuleGen;
-        if(!global.enableRuleGen)
+        if (!global.enableRuleGen)
         {
             global.overwriteOriginalRules = false;
             global.updateRulesetOnRequest = false;
@@ -435,7 +438,7 @@ void readYAMLConf(YAML::Node &node)
             section["update_ruleset_on_request"] >> global.updateRulesetOnRequest;
         }
         const char *ruleset_title = section["rulesets"].IsDefined() ? "rulesets" : "surge_ruleset";
-        if(section[ruleset_title].IsSequence())
+        if (section[ruleset_title].IsSequence())
         {
             string_array vArray;
             readRuleset(section[ruleset_title], vArray, false);
@@ -444,20 +447,20 @@ void readYAMLConf(YAML::Node &node)
     }
 
     const char *groups_title = node["proxy_groups"].IsDefined() ? "proxy_groups" : "proxy_group";
-    if(node[groups_title].IsDefined() && node[groups_title]["custom_proxy_group"].IsDefined())
+    if (node[groups_title].IsDefined() && node[groups_title]["custom_proxy_group"].IsDefined())
     {
         string_array vArray;
         readGroup(node[groups_title]["custom_proxy_group"], vArray, false);
         global.customProxyGroups = INIBinding::from<ProxyGroupConfig>::from_ini(vArray);
     }
 
-    if(node["template"].IsDefined())
+    if (node["template"].IsDefined())
     {
         node["template"]["template_path"] >> global.templatePath;
-        if(node["template"]["globals"].IsSequence())
+        if (node["template"]["globals"].IsSequence())
         {
             eraseElements(global.templateVars);
-            for(size_t i = 0; i < node["template"]["globals"].size(); i++)
+            for (size_t i = 0; i < node["template"]["globals"].size(); i++)
             {
                 std::string key, value;
                 node["template"]["globals"][i]["key"] >> key;
@@ -467,10 +470,10 @@ void readYAMLConf(YAML::Node &node)
         }
     }
 
-    if(node["aliases"].IsSequence())
+    if (node["aliases"].IsSequence())
     {
         webServer.reset_redirect();
-        for(size_t i = 0; i < node["aliases"].size(); i++)
+        for (size_t i = 0; i < node["aliases"].size(); i++)
         {
             std::string uri, target;
             node["aliases"][i]["uri"] >> uri;
@@ -479,14 +482,14 @@ void readYAMLConf(YAML::Node &node)
         }
     }
 
-    if(node["tasks"].IsSequence())
+    if (node["tasks"].IsSequence())
     {
         string_array vArray;
-        for(size_t i = 0; i < node["tasks"].size(); i++)
+        for (size_t i = 0; i < node["tasks"].size(); i++)
         {
             std::string name, exp, path, timeout;
             node["tasks"][i]["import"] >> name;
-            if(name.size())
+            if (name.size())
             {
                 vArray.emplace_back("!!import:" + name);
                 continue;
@@ -504,7 +507,7 @@ void readYAMLConf(YAML::Node &node)
         refresh_schedule();
     }
 
-    if(node["server"].IsDefined())
+    if (node["server"].IsDefined())
     {
         node["server"]["listen"] >> global.listenAddress;
         node["server"]["port"] >> global.listenPort;
@@ -512,16 +515,16 @@ void readYAMLConf(YAML::Node &node)
         webServer.serve_file = !webServer.serve_file_root.empty();
     }
 
-    if(node["advanced"].IsDefined())
+    if (node["advanced"].IsDefined())
     {
         std::string log_level;
         node["advanced"]["log_level"] >> log_level;
         node["advanced"]["print_debug_info"] >> global.printDbgInfo;
-        if(global.printDbgInfo)
+        if (global.printDbgInfo)
             global.logLevel = LOG_LEVEL_VERBOSE;
         else
         {
-            switch(hash_(log_level))
+            switch (hash_(log_level))
             {
             case "warn"_hash:
                 global.logLevel = LOG_LEVEL_WARNING;
@@ -547,9 +550,9 @@ void readYAMLConf(YAML::Node &node)
         node["advanced"]["max_allowed_rulesets"] >> global.maxAllowedRulesets;
         node["advanced"]["max_allowed_rules"] >> global.maxAllowedRules;
         node["advanced"]["max_allowed_download_size"] >> global.maxAllowedDownloadSize;
-        if(node["advanced"]["enable_cache"].IsDefined())
+        if (node["advanced"]["enable_cache"].IsDefined())
         {
-            if(safe_as<bool>(node["advanced"]["enable_cache"]))
+            if (safe_as<bool>(node["advanced"]["enable_cache"]))
             {
                 node["advanced"]["cache_subscription"] >> global.cacheSubscription;
                 node["advanced"]["cache_config"] >> global.cacheConfig;
@@ -557,7 +560,7 @@ void readYAMLConf(YAML::Node &node)
                 node["advanced"]["serve_cache_on_fetch_fail"] >> global.serveCacheOnFetchFail;
             }
             else
-                global.cacheSubscription = global.cacheConfig = global.cacheRuleset = 0; //disable cache
+                global.cacheSubscription = global.cacheConfig = global.cacheRuleset = 0; // disable cache
         }
         node["advanced"]["script_clean_context"] >> global.scriptCleanContext;
         node["advanced"]["async_fetch_ruleset"] >> global.asyncFetchRuleset;
@@ -567,15 +570,17 @@ void readYAMLConf(YAML::Node &node)
 }
 
 template <class T, class... U>
-void find_if_exist(const toml::value &v, const toml::key &k, T& target, U&&... args)
+void find_if_exist(const toml::value &v, const toml::key &k, T &target, U &&...args)
 {
-    if(v.contains(k)) target = toml::find<T>(v, k);
-    if constexpr (sizeof...(args) > 0) find_if_exist(v, std::forward<U>(args)...);
+    if (v.contains(k))
+        target = toml::find<T>(v, k);
+    if constexpr (sizeof...(args) > 0)
+        find_if_exist(v, std::forward<U>(args)...);
 }
 
-void operate_toml_kv_table(const std::vector<toml::table> &arr, const toml::key &key_name, const toml::key &value_name, std::function<void (const toml::value&, const toml::value&)> binary_op)
+void operate_toml_kv_table(const std::vector<toml::table> &arr, const toml::key &key_name, const toml::key &value_name, std::function<void(const toml::value &, const toml::value &)> binary_op)
 {
-    for(const toml::table &table : arr)
+    for (const toml::table &table : arr)
     {
         const auto &key = table.at(key_name), &value = table.at(value_name);
         binary_op(key, value);
@@ -615,10 +620,9 @@ void readTOMLConf(toml::value &root)
                   "proxy_ruleset", global.proxyRuleset,
                   "proxy_subscription", global.proxySubscription,
                   "append_proxy_type", global.appendType,
-                  "reload_conf_on_request", global.reloadConfOnRequest
-    );
+                  "reload_conf_on_request", global.reloadConfOnRequest);
 
-    if(filter)
+    if (filter)
         find_if_exist(section_common, "filter_script", global.filterScript);
     else
         global.filterScript.clear();
@@ -640,8 +644,7 @@ void readTOMLConf(toml::value &root)
                   "clash_use_new_field_name", global.clashUseNewField,
                   "clash_proxies_style", global.clashProxiesStyle,
                   "clash_proxy_groups_style", global.clashProxyGroupsStyle,
-                  "singbox_add_clash_modes", global.singBoxAddClashModes
-    );
+                  "singbox_add_clash_modes", global.singBoxAddClashModes);
 
     auto renameconfs = toml::find_or<std::vector<toml::value>>(section_node_pref, "rename_node", {});
     importItems(renameconfs, "rename_node", false);
@@ -654,21 +657,18 @@ void readTOMLConf(toml::value &root)
                   "managed_config_prefix", global.managedConfigPrefix,
                   "config_update_interval", global.updateInterval,
                   "config_update_strict", global.updateStrict,
-                  "quanx_device_id", global.quanXDevID
-    );
+                  "quanx_device_id", global.quanXDevID);
 
     auto section_surge_external = toml::find(root, "surge_external_proxy");
     find_if_exist(section_surge_external,
                   "surge_ssr_path", global.surgeSSRPath,
-                  "resolve_hostname", global.surgeResolveHostname
-    );
+                  "resolve_hostname", global.surgeResolveHostname);
 
     auto section_emojis = toml::find(root, "emojis");
 
     find_if_exist(section_emojis,
                   "add_emoji", global.addEmoji,
-                  "remove_old_emoji", global.removeEmoji
-    );
+                  "remove_old_emoji", global.removeEmoji);
 
     auto emojiconfs = toml::find_or<std::vector<toml::value>>(section_emojis, "emoji", {});
     importItems(emojiconfs, "emoji", false);
@@ -683,8 +683,7 @@ void readTOMLConf(toml::value &root)
     find_if_exist(section_ruleset,
                   "enabled", global.enableRuleGen,
                   "overwrite_original_rules", global.overwriteOriginalRules,
-                  "update_ruleset_on_request", global.updateRulesetOnRequest
-    );
+                  "update_ruleset_on_request", global.updateRulesetOnRequest);
 
     auto rulesets = toml::find_or<std::vector<toml::value>>(root, "rulesets", {});
     importItems(rulesets, "rulesets", false);
@@ -696,15 +695,11 @@ void readTOMLConf(toml::value &root)
 
     eraseElements(global.templateVars);
     operate_toml_kv_table(toml::find_or<std::vector<toml::table>>(section_template, "globals", {}), "key", "value", [&](const toml::value &key, const toml::value &value)
-    {
-        global.templateVars[key.as_string()] = value.as_string();
-    });
+                          { global.templateVars[key.as_string()] = value.as_string(); });
 
     webServer.reset_redirect();
     operate_toml_kv_table(toml::find_or<std::vector<toml::table>>(root, "aliases", {}), "uri", "target", [&](const toml::value &key, const toml::value &value)
-    {
-        webServer.append_redirect(key.as_string(), value.as_string());
-    });
+                          { webServer.append_redirect(key.as_string(), value.as_string()); });
 
     auto tasks = toml::find_or<std::vector<toml::value>>(root, "tasks", {});
     importItems(tasks, "tasks", false);
@@ -716,8 +711,7 @@ void readTOMLConf(toml::value &root)
     find_if_exist(section_server,
                   "listen", global.listenAddress,
                   "port", global.listenPort,
-                  "serve_file_root", webServer.serve_file_root
-    );
+                  "serve_file_root", webServer.serve_file_root);
     webServer.serve_file = !webServer.serve_file_root.empty();
 
     auto section_advanced = toml::find(root, "advanced");
@@ -740,14 +734,13 @@ void readTOMLConf(toml::value &root)
                   "cache_ruleset", cache_ruleset,
                   "script_clean_context", global.scriptCleanContext,
                   "async_fetch_ruleset", global.asyncFetchRuleset,
-                  "skip_failed_links", global.skipFailedLinks
-    );
+                  "skip_failed_links", global.skipFailedLinks);
 
-    if(global.printDbgInfo)
+    if (global.printDbgInfo)
         global.logLevel = LOG_LEVEL_VERBOSE;
     else
     {
-        switch(hash_(log_level))
+        switch (hash_(log_level))
         {
         case "warn"_hash:
             global.logLevel = LOG_LEVEL_WARNING;
@@ -769,7 +762,7 @@ void readTOMLConf(toml::value &root)
         }
     }
 
-    if(enable_cache)
+    if (enable_cache)
     {
         global.cacheSubscription = cache_subscription;
         global.cacheConfig = cache_config;
@@ -796,34 +789,34 @@ void readConf()
     try
     {
         std::string prefdata = fileGet(global.prefPath, false);
-        if(prefdata.find("common:") != std::string::npos)
+        if (prefdata.find("common:") != std::string::npos)
         {
             YAML::Node yaml = YAML::Load(prefdata);
-            if(yaml.size() && yaml["common"])
+            if (yaml.size() && yaml["common"])
                 return readYAMLConf(yaml);
         }
         toml::value conf = parseToml(prefdata, global.prefPath);
-        if(!conf.is_uninitialized() && toml::find_or<int>(conf, "version", 0))
+        if (!conf.is_uninitialized() && toml::find_or<int>(conf, "version", 0))
             return readTOMLConf(conf);
     }
     catch (YAML::Exception &e)
     {
-        //ignore yaml parse error
+        // ignore yaml parse error
         writeLog(0, e.what(), LOG_LEVEL_DEBUG);
         writeLog(0, "Unable to load preference settings as YAML.", LOG_LEVEL_DEBUG);
     }
     catch (toml::exception &e)
     {
-        //ignore toml parse error
+        // ignore toml parse error
         writeLog(0, e.what(), LOG_LEVEL_DEBUG);
         writeLog(0, "Unable to load preference settings as TOML.", LOG_LEVEL_DEBUG);
     }
 
     INIReader ini;
     ini.allow_dup_section_titles = true;
-    //ini.do_utf8_to_gbk = true;
+    // ini.do_utf8_to_gbk = true;
     int retVal = ini.parse_file(global.prefPath);
-    if(retVal != INIREADER_EXCEPTION_NONE)
+    if (retVal != INIREADER_EXCEPTION_NONE)
     {
         writeLog(0, "Unable to load preference settings as INI. Reason: " + ini.get_last_error(), LOG_LEVEL_FATAL);
         return;
@@ -838,9 +831,9 @@ void readConf()
     global.enableInsert = ini.get("enable_insert");
     ini.get_if_exist("insert_url", global.insertUrls);
     ini.get_bool_if_exist("prepend_insert_url", global.prependInsert);
-    if(ini.item_prefix_exist("exclude_remarks"))
+    if (ini.item_prefix_exist("exclude_remarks"))
         ini.get_all("exclude_remarks", global.excludeRemarks);
-    if(ini.item_prefix_exist("include_remarks"))
+    if (ini.item_prefix_exist("include_remarks"))
         ini.get_all("include_remarks", global.includeRemarks);
     global.filterScript = ini.get_bool("enable_filter") ? ini.get("filter_script") : "";
     ini.get_if_exist("base_path", global.basePath);
@@ -860,14 +853,14 @@ void readConf()
     ini.get_if_exist("proxy_subscription", global.proxySubscription);
     ini.get_bool_if_exist("reload_conf_on_request", global.reloadConfOnRequest);
 
-    if(ini.section_exist("surge_external_proxy"))
+    if (ini.section_exist("surge_external_proxy"))
     {
         ini.enter_section("surge_external_proxy");
         ini.get_if_exist("surge_ssr_path", global.surgeSSRPath);
         ini.get_bool_if_exist("resolve_hostname", global.surgeResolveHostname);
     }
 
-    if(ini.section_exist("node_pref"))
+    if (ini.section_exist("node_pref"))
     {
         ini.enter_section("node_pref");
         /*
@@ -887,7 +880,7 @@ void readConf()
         ini.get_if_exist("clash_proxies_style", global.clashProxiesStyle);
         ini.get_if_exist("clash_proxy_groups_style", global.clashProxyGroupsStyle);
         ini.get_bool_if_exist("singbox_add_clash_modes", global.singBoxAddClashModes);
-        if(ini.item_prefix_exist("rename_node"))
+        if (ini.item_prefix_exist("rename_node"))
         {
             ini.get_all("rename_node", tempArray);
             importItems(tempArray, false);
@@ -897,10 +890,10 @@ void readConf()
         }
     }
 
-    if(ini.section_exist("userinfo"))
+    if (ini.section_exist("userinfo"))
     {
         ini.enter_section("userinfo");
-        if(ini.item_prefix_exist("stream_rule"))
+        if (ini.item_prefix_exist("stream_rule"))
         {
             ini.get_all("stream_rule", tempArray);
             importItems(tempArray, false);
@@ -908,7 +901,7 @@ void readConf()
             safe_set_streams(configs);
             eraseElements(tempArray);
         }
-        if(ini.item_prefix_exist("time_rule"))
+        if (ini.item_prefix_exist("time_rule"))
         {
             ini.get_all("time_rule", tempArray);
             importItems(tempArray, false);
@@ -928,7 +921,7 @@ void readConf()
     ini.enter_section("emojis");
     ini.get_bool_if_exist("add_emoji", global.addEmoji);
     ini.get_bool_if_exist("remove_old_emoji", global.removeEmoji);
-    if(ini.item_prefix_exist("rule"))
+    if (ini.item_prefix_exist("rule"))
     {
         ini.get_all("rule", tempArray);
         importItems(tempArray, false);
@@ -937,23 +930,23 @@ void readConf()
         eraseElements(tempArray);
     }
 
-    if(ini.section_exist("rulesets"))
+    if (ini.section_exist("rulesets"))
         ini.enter_section("rulesets");
     else
         ini.enter_section("ruleset");
     global.enableRuleGen = ini.get_bool("enabled");
-    if(global.enableRuleGen)
+    if (global.enableRuleGen)
     {
         ini.get_bool_if_exist("overwrite_original_rules", global.overwriteOriginalRules);
         ini.get_bool_if_exist("update_ruleset_on_request", global.updateRulesetOnRequest);
-        if(ini.item_prefix_exist("ruleset"))
+        if (ini.item_prefix_exist("ruleset"))
         {
             string_array vArray;
             ini.get_all("ruleset", vArray);
             importItems(vArray, false);
             global.customRulesets = INIBinding::from<RulesetConfig>::from_ini(vArray);
         }
-        else if(ini.item_prefix_exist("surge_ruleset"))
+        else if (ini.item_prefix_exist("surge_ruleset"))
         {
             string_array vArray;
             ini.get_all("surge_ruleset", vArray);
@@ -967,11 +960,11 @@ void readConf()
         global.updateRulesetOnRequest = false;
     }
 
-    if(ini.section_exist("proxy_groups"))
+    if (ini.section_exist("proxy_groups"))
         ini.enter_section("proxy_groups");
     else
         ini.enter_section("clash_proxy_group");
-    if(ini.item_prefix_exist("custom_proxy_group"))
+    if (ini.item_prefix_exist("custom_proxy_group"))
     {
         string_array vArray;
         ini.get_all("custom_proxy_group", vArray);
@@ -984,24 +977,24 @@ void readConf()
     string_multimap tempmap;
     ini.get_items(tempmap);
     eraseElements(global.templateVars);
-    for(auto &x : tempmap)
+    for (auto &x : tempmap)
     {
-        if(x.first == "template_path")
+        if (x.first == "template_path")
             continue;
         global.templateVars[x.first] = x.second;
     }
     global.templateVars["managed_config_prefix"] = global.managedConfigPrefix;
 
-    if(ini.section_exist("aliases"))
+    if (ini.section_exist("aliases"))
     {
         ini.enter_section("aliases");
         ini.get_items(tempmap);
         webServer.reset_redirect();
-        for(auto &x : tempmap)
+        for (auto &x : tempmap)
             webServer.append_redirect(x.first, x.second);
     }
 
-    if(ini.section_exist("tasks"))
+    if (ini.section_exist("tasks"))
     {
         string_array vArray;
         ini.enter_section("tasks");
@@ -1022,11 +1015,11 @@ void readConf()
     std::string log_level;
     ini.get_if_exist("log_level", log_level);
     ini.get_bool_if_exist("print_debug_info", global.printDbgInfo);
-    if(global.printDbgInfo)
+    if (global.printDbgInfo)
         global.logLevel = LOG_LEVEL_VERBOSE;
     else
     {
-        switch(hash_(log_level))
+        switch (hash_(log_level))
         {
         case "warn"_hash:
             global.logLevel = LOG_LEVEL_WARNING;
@@ -1052,9 +1045,9 @@ void readConf()
     ini.get_number_if_exist("max_allowed_rulesets", global.maxAllowedRulesets);
     ini.get_number_if_exist("max_allowed_rules", global.maxAllowedRules);
     ini.get_number_if_exist("max_allowed_download_size", global.maxAllowedDownloadSize);
-    if(ini.item_exist("enable_cache"))
+    if (ini.item_exist("enable_cache"))
     {
-        if(ini.get_bool("enable_cache"))
+        if (ini.get_bool("enable_cache"))
         {
             ini.get_int_if_exist("cache_subscription", global.cacheSubscription);
             ini.get_int_if_exist("cache_config", global.cacheConfig);
@@ -1063,7 +1056,7 @@ void readConf()
         }
         else
         {
-            global.cacheSubscription = global.cacheConfig = global.cacheRuleset = 0; //disable cache
+            global.cacheSubscription = global.cacheConfig = global.cacheRuleset = 0; // disable cache
             global.serveCacheOnFetchFail = false;
         }
     }
@@ -1094,7 +1087,7 @@ int loadExternalYAML(YAML::Node &node, ExternalConfig &ext)
     section["overwrite_original_rules"] >> ext.overwrite_original_rules;
 
     const char *group_name = section["proxy_groups"].IsDefined() ? "proxy_groups" : "custom_proxy_group";
-    if(section[group_name].size())
+    if (section[group_name].size())
     {
         string_array vArray;
         readGroup(section[group_name], vArray, global.APIMode);
@@ -1102,11 +1095,11 @@ int loadExternalYAML(YAML::Node &node, ExternalConfig &ext)
     }
 
     const char *ruleset_name = section["rulesets"].IsDefined() ? "rulesets" : "surge_ruleset";
-    if(section[ruleset_name].size())
+    if (section[ruleset_name].size())
     {
         string_array vArray;
         readRuleset(section[ruleset_name], vArray, global.APIMode);
-        if(global.maxAllowedRulesets && vArray.size() > global.maxAllowedRulesets)
+        if (global.maxAllowedRulesets && vArray.size() > global.maxAllowedRulesets)
         {
             writeLog(0, "Ruleset count in external config has exceeded limit.", LOG_LEVEL_WARNING);
             return -1;
@@ -1114,7 +1107,7 @@ int loadExternalYAML(YAML::Node &node, ExternalConfig &ext)
         ext.surge_ruleset = INIBinding::from<RulesetConfig>::from_ini(vArray);
     }
 
-    if(section["rename_node"].size())
+    if (section["rename_node"].size())
     {
         string_array vArray;
         readRegexMatch(section["rename_node"], "@", vArray, global.APIMode);
@@ -1124,7 +1117,7 @@ int loadExternalYAML(YAML::Node &node, ExternalConfig &ext)
     ext.add_emoji = safe_as<std::string>(section["add_emoji"]);
     ext.remove_old_emoji = safe_as<std::string>(section["remove_old_emoji"]);
     const char *emoji_name = section["emojis"].IsDefined() ? "emojis" : "emoji";
-    if(section[emoji_name].size())
+    if (section[emoji_name].size())
     {
         string_array vArray;
         readEmoji(section[emoji_name], vArray, global.APIMode);
@@ -1134,10 +1127,10 @@ int loadExternalYAML(YAML::Node &node, ExternalConfig &ext)
     section["include_remarks"] >> ext.include;
     section["exclude_remarks"] >> ext.exclude;
 
-    if(node["template_args"].IsSequence() && ext.tpl_args != NULL)
+    if (node["template_args"].IsSequence() && ext.tpl_args != NULL)
     {
         std::string key, value;
-        for(size_t i = 0; i < node["template_args"].size(); i++)
+        for (size_t i = 0; i < node["template_args"].size(); i++)
         {
             node["template_args"][i]["key"] >> key;
             node["template_args"][i]["value"] >> value;
@@ -1167,15 +1160,13 @@ int loadExternalTOML(toml::value &root, ExternalConfig &ext)
                   "add_emoji", ext.add_emoji,
                   "remove_old_emoji", ext.remove_old_emoji,
                   "include_remarks", ext.include,
-                  "exclude_remarks", ext.exclude
-    );
+                  "exclude_remarks", ext.exclude);
 
-    if(ext.tpl_args != nullptr) operate_toml_kv_table(toml::find_or<std::vector<toml::table>>(root, "template_args", {}), "key", "value",
-                                                      [&](const toml::value &key, const toml::value &value)
-    {
-        std::string val = toml::format(value);
-        ext.tpl_args->local_vars[key.as_string()] = val;
-    });
+    if (ext.tpl_args != nullptr)
+        operate_toml_kv_table(toml::find_or<std::vector<toml::table>>(root, "template_args", {}), "key", "value", [&](const toml::value &key, const toml::value &value)
+                              {
+                std::string val = toml::format(value);
+                ext.tpl_args->local_vars[key.as_string()] = val; });
 
     auto groups = toml::find_or<std::vector<toml::value>>(root, "custom_groups", {});
     importItems(groups, "custom_groups", false);
@@ -1183,7 +1174,7 @@ int loadExternalTOML(toml::value &root, ExternalConfig &ext)
 
     auto rulesets = toml::find_or<std::vector<toml::value>>(root, "rulesets", {});
     importItems(rulesets, "rulesets", false);
-    if(global.maxAllowedRulesets && rulesets.size() > global.maxAllowedRulesets)
+    if (global.maxAllowedRulesets && rulesets.size() > global.maxAllowedRulesets)
     {
         writeLog(0, "Ruleset count in external config has exceeded limit. ", LOG_LEVEL_WARNING);
         return -1;
@@ -1204,39 +1195,39 @@ int loadExternalTOML(toml::value &root, ExternalConfig &ext)
 int loadExternalConfig(std::string &path, ExternalConfig &ext)
 {
     std::string base_content, proxy = parseProxy(global.proxyConfig), config = fetchFile(path, proxy, global.cacheConfig);
-    if(render_template(config, *ext.tpl_args, base_content, global.templatePath) != 0)
+    if (render_template(config, *ext.tpl_args, base_content, global.templatePath) != 0)
         base_content = config;
 
     try
     {
         YAML::Node yaml = YAML::Load(base_content);
-        if(yaml.size() && yaml["custom"].IsDefined())
+        if (yaml.size() && yaml["custom"].IsDefined())
             return loadExternalYAML(yaml, ext);
         toml::value conf = parseToml(base_content, path);
-        if(!conf.is_uninitialized() && toml::find_or<int>(conf, "version", 0))
+        if (!conf.is_uninitialized() && toml::find_or<int>(conf, "version", 0))
             return loadExternalTOML(conf, ext);
     }
     catch (YAML::Exception &e)
     {
-        //ignore
+        // ignore
     }
     catch (toml::exception &e)
     {
-        //ignore
+        // ignore
     }
 
     INIReader ini;
     ini.store_isolated_line = true;
     ini.set_isolated_items_section("custom");
-    if(ini.parse(base_content) != INIREADER_EXCEPTION_NONE)
+    if (ini.parse(base_content) != INIREADER_EXCEPTION_NONE)
     {
-        //std::cerr<<"Load external configuration failed. Reason: "<<ini.get_last_error()<<"\n";
+        // std::cerr<<"Load external configuration failed. Reason: "<<ini.get_last_error()<<"\n";
         writeLog(0, "Load external configuration failed. Reason: " + ini.get_last_error(), LOG_LEVEL_ERROR);
         return -1;
     }
 
     ini.enter_section("custom");
-    if(ini.item_prefix_exist("custom_proxy_group"))
+    if (ini.item_prefix_exist("custom_proxy_group"))
     {
         string_array vArray;
         ini.get_all("custom_proxy_group", vArray);
@@ -1244,12 +1235,12 @@ int loadExternalConfig(std::string &path, ExternalConfig &ext)
         ext.custom_proxy_group = INIBinding::from<ProxyGroupConfig>::from_ini(vArray);
     }
     std::string ruleset_name = ini.item_prefix_exist("ruleset") ? "ruleset" : "surge_ruleset";
-    if(ini.item_prefix_exist(ruleset_name))
+    if (ini.item_prefix_exist(ruleset_name))
     {
         string_array vArray;
         ini.get_all(ruleset_name, vArray);
         importItems(vArray, global.APIMode);
-        if(global.maxAllowedRulesets && vArray.size() > global.maxAllowedRulesets)
+        if (global.maxAllowedRulesets && vArray.size() > global.maxAllowedRulesets)
         {
             writeLog(0, "Ruleset count in external config has exceeded limit. ", LOG_LEVEL_WARNING);
             return -1;
@@ -1270,7 +1261,7 @@ int loadExternalConfig(std::string &path, ExternalConfig &ext)
     ini.get_bool_if_exist("overwrite_original_rules", ext.overwrite_original_rules);
     ini.get_bool_if_exist("enable_rule_generator", ext.enable_rule_generator);
 
-    if(ini.item_prefix_exist("rename"))
+    if (ini.item_prefix_exist("rename"))
     {
         string_array vArray;
         ini.get_all("rename", vArray);
@@ -1279,24 +1270,24 @@ int loadExternalConfig(std::string &path, ExternalConfig &ext)
     }
     ext.add_emoji = ini.get("add_emoji");
     ext.remove_old_emoji = ini.get("remove_old_emoji");
-    if(ini.item_prefix_exist("emoji"))
+    if (ini.item_prefix_exist("emoji"))
     {
         string_array vArray;
         ini.get_all("emoji", vArray);
         importItems(vArray, global.APIMode);
         ext.emoji = INIBinding::from<RegexMatchConfig>::from_ini(vArray, ",");
     }
-    if(ini.item_prefix_exist("include_remarks"))
+    if (ini.item_prefix_exist("include_remarks"))
         ini.get_all("include_remarks", ext.include);
-    if(ini.item_prefix_exist("exclude_remarks"))
+    if (ini.item_prefix_exist("exclude_remarks"))
         ini.get_all("exclude_remarks", ext.exclude);
 
-    if(ini.section_exist("template") && ext.tpl_args != nullptr)
+    if (ini.section_exist("template") && ext.tpl_args != nullptr)
     {
         ini.enter_section("template");
         string_multimap tempmap;
         ini.get_items(tempmap);
-        for(auto &x : tempmap)
+        for (auto &x : tempmap)
             ext.tpl_args->local_vars[x.first] = x.second;
     }
 
