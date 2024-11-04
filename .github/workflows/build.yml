@@ -162,7 +162,7 @@ jobs:
         run: tar czf ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz subconverter
       - name: Prepare Release
         #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-        uses: softprops/action-gh-release@v2.0.8
+        uses: softprops/action-gh-release@v2.0.9
         with:
           name: Sub+SimpleWeb.${{ env.VERSION }}
           tag_name: ${{ env.VERSION }}
@@ -214,7 +214,7 @@ jobs:
         run: tar czf ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz subconverter
       - name: Prepare Release
         #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-        uses: softprops/action-gh-release@v2.0.8
+        uses: softprops/action-gh-release@v2.0.9
         with:
           name: Sub+SimpleWeb.${{ env.VERSION }}
           tag_name: ${{ env.VERSION }}
@@ -282,7 +282,7 @@ jobs:
         run: 7z a ${{ matrix.artifact }}.${{ env.VERSION }}.7z subconverter/
       - name: Prepare Release
         #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-        uses: softprops/action-gh-release@v2.0.8
+        uses: softprops/action-gh-release@v2.0.9
         with:
           name: Sub+SimpleWeb.${{ env.VERSION }}
           tag_name: ${{ env.VERSION }}
@@ -305,7 +305,7 @@ jobs:
           fetch-depth: 0
           token: ${{env.GIT_TOKEN}}
       - name: Complete Publish Release
-        uses: softprops/action-gh-release@v2.0.8
+        uses: softprops/action-gh-release@v2.0.9
         with:
           append_body: true
           body: ${{ env.CHANGE }}
