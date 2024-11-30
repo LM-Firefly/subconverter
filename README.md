@@ -2,14 +2,14 @@
 
 Utility to convert between various proxy subscription formats.
 
-[![Build Status](https://github.com/tindy2013/subconverter/actions/workflows/build.yml/badge.svg)](https://github.com/tindy2013/subconverter/actions)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/tags)
-[![GitHub release](https://img.shields.io/github/release/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/releases)
-[![GitHub license](https://img.shields.io/github/license/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/blob/master/LICENSE)
+[![Build Status](https://github.com/LM-Firefly/subconverter/actions/workflows/build.yml/badge.svg)](https://github.com/LM-Firefly/subconverter/actions)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/LM-Firefly/subconverter.svg)](https://github.com/LM-Firefly/subconverter/tags)
+[![GitHub release](https://img.shields.io/github/release/LM-Firefly/subconverter.svg)](https://github.com/LM-Firefly/subconverter/releases)
+[![GitHub license](https://img.shields.io/github/license/LM-Firefly/subconverter.svg)](https://github.com/LM-Firefly/subconverter/blob/master/LICENSE)
 
-[Docker README](https://github.com/tindy2013/subconverter/blob/master/README-docker.md)
+[Docker README](https://github.com/LM-Firefly/subconverter/blob/master/README-docker.md)
 
-[中文文档](https://github.com/tindy2013/subconverter/blob/master/README-cn.md)
+[中文文档](https://github.com/LM-Firefly/subconverter/blob/master/README-cn.md)
 
 - [subconverter](#subconverter)
   - [Supported Types](#supported-types)
@@ -21,23 +21,23 @@ Utility to convert between various proxy subscription formats.
 
 ## Supported Types
 
-| Type         | As Source  | As Target    | Target Name |
-| ------------ | :--------: | :----------: | ----------- |
-| Clash        |     ✓      |      ✓       | clash       |
-| ClashR       |     ✓      |      ✓       | clashr      |
-| Quantumult   |     ✓      |      ✓       | quan        |
-| Quantumult X |     ✓      |      ✓       | quanx       |
-| Loon         |     ✓      |      ✓       | loon        |
-| SS (SIP002)  |     ✓      |      ✓       | ss          |
-| SS Android   |     ✓      |      ✓       | sssub       |
-| SSD          |     ✓      |      ✓       | ssd         |
-| SSR          |     ✓      |      ✓       | ssr         |
-| Surfboard    |     ✓      |      ✓       | surfboard   |
-| Surge 2      |     ✓      |      ✓       | surge&ver=2 |
-| Surge 3      |     ✓      |      ✓       | surge&ver=3 |
-| Surge 4      |     ✓      |      ✓       | surge&ver=4 |
-| V2Ray        |     ✓      |      ✓       | v2ray       |
-| Telegram-liked HTTP/Socks 5 links |     ✓      |      ×       | Only as source |
+| Type                              | As Source | As Target | Target Name    |
+| --------------------------------- | :-------: | :-------: | -------------- |
+| Clash                             |     ✓     |     ✓     | clash          |
+| ClashR                            |     ✓     |     ✓     | clashr         |
+| Quantumult                        |     ✓     |     ✓     | quan           |
+| Quantumult X                      |     ✓     |     ✓     | quanx          |
+| Loon                              |     ✓     |     ✓     | loon           |
+| SS (SIP002)                       |     ✓     |     ✓     | ss             |
+| SS Android                        |     ✓     |     ✓     | sssub          |
+| SSD                               |     ✓     |     ✓     | ssd            |
+| SSR                               |     ✓     |     ✓     | ssr            |
+| Surfboard                         |     ✓     |     ✓     | surfboard      |
+| Surge 2                           |     ✓     |     ✓     | surge&ver=2    |
+| Surge 3                           |     ✓     |     ✓     | surge&ver=3    |
+| Surge 4                           |     ✓     |     ✓     | surge&ver=4    |
+| V2Ray                             |     ✓     |     ✓     | v2ray          |
+| Telegram-liked HTTP/Socks 5 links |     ✓     |     ×     | Only as source |
 
 Notice:
 
@@ -48,7 +48,6 @@ Notice:
    - tg://http?server=1.2.3.4&port=233&user=user&pass=pass&remark=Example
 
    - https://t.me/http?server=1.2.3.4&port=233&user=user&pass=pass&remark=Example
-
 
 ---
 
@@ -64,11 +63,11 @@ http://127.0.0.1:25500/sub?target=%TARGET%&url=%URL%&config=%CONFIG%
 
 ### Description
 
-| Argument | Required | Example | Description |
-| -------- | :------: | :------ | ----------- |
-| target   | Yes      | clash   | Target subscription type. Acquire from Target Name in [Supported Types](#supported-types). |
-| url      | Yes      | https%3A%2F%2Fwww.xxx.com | Subscription to convert. Supports URLs and file paths. Process with [URLEncode](https://www.urlencoder.org/) first. |
-| config   | No       | https%3A%2F%2Fwww.xxx.com | External configuration file path. Supports URLs and file paths. Process with [URLEncode](https://www.urlencoder.org/) first. More examples can be found in [this](https://github.com/lzdnico/subconverteriniexample) repository. |
+| Argument | Needed | Example                   | Explanation                                                                                                                                                                                                                                                                         |
+| -------- | :----: | :------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| target   |  Yes   | clash                     | Target subscription type. Acquire from Target Name in [Supported Types](#Supported_Types).                                                                                                                                                                                          |
+| url      |  Yes   | https%3A%2F%2Fwww.xxx.com | Subscription to convert. Supports URLs and file paths. Process with [URLEncode](https://www.urlencoder.org/) first.                                                                                                                                                                 |
+| config   |   No   | https%3A%2F%2Fwww.xxx.com | External configuration file path. Supports URLs and file paths. Process with [URLEncode](https://www.urlencoder.org/) first. More examples can be found in [this](https://github.com/lzdnico/subconverteriniexample) repository. Default is to load configurations from `pref.ini`. |
 
 If you need to merge two or more subscription, you should join them with '|' before the URLEncode process.
 
@@ -95,7 +94,7 @@ Finally subscribe this link in Clash and you are done!
 
 ## Advanced Usage
 
-Please refer to [中文文档](https://github.com/tindy2013/subconverter/blob/master/README-cn.md#%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95).
+Please refer to [中文文档](https://github.com/LM-Firefly/subconverter/blob/master/README-cn.md#%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95).
 
 ## Auto Upload
 
