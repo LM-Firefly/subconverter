@@ -36,9 +36,9 @@ string_array gRegexBlacklist = {"(.*)*"};
 std::string parseProxy(const std::string &source)
 {
     std::string proxy = source;
-    if(source == "SYSTEM")
+    if (source == "SYSTEM")
         proxy = getSystemProxy();
-    else if(source == "NONE")
+    else if (source == "NONE")
         proxy = "";
     return proxy;
 }
@@ -56,50 +56,56 @@ struct UAProfile
 };
 
 const std::vector<UAProfile> UAMatchList = {
-    {"ClashForAndroid","\\/([0-9.]+)","2.0","clash",true},
-    {"ClashForAndroid","\\/([0-9.]+)R","","clashr",false},
-    {"ClashForAndroid","","","clash",false},
-    {"ClashforWindows","\\/([0-9.]+)","0.11","clash",true},
-    {"ClashforWindows","","","clash",false},
-    {"clash-verge","","","clash",true},
-    {"ClashX Pro","","","clash",true},
-    {"ClashX","\\/([0-9.]+)","0.13","clash",true},
-    {"Clash","","","clash",true},
-    {"Kitsunebi","","","v2ray"},
-    {"Loon","","","loon"},
-    {"Pharos","","","mixed"},
-    {"Potatso","","","mixed"},
-    {"Quantumult%20X","","","quanx"},
-    {"Quantumult","","","quan"},
-    {"Qv2ray","","","v2ray"},
-    {"Shadowrocket","","","mixed"},
-    {"Surfboard","","","surfboard"},
-    {"Surge","\\/([0-9.]+).*x86","906","surge",false,4}, /// Surge for Mac (supports VMess)
-    {"Surge","\\/([0-9.]+).*x86","368","surge",false,3}, /// Surge for Mac (supports new rule types and Shadowsocks without plugin)
-    {"Surge","\\/([0-9.]+)","1419","surge",false,4}, /// Surge iOS 4 (first version)
-    {"Surge","\\/([0-9.]+)","900","surge",false,3}, /// Surge iOS 3 (approx)
-    {"Surge","","","surge",false,2}, /// any version of Surge as fallback
-    {"Trojan-Qt5","","","trojan"},
-    {"V2rayU","","","v2ray"},
-    {"V2RayX","","","v2ray"}
-};
+    {"ClashForAndroid", "\\/([0-9.]+)", "2.0", "clash", true},
+    {"ClashForAndroid", "\\/([0-9.]+)R", "", "clashr", false},
+    {"ClashForAndroid", "", "", "clash", false},
+    {"ClashforWindows", "\\/([0-9.]+)", "0.11", "clash", true},
+    {"ClashforWindows", "", "", "clash", false},
+    {"clash-verge", "", "", "clash", true},
+    {"ClashX Pro", "", "", "clash", true},
+    {"ClashX", "\\/([0-9.]+)", "0.13", "clash", true},
+    {"Clash", "", "", "clash", true},
+    {"Kitsunebi", "", "", "v2ray"},
+    {"Loon", "", "", "loon"},
+    {"Pharos", "", "", "mixed"},
+    {"Potatso", "", "", "mixed"},
+    {"Quantumult%20X", "", "", "quanx"},
+    {"Quantumult", "", "", "quan"},
+    {"Qv2ray", "", "", "v2ray"},
+    {"Shadowrocket", "", "", "mixed"},
+    {"Surfboard", "", "", "surfboard"},
+    {"Surge", "\\/([0-9.]+).*x86", "906", "surge", false, 4}, /// Surge for Mac (supports VMess)
+    {"Surge", "\\/([0-9.]+).*x86", "368", "surge", false, 3}, /// Surge for Mac (supports new rule types and Shadowsocks without plugin)
+    {"Surge", "\\/([0-9.]+)", "1419", "surge", false, 4},     /// Surge iOS 4 (first version)
+    {"Surge", "\\/([0-9.]+)", "900", "surge", false, 3},      /// Surge iOS 3 (approx)
+    {"Surge", "", "", "surge", false, 2},                     /// any version of Surge as fallback
+    {"Trojan-Qt5", "", "", "trojan"},
+    {"V2rayU", "", "", "v2ray"},
+    {"V2RayX", "", "", "v2ray"}};
 
-bool verGreaterEqual(const std::string& src_ver, const std::string& target_ver)
+bool verGreaterEqual(const std::string &src_ver, const std::string &target_ver)
 {
     std::istringstream src_stream(src_ver), target_stream(target_ver);
     int src_part, target_part;
     char dot;
-    while (src_stream >> src_part) {
-        if (target_stream >> target_part) {
-            if (src_part < target_part) {
+    while (src_stream >> src_part)
+    {
+        if (target_stream >> target_part)
+        {
+            if (src_part < target_part)
+            {
                 return false;
-            } else if (src_part > target_part) {
+            }
+            else if (src_part > target_part)
+            {
                 return true;
             }
             // Skip the dot separator in both streams
             src_stream >> dot;
             target_stream >> dot;
-        } else {
+        }
+        else
+        {
             // If we run out of target parts, the source version is greater only if it has more parts
             return true;
         }
@@ -110,23 +116,23 @@ bool verGreaterEqual(const std::string& src_ver, const std::string& target_ver)
 
 void matchUserAgent(const std::string &user_agent, std::string &target, tribool &clash_new_name, int &surge_ver)
 {
-    if(user_agent.empty())
+    if (user_agent.empty())
         return;
-    for(const UAProfile &x : UAMatchList)
+    for (const UAProfile &x : UAMatchList)
     {
-        if(startsWith(user_agent, x.head))
+        if (startsWith(user_agent, x.head))
         {
-            if(!x.version_match.empty())
+            if (!x.version_match.empty())
             {
                 std::string version;
-                if(regGetMatch(user_agent, x.version_match, 2, 0, &version))
+                if (regGetMatch(user_agent, x.version_match, 2, 0, &version))
                     continue;
-                if(!x.version_target.empty() && !verGreaterEqual(version, x.version_target))
+                if (!x.version_target.empty() && !verGreaterEqual(version, x.version_target))
                     continue;
             }
             target = x.target;
             clash_new_name = x.clash_new_name;
-            if(x.surge_ver != -1)
+            if (x.surge_ver != -1)
                 surge_ver = x.surge_ver;
             return;
         }
@@ -142,7 +148,7 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
     std::string output_content, dummy;
     int type_int = to_int(type, 0);
 
-    if(url.empty() || type.empty() || (type_int == 2 && group.empty()) || (type_int < 1 || type_int > 6))
+    if (url.empty() || type.empty() || (type_int == 2 && group.empty()) || (type_int < 1 || type_int > 6))
     {
         *status_code = 400;
         return "Invalid request!";
@@ -150,18 +156,18 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
 
     std::string proxy = parseProxy(global.proxyRuleset);
     string_array vArray = split(url, "|");
-    for(std::string &x : vArray)
+    for (std::string &x : vArray)
         x.insert(0, "ruleset,");
     std::vector<RulesetContent> rca;
     RulesetConfigs confs = INIBinding::from<RulesetConfig>::from_ini(vArray);
     refreshRulesets(confs, rca);
-    for(RulesetContent &x : rca)
+    for (RulesetContent &x : rca)
     {
         std::string content = x.rule_content.get();
         output_content += convertRuleset(content, x.rule_type);
     }
 
-    if(output_content.empty())
+    if (output_content.empty())
     {
         *status_code = 400;
         return "Invalid request!";
@@ -178,14 +184,14 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
     {
         posb = 0;
         pose = strLine.find(',');
-        if(pose == std::string::npos)
+        if (pose == std::string::npos)
             return 1;
         posb = pose + 1;
         pose = strLine.find(',', posb);
-        if(pose == std::string::npos)
+        if (pose == std::string::npos)
         {
             pose = strLine.size();
-            if(strLine[pose - 1] == '\r')
+            if (strLine[pose - 1] == '\r')
                 pose--;
         }
         pose -= posb;
@@ -196,58 +202,61 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
     output_content.clear();
     output_content.reserve(lineSize);
 
-    if(type_int == 3 || type_int == 4 || type_int == 6)
+    if (type_int == 3 || type_int == 4 || type_int == 6)
         output_content = "payload:\n";
 
-    while(getline(ss, strLine, delimiter))
+    while (getline(ss, strLine, delimiter))
     {
-        if(strFind(strLine, "//"))
+        if (strFind(strLine, "//"))
         {
             strLine.erase(strLine.find("//"));
             strLine = trimWhitespace(strLine);
         }
-        switch(type_int)
+        switch (type_int)
         {
         case 2:
-            if(!std::any_of(QuanXRuleTypes.begin(), QuanXRuleTypes.end(), [&strLine](const std::string& type){return startsWith(strLine, type);}))
+            if (!std::any_of(QuanXRuleTypes.begin(), QuanXRuleTypes.end(), [&strLine](const std::string &type)
+                             { return startsWith(strLine, type); }))
                 continue;
             break;
         case 1:
-            if(!std::any_of(SurgeRuleTypes.begin(), SurgeRuleTypes.end(), [&strLine](const std::string& type){return startsWith(strLine, type);}))
+            if (!std::any_of(SurgeRuleTypes.begin(), SurgeRuleTypes.end(), [&strLine](const std::string &type)
+                             { return startsWith(strLine, type); }))
                 continue;
             break;
         case 3:
-            if(!startsWith(strLine, "DOMAIN-SUFFIX,") && !startsWith(strLine, "DOMAIN,"))
+            if (!startsWith(strLine, "DOMAIN-SUFFIX,") && !startsWith(strLine, "DOMAIN,"))
                 continue;
-            if(filterLine())
+            if (filterLine())
                 continue;
             output_content += "  - '";
-            if(strLine[posb - 2] == 'X')
+            if (strLine[posb - 2] == 'X')
                 output_content += "+.";
             output_content += strLine.substr(posb, pose);
             output_content += "'\n";
             continue;
         case 4:
-            if(!startsWith(strLine, "IP-CIDR,") && !startsWith(strLine, "IP-CIDR6,"))
+            if (!startsWith(strLine, "IP-CIDR,") && !startsWith(strLine, "IP-CIDR6,"))
                 continue;
-            if(filterLine())
+            if (filterLine())
                 continue;
             output_content += "  - '";
             output_content += strLine.substr(posb, pose);
             output_content += "'\n";
             continue;
         case 5:
-            if(!startsWith(strLine, "DOMAIN-SUFFIX,") && !startsWith(strLine, "DOMAIN,"))
+            if (!startsWith(strLine, "DOMAIN-SUFFIX,") && !startsWith(strLine, "DOMAIN,"))
                 continue;
-            if(filterLine())
+            if (filterLine())
                 continue;
-            if(strLine[posb - 2] == 'X')
+            if (strLine[posb - 2] == 'X')
                 output_content += '.';
             output_content += strLine.substr(posb, pose);
             output_content += '\n';
             continue;
         case 6:
-            if(!std::any_of(ClashRuleTypes.begin(), ClashRuleTypes.end(), [&strLine](const std::string& type){return startsWith(strLine, type);}))
+            if (!std::any_of(ClashRuleTypes.begin(), ClashRuleTypes.end(), [&strLine](const std::string &type)
+                             { return startsWith(strLine, type); }))
                 continue;
             output_content += "  - ";
         default:
@@ -255,17 +264,17 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
         }
 
         lineSize = strLine.size();
-        if(lineSize && strLine[lineSize - 1] == '\r') //remove line break
+        if (lineSize && strLine[lineSize - 1] == '\r') // remove line break
             strLine.erase(--lineSize);
 
-        if(!strLine.empty() && (strLine[0] != ';' && strLine[0] != '#' && !(lineSize >= 2 && strLine[0] == '/' && strLine[1] == '/')))
+        if (!strLine.empty() && (strLine[0] != ';' && strLine[0] != '#' && !(lineSize >= 2 && strLine[0] == '/' && strLine[1] == '/')))
         {
-            if(type_int == 2)
+            if (type_int == 2)
             {
-                if(startsWith(strLine, "IP-CIDR6"))
+                if (startsWith(strLine, "IP-CIDR6"))
                     strLine.replace(0, 8, "IP6-CIDR");
                 strLine += "," + group;
-                if(count_least(strLine, ',', 3) && regReplace(strLine, rule_match_regex, "$2") == ",no-resolve")
+                if (count_least(strLine, ',', 3) && regReplace(strLine, rule_match_regex, "$2") == ",no-resolve")
                     strLine = regReplace(strLine, rule_match_regex, "$1$3$2");
                 else
                     strLine = regReplace(strLine, rule_match_regex, "$1$3");
@@ -275,9 +284,9 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
         output_content += '\n';
     }
 
-    if(output_content == "payload:\n")
+    if (output_content == "payload:\n")
     {
-        switch(type_int)
+        switch (type_int)
         {
         case 3:
             output_content += "  - '--placeholder--'";
@@ -295,7 +304,7 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
 
 void checkExternalBase(const std::string &path, std::string &dest)
 {
-    if(isLink(path) || (startsWith(path, global.basePath) && fileExist(path)))
+    if (isLink(path) || (startsWith(path, global.basePath) && fileExist(path)))
         dest = path;
 }
 
@@ -307,24 +316,38 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     std::string argTarget = getUrlArg(argument, "target"), argSurgeVer = getUrlArg(argument, "ver");
     tribool argClashNewField = getUrlArg(argument, "new_name");
     int intSurgeVer = !argSurgeVer.empty() ? to_int(argSurgeVer, 3) : 3;
-    if(argTarget == "auto")
+    if (argTarget == "auto")
         matchUserAgent(request.headers["User-Agent"], argTarget, argClashNewField, intSurgeVer);
 
     /// don't try to load groups or rulesets when generating simple subscriptions
     bool lSimpleSubscription = false;
-    switch(hash_(argTarget))
+    switch (hash_(argTarget))
     {
-    case "ss"_hash: case "ssd"_hash: case "ssr"_hash: case "sssub"_hash: case "v2ray"_hash: case "trojan"_hash: case "mixed"_hash:
+    case "ss"_hash:
+    case "ssd"_hash:
+    case "ssr"_hash:
+    case "sssub"_hash:
+    case "v2ray"_hash:
+    case "trojan"_hash:
+    case "mixed"_hash:
         lSimpleSubscription = true;
         break;
-    case "clash"_hash: case "clashr"_hash: case "surge"_hash: case "quan"_hash: case "quanx"_hash: case "loon"_hash: case "surfboard"_hash: case "mellow"_hash: case "singbox"_hash:
+    case "clash"_hash:
+    case "clashr"_hash:
+    case "surge"_hash:
+    case "quan"_hash:
+    case "quanx"_hash:
+    case "loon"_hash:
+    case "surfboard"_hash:
+    case "mellow"_hash:
+    case "singbox"_hash:
         break;
     default:
         *status_code = 400;
         return "Invalid target!";
     }
-    //check if we need to read configuration
-    if(global.reloadConfOnRequest && (!global.APIMode || global.CFWChildProcess) && !global.generatorMode)
+    // check if we need to read configuration
+    if (global.reloadConfOnRequest && (!global.APIMode || global.CFWChildProcess) && !global.generatorMode)
         readConf();
 
     /// string values
@@ -353,7 +376,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     int interval = !argUpdateInterval.empty() ? to_int(argUpdateInterval, global.updateInterval) : global.updateInterval;
     bool authorized = !global.APIMode || getUrlArg(argument, "token") == global.accessToken, strict = !argUpdateStrict.empty() ? argUpdateStrict == "true" : global.updateStrict;
 
-    if(std::find(gRegexBlacklist.cbegin(), gRegexBlacklist.cend(), argIncludeRemark) != gRegexBlacklist.cend() || std::find(gRegexBlacklist.cbegin(), gRegexBlacklist.cend(), argExcludeRemark) != gRegexBlacklist.cend())
+    if (std::find(gRegexBlacklist.cbegin(), gRegexBlacklist.cend(), argIncludeRemark) != gRegexBlacklist.cend() || std::find(gRegexBlacklist.cbegin(), gRegexBlacklist.cend(), argExcludeRemark) != gRegexBlacklist.cend())
         return "Invalid request!";
 
     /// for external configuration
@@ -363,33 +386,33 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
 
     /// validate urls
     argEnableInsert.define(global.enableInsert);
-    if(argUrl.empty() && (!global.APIMode || authorized))
+    if (argUrl.empty() && (!global.APIMode || authorized))
         argUrl = global.defaultUrls;
-    if((argUrl.empty() && !(!global.insertUrls.empty() && argEnableInsert)) || argTarget.empty())
+    if ((argUrl.empty() && !(!global.insertUrls.empty() && argEnableInsert)) || argTarget.empty())
     {
         *status_code = 400;
         return "Invalid request!";
     }
 
     /// load request arguments as template variables
-//    string_array req_args = split(argument, "&");
-//    string_map req_arg_map;
-//    for(std::string &x : req_args)
-//    {
-//        string_size pos = x.find("=");
-//        if(pos == x.npos)
-//        {
-//            req_arg_map[x] = "";
-//            continue;
-//        }
-//        if(x.substr(0, pos) == "token")
-//            continue;
-//        req_arg_map[x.substr(0, pos)] = x.substr(pos + 1);
-//    }
+    //    string_array req_args = split(argument, "&");
+    //    string_map req_arg_map;
+    //    for(std::string &x : req_args)
+    //    {
+    //        string_size pos = x.find("=");
+    //        if(pos == x.npos)
+    //        {
+    //            req_arg_map[x] = "";
+    //            continue;
+    //        }
+    //        if(x.substr(0, pos) == "token")
+    //            continue;
+    //        req_arg_map[x.substr(0, pos)] = x.substr(pos + 1);
+    //    }
     string_map req_arg_map;
     for (auto &x : argument)
     {
-        if(x.first == "token")
+        if (x.first == "token")
             continue;
         req_arg_map[x.first] = x.second;
     }
@@ -407,7 +430,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     /// check other flags
     ext.authorized = authorized;
     ext.append_proxy_type = argAppendType.get(global.appendType);
-    if((argTarget == "clash" || argTarget == "clashr") && argGenClashScript.is_undef())
+    if ((argTarget == "clash" || argTarget == "clashr") && argGenClashScript.is_undef())
         argExpandRulesets.define(true);
 
     ext.clash_proxies_style = global.clashProxiesStyle;
@@ -421,13 +444,13 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
 
     ext.sort_flag = argSort.get(global.enableSort);
     argUseSortScript.define(!global.sortScript.empty());
-    if(ext.sort_flag && argUseSortScript)
+    if (ext.sort_flag && argUseSortScript)
         ext.sort_script = global.sortScript;
     ext.filter_deprecated = argFilterDeprecated.get(global.filterDeprecated);
     ext.clash_new_field_name = argClashNewField.get(global.clashUseNewField);
     ext.clash_script = argGenClashScript.get();
     ext.clash_classical_ruleset = argGenClassicalRuleProvider.get();
-    if(!argExpandRulesets)
+    if (!argExpandRulesets)
         ext.clash_new_field_name = true;
     else
         ext.clash_script = false;
@@ -437,24 +460,24 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     ext.quanx_dev_id = !argDeviceID.empty() ? argDeviceID : global.quanXDevID;
     ext.enable_rule_generator = global.enableRuleGen;
     ext.overwrite_original_rules = global.overwriteOriginalRules;
-    if(!argExpandRulesets)
+    if (!argExpandRulesets)
         ext.managed_config_prefix = global.managedConfigPrefix;
 
     /// load external configuration
-    if(argExternalConfig.empty())
+    if (argExternalConfig.empty())
         argExternalConfig = global.defaultExtConfig;
-    if(!argExternalConfig.empty())
+    if (!argExternalConfig.empty())
     {
-        //std::cerr<<"External configuration file provided. Loading...\n";
+        // std::cerr<<"External configuration file provided. Loading...\n";
         writeLog(0, "External configuration file provided. Loading...", LOG_LEVEL_INFO);
         ExternalConfig extconf;
         extconf.tpl_args = &tpl_args;
-        if(loadExternalConfig(argExternalConfig, extconf) == 0)
+        if (loadExternalConfig(argExternalConfig, extconf) == 0)
         {
-            if(!ext.nodelist)
+            if (!ext.nodelist)
             {
                 checkExternalBase(extconf.sssub_rule_base, lSSSubBase);
-                if(!lSimpleSubscription)
+                if (!lSimpleSubscription)
                 {
                     checkExternalBase(extconf.clash_rule_base, lClashBase);
                     checkExternalBase(extconf.surge_rule_base, lSurgeBase);
@@ -465,21 +488,21 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
                     checkExternalBase(extconf.loon_rule_base, lLoonBase);
                     checkExternalBase(extconf.singbox_rule_base, lSingBoxBase);
 
-                    if(!extconf.surge_ruleset.empty())
+                    if (!extconf.surge_ruleset.empty())
                         lCustomRulesets = extconf.surge_ruleset;
-                    if(!extconf.custom_proxy_group.empty())
+                    if (!extconf.custom_proxy_group.empty())
                         lCustomProxyGroups = extconf.custom_proxy_group;
                     ext.enable_rule_generator = extconf.enable_rule_generator;
                     ext.overwrite_original_rules = extconf.overwrite_original_rules;
                 }
             }
-            if(!extconf.rename.empty())
+            if (!extconf.rename.empty())
                 ext.rename_array = extconf.rename;
-            if(!extconf.emoji.empty())
+            if (!extconf.emoji.empty())
                 ext.emoji_array = extconf.emoji;
-            if(!extconf.include.empty())
+            if (!extconf.include.empty())
                 lIncludeRemarks = extconf.include;
-            if(!extconf.exclude.empty())
+            if (!extconf.exclude.empty())
                 lExcludeRemarks = extconf.exclude;
             argAddEmoji.define(extconf.add_emoji);
             argRemoveEmoji.define(extconf.remove_old_emoji);
@@ -487,57 +510,57 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     }
     else
     {
-        if(!lSimpleSubscription)
+        if (!lSimpleSubscription)
         {
             /// loading custom groups
-            if(!argCustomGroups.empty() && !ext.nodelist)
+            if (!argCustomGroups.empty() && !ext.nodelist)
             {
                 string_array vArray = split(argCustomGroups, "@");
                 lCustomProxyGroups = INIBinding::from<ProxyGroupConfig>::from_ini(vArray);
             }
 
             /// loading custom rulesets
-            if(!argCustomRulesets.empty() && !ext.nodelist)
+            if (!argCustomRulesets.empty() && !ext.nodelist)
             {
                 string_array vArray = split(argCustomRulesets, "@");
                 lCustomRulesets = INIBinding::from<RulesetConfig>::from_ini(vArray);
             }
         }
     }
-    if(ext.enable_rule_generator && !ext.nodelist && !lSimpleSubscription)
+    if (ext.enable_rule_generator && !ext.nodelist && !lSimpleSubscription)
     {
-        if(lCustomRulesets != global.customRulesets)
+        if (lCustomRulesets != global.customRulesets)
             refreshRulesets(lCustomRulesets, lRulesetContent);
         else
         {
-            if(global.updateRulesetOnRequest)
+            if (global.updateRulesetOnRequest)
                 refreshRulesets(global.customRulesets, global.rulesetsContent);
             lRulesetContent = global.rulesetsContent;
         }
     }
 
-    if(!argEmoji.is_undef())
+    if (!argEmoji.is_undef())
     {
         argAddEmoji.set(argEmoji);
         argRemoveEmoji.set(true);
     }
     ext.add_emoji = argAddEmoji.get(global.addEmoji);
     ext.remove_emoji = argRemoveEmoji.get(global.removeEmoji);
-    if(ext.add_emoji && ext.emoji_array.empty())
+    if (ext.add_emoji && ext.emoji_array.empty())
         ext.emoji_array = safe_get_emojis();
-    if(!argRenames.empty())
+    if (!argRenames.empty())
         ext.rename_array = INIBinding::from<RegexMatchConfig>::from_ini(split(argRenames, "`"), "@");
-    else if(ext.rename_array.empty())
+    else if (ext.rename_array.empty())
         ext.rename_array = safe_get_renames();
 
     /// check custom include/exclude settings
-    if(!argIncludeRemark.empty() && regValid(argIncludeRemark))
+    if (!argIncludeRemark.empty() && regValid(argIncludeRemark))
         lIncludeRemarks = string_array{argIncludeRemark};
-    if(!argExcludeRemark.empty() && regValid(argExcludeRemark))
+    if (!argExcludeRemark.empty() && regValid(argExcludeRemark))
         lExcludeRemarks = string_array{argExcludeRemark};
 
     /// initialize script runtime
-    if(authorized && !global.scriptCleanContext)
+    if (authorized && !global.scriptCleanContext)
     {
         ext.js_runtime = new qjs::Runtime();
         script_runtime_init(*ext.js_runtime);
@@ -545,10 +568,10 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         script_context_init(*ext.js_context);
     }
 
-    //start parsing urls
+    // start parsing urls
     RegexMatchConfigs stream_temp = safe_get_streams(), time_temp = safe_get_times();
 
-    //loading urls
+    // loading urls
     string_array urls;
     std::vector<Proxy> nodes, insert_nodes;
     int groupID = 0;
@@ -565,18 +588,18 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     parse_set.js_runtime = ext.js_runtime;
     parse_set.js_context = ext.js_context;
 
-    if(!global.insertUrls.empty() && argEnableInsert)
+    if (!global.insertUrls.empty() && argEnableInsert)
     {
         groupID = -1;
         urls = split(global.insertUrls, "|");
         importItems(urls, true);
-        for(std::string &x : urls)
+        for (std::string &x : urls)
         {
             x = regTrim(x);
             writeLog(0, "Fetching node data from url '" + x + "'.", LOG_LEVEL_INFO);
-            if(addNodes(x, insert_nodes, groupID, parse_set) == -1)
+            if (addNodes(x, insert_nodes, groupID, parse_set) == -1)
             {
-                if(global.skipFailedLinks)
+                if (global.skipFailedLinks)
                     writeLog(0, "The following link doesn't contain any valid node info: " + x, LOG_LEVEL_WARNING);
                 else
                 {
@@ -590,14 +613,14 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     urls = split(argUrl, "|");
     importItems(urls, true);
     groupID = 0;
-    for(std::string &x : urls)
+    for (std::string &x : urls)
     {
         x = regTrim(x);
-        //std::cerr<<"Fetching node data from url '"<<x<<"'."<<std::endl;
+        // std::cerr<<"Fetching node data from url '"<<x<<"'."<<std::endl;
         writeLog(0, "Fetching node data from url '" + x + "'.", LOG_LEVEL_INFO);
-        if(addNodes(x, nodes, groupID, parse_set) == -1)
+        if (addNodes(x, nodes, groupID, parse_set) == -1)
         {
-            if(global.skipFailedLinks)
+            if (global.skipFailedLinks)
                 writeLog(0, "The following link doesn't contain any valid node info: " + x, LOG_LEVEL_WARNING);
             else
             {
@@ -607,20 +630,20 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         }
         groupID++;
     }
-    //exit if found nothing
-    if(nodes.empty() && insert_nodes.empty())
+    // exit if found nothing
+    if (nodes.empty() && insert_nodes.empty())
     {
         *status_code = 400;
         return "No nodes were found!";
     }
-    if(!subInfo.empty() && argAppendUserinfo.get(global.appendUserinfo))
+    if (!subInfo.empty() && argAppendUserinfo.get(global.appendUserinfo))
         response.headers.emplace("Subscription-UserInfo", subInfo);
 
-    if(request.method == "HEAD")
+    if (request.method == "HEAD")
         return "";
 
     argPrependInsert.define(global.prependInsert);
-    if(argPrependInsert)
+    if (argPrependInsert)
     {
         std::move(nodes.begin(), nodes.end(), std::back_inserter(insert_nodes));
         nodes.swap(insert_nodes);
@@ -629,13 +652,13 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     {
         std::move(insert_nodes.begin(), insert_nodes.end(), std::back_inserter(nodes));
     }
-    //run filter script
+    // run filter script
     std::string filterScript = global.filterScript;
-    if(authorized && !argFilterScript.empty())
+    if (authorized && !argFilterScript.empty())
         filterScript = argFilterScript;
-    if(!filterScript.empty())
+    if (!filterScript.empty())
     {
-        if(startsWith(filterScript, "path:"))
+        if (startsWith(filterScript, "path:"))
             filterScript = fileGet(filterScript.substr(5), false);
         /*
         duk_context *ctx = duktape_init();
@@ -661,7 +684,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         }
         */
         script_safe_runner(ext.js_runtime, ext.js_context, [&](qjs::Context &ctx)
-        {
+                           {
             try
             {
                 ctx.eval(filterScript);
@@ -671,16 +694,15 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
             catch(qjs::exception)
             {
                 script_print_stack(ctx);
-            }
-        }, global.scriptCleanContext);
+            } }, global.scriptCleanContext);
     }
 
-    //check custom group name
-    if(!argGroupName.empty())
-        for(Proxy &x : nodes)
+    // check custom group name
+    if (!argGroupName.empty())
+        for (Proxy &x : nodes)
             x.Group = argGroupName;
 
-    //do pre-process now
+    // do pre-process now
     preprocessNodes(nodes, ext);
 
     /*
@@ -700,18 +722,19 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     ProxyGroupConfigs dummy_group;
     std::vector<RulesetContent> dummy_ruleset;
     std::string managed_url = base64Decode(getUrlArg(argument, "profile_data"));
-    if(managed_url.empty())
+    if (managed_url.empty())
         managed_url = global.managedConfigPrefix + "/sub?" + joinArguments(argument);
 
-    //std::cerr<<"Generate target: ";
+    // std::cerr<<"Generate target: ";
     proxy = parseProxy(global.proxyConfig);
-    switch(hash_(argTarget))
+    switch (hash_(argTarget))
     {
-    case "clash"_hash: case "clashr"_hash:
+    case "clash"_hash:
+    case "clashr"_hash:
         writeLog(0, argTarget == "clashr" ? "Generate target: ClashR" : "Generate target: Clash", LOG_LEVEL_INFO);
         tpl_args.local_vars["clash.new_field_name"] = ext.clash_new_field_name ? "true" : "false";
         response.headers["profile-update-interval"] = std::to_string(interval / 3600);
-        if(ext.nodelist)
+        if (ext.nodelist)
         {
             YAML::Node yamlnode;
             proxyToClash(nodes, yamlnode, dummy_group, argTarget == "clashr", ext);
@@ -719,7 +742,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         }
         else
         {
-            if(render_template(fetchFile(lClashBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+            if (render_template(fetchFile(lClashBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
             {
                 *status_code = 400;
                 return base_content;
@@ -727,113 +750,111 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
             output_content = proxyToClash(nodes, base_content, lRulesetContent, lCustomProxyGroups, argTarget == "clashr", ext);
         }
 
-        if(argUpload)
+        if (argUpload)
             uploadGist(argTarget, argUploadPath, output_content, false);
         break;
     case "surge"_hash:
 
         writeLog(0, "Generate target: Surge " + std::to_string(intSurgeVer), LOG_LEVEL_INFO);
 
-        if(ext.nodelist)
+        if (ext.nodelist)
         {
             output_content = proxyToSurge(nodes, base_content, dummy_ruleset, dummy_group, intSurgeVer, ext);
 
-            if(argUpload)
+            if (argUpload)
                 uploadGist("surge" + argSurgeVer + "list", argUploadPath, output_content, true);
         }
         else
         {
-            if(render_template(fetchFile(lSurgeBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+            if (render_template(fetchFile(lSurgeBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
             {
                 *status_code = 400;
                 return base_content;
             }
             output_content = proxyToSurge(nodes, base_content, lRulesetContent, lCustomProxyGroups, intSurgeVer, ext);
 
-            if(argUpload)
+            if (argUpload)
                 uploadGist("surge" + argSurgeVer, argUploadPath, output_content, true);
 
-            if(global.writeManagedConfig && !global.managedConfigPrefix.empty())
-                output_content = "#!MANAGED-CONFIG " + managed_url + (interval ? " interval=" + std::to_string(interval) : "") \
-                 + " strict=" + std::string(strict ? "true" : "false") + "\n\n" + output_content;
+            if (global.writeManagedConfig && !global.managedConfigPrefix.empty())
+                output_content = "#!MANAGED-CONFIG " + managed_url + (interval ? " interval=" + std::to_string(interval) : "") + " strict=" + std::string(strict ? "true" : "false") + "\n\n" + output_content;
         }
         break;
     case "surfboard"_hash:
         writeLog(0, "Generate target: Surfboard", LOG_LEVEL_INFO);
 
-        if(render_template(fetchFile(lSurfboardBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+        if (render_template(fetchFile(lSurfboardBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
         {
             *status_code = 400;
             return base_content;
         }
         output_content = proxyToSurge(nodes, base_content, lRulesetContent, lCustomProxyGroups, -3, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("surfboard", argUploadPath, output_content, true);
 
-        if(global.writeManagedConfig && !global.managedConfigPrefix.empty())
-            output_content = "#!MANAGED-CONFIG " + managed_url + (interval ? " interval=" + std::to_string(interval) : "") \
-                 + " strict=" + std::string(strict ? "true" : "false") + "\n\n" + output_content;
+        if (global.writeManagedConfig && !global.managedConfigPrefix.empty())
+            output_content = "#!MANAGED-CONFIG " + managed_url + (interval ? " interval=" + std::to_string(interval) : "") + " strict=" + std::string(strict ? "true" : "false") + "\n\n" + output_content;
         break;
     case "mellow"_hash:
         writeLog(0, "Generate target: Mellow", LOG_LEVEL_INFO);
 
-        if(render_template(fetchFile(lMellowBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+        if (render_template(fetchFile(lMellowBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
         {
             *status_code = 400;
             return base_content;
         }
         output_content = proxyToMellow(nodes, base_content, lRulesetContent, lCustomProxyGroups, ext);
 
-        if(argUpload)
+        if (argUpload)
             uploadGist("mellow", argUploadPath, output_content, true);
         break;
     case "sssub"_hash:
         writeLog(0, "Generate target: SS Subscription", LOG_LEVEL_INFO);
 
-        if(render_template(fetchFile(lSSSubBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+        if (render_template(fetchFile(lSSSubBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
         {
             *status_code = 400;
             return base_content;
         }
         output_content = proxyToSSSub(base_content, nodes, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("sssub", argUploadPath, output_content, false);
         break;
     case "ss"_hash:
         writeLog(0, "Generate target: SS", LOG_LEVEL_INFO);
         output_content = proxyToSingle(nodes, 1, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("ss", argUploadPath, output_content, false);
         break;
     case "ssr"_hash:
         writeLog(0, "Generate target: SSR", LOG_LEVEL_INFO);
         output_content = proxyToSingle(nodes, 2, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("ssr", argUploadPath, output_content, false);
         break;
     case "v2ray"_hash:
         writeLog(0, "Generate target: v2rayN", LOG_LEVEL_INFO);
         output_content = proxyToSingle(nodes, 4, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("v2ray", argUploadPath, output_content, false);
         break;
     case "trojan"_hash:
         writeLog(0, "Generate target: Trojan", LOG_LEVEL_INFO);
         output_content = proxyToSingle(nodes, 8, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("trojan", argUploadPath, output_content, false);
         break;
     case "mixed"_hash:
         writeLog(0, "Generate target: Standard Subscription", LOG_LEVEL_INFO);
         output_content = proxyToSingle(nodes, 15, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("sub", argUploadPath, output_content, false);
         break;
     case "quan"_hash:
         writeLog(0, "Generate target: Quantumult", LOG_LEVEL_INFO);
-        if(!ext.nodelist)
+        if (!ext.nodelist)
         {
-            if(render_template(fetchFile(lQuanBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+            if (render_template(fetchFile(lQuanBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
             {
                 *status_code = 400;
                 return base_content;
@@ -842,14 +863,14 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
 
         output_content = proxyToQuan(nodes, base_content, lRulesetContent, lCustomProxyGroups, ext);
 
-        if(argUpload)
+        if (argUpload)
             uploadGist("quan", argUploadPath, output_content, false);
         break;
     case "quanx"_hash:
         writeLog(0, "Generate target: Quantumult X", LOG_LEVEL_INFO);
-        if(!ext.nodelist)
+        if (!ext.nodelist)
         {
-            if(render_template(fetchFile(lQuanXBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+            if (render_template(fetchFile(lQuanXBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
             {
                 *status_code = 400;
                 return base_content;
@@ -858,14 +879,14 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
 
         output_content = proxyToQuanX(nodes, base_content, lRulesetContent, lCustomProxyGroups, ext);
 
-        if(argUpload)
+        if (argUpload)
             uploadGist("quanx", argUploadPath, output_content, false);
         break;
     case "loon"_hash:
         writeLog(0, "Generate target: Loon", LOG_LEVEL_INFO);
-        if(!ext.nodelist)
+        if (!ext.nodelist)
         {
-            if(render_template(fetchFile(lLoonBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+            if (render_template(fetchFile(lLoonBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
             {
                 *status_code = 400;
                 return base_content;
@@ -874,20 +895,20 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
 
         output_content = proxyToLoon(nodes, base_content, lRulesetContent, lCustomProxyGroups, ext);
 
-        if(argUpload)
+        if (argUpload)
             uploadGist("loon", argUploadPath, output_content, false);
         break;
     case "ssd"_hash:
         writeLog(0, "Generate target: SSD", LOG_LEVEL_INFO);
         output_content = proxyToSSD(nodes, argGroupName, subInfo, ext);
-        if(argUpload)
+        if (argUpload)
             uploadGist("ssd", argUploadPath, output_content, false);
         break;
     case "singbox"_hash:
         writeLog(0, "Generate target: sing-box", LOG_LEVEL_INFO);
-        if(!ext.nodelist)
+        if (!ext.nodelist)
         {
-            if(render_template(fetchFile(lSingBoxBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+            if (render_template(fetchFile(lSingBoxBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
             {
                 *status_code = 400;
                 return base_content;
@@ -896,7 +917,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
 
         output_content = proxyToSingBox(nodes, base_content, lRulesetContent, lCustomProxyGroups, ext);
 
-        if(argUpload)
+        if (argUpload)
             uploadGist("singbox", argUploadPath, output_content, false);
         break;
     default:
@@ -905,7 +926,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         return "Unrecognized target";
     }
     writeLog(0, "Generate completed.", LOG_LEVEL_INFO);
-    if(!argFilename.empty())
+    if (!argFilename.empty())
         response.headers.emplace("Content-Disposition", "attachment; filename=\"" + argFilename + "\"; filename*=utf-8''" + urlEncode(argFilename));
     return output_content;
 }
@@ -916,12 +937,12 @@ std::string simpleToClashR(RESPONSE_CALLBACK_ARGS)
     int *status_code = &response.status_code;
 
     std::string url = argument.size() <= 8 ? "" : argument.substr(8);
-    if(url.empty() || argument.substr(0, 8) != "sublink=")
+    if (url.empty() || argument.substr(0, 8) != "sublink=")
     {
         *status_code = 400;
         return "Invalid request!";
     }
-    if(url == "sublink")
+    if (url == "sublink")
     {
         *status_code = 400;
         return "Please insert your subscription link instead of clicking the default link.";
@@ -944,14 +965,14 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
 
     ini.store_any_line = true;
 
-    if(url.empty())
+    if (url.empty())
         url = global.defaultUrls;
-    if(url.empty() || argument.substr(0, 5) != "link=")
+    if (url.empty() || argument.substr(0, 5) != "link=")
     {
         *status_code = 400;
         return "Invalid request!";
     }
-    if(url == "link")
+    if (url == "link")
     {
         *status_code = 400;
         return "Please insert your subscription link instead of clicking the default link.";
@@ -966,7 +987,7 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
     tpl_args.request_params["target"] = "clash";
     tpl_args.request_params["url"] = url;
 
-    if(render_template(fetchFile(global.clashBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
+    if (render_template(fetchFile(global.clashBase, proxy, global.cacheConfig), tpl_args, base_content, global.templatePath) != 0)
     {
         *status_code = 400;
         return base_content;
@@ -975,50 +996,50 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
 
     base_content = fetchFile(url, proxy, global.cacheConfig);
 
-    if(ini.parse(base_content) != INIREADER_EXCEPTION_NONE)
+    if (ini.parse(base_content) != INIREADER_EXCEPTION_NONE)
     {
         std::string errmsg = "Parsing Surge config failed! Reason: " + ini.get_last_error();
-        //std::cerr<<errmsg<<"\n";
+        // std::cerr<<errmsg<<"\n";
         writeLog(0, errmsg, LOG_LEVEL_ERROR);
         *status_code = 400;
         return errmsg;
     }
-    if(!ini.section_exist("Proxy") || !ini.section_exist("Proxy Group") || !ini.section_exist("Rule"))
+    if (!ini.section_exist("Proxy") || !ini.section_exist("Proxy Group") || !ini.section_exist("Rule"))
     {
         std::string errmsg = "Incomplete surge config! Missing critical sections!";
-        //std::cerr<<errmsg<<"\n";
+        // std::cerr<<errmsg<<"\n";
         writeLog(0, errmsg, LOG_LEVEL_ERROR);
         *status_code = 400;
         return errmsg;
     }
 
-    //scan groups first, get potential policy-path
+    // scan groups first, get potential policy-path
     string_multimap section;
     ini.get_items("Proxy Group", section);
     std::string name, type, content;
     string_array links;
     links.emplace_back(url);
     YAML::Node singlegroup;
-    for(auto &x : section)
+    for (auto &x : section)
     {
         singlegroup.reset();
         name = x.first;
         content = x.second;
         dummy_str_array = split(content, ",");
-        if(dummy_str_array.empty())
+        if (dummy_str_array.empty())
             continue;
         type = dummy_str_array[0];
-        if(!(type == "select" || type == "url-test" || type == "fallback" || type == "load-balance")) //remove unsupported types
+        if (!(type == "select" || type == "url-test" || type == "fallback" || type == "load-balance")) // remove unsupported types
             continue;
         singlegroup["name"] = name;
         singlegroup["type"] = type;
-        for(unsigned int i = 1; i < dummy_str_array.size(); i++)
+        for (unsigned int i = 1; i < dummy_str_array.size(); i++)
         {
-            if(startsWith(dummy_str_array[i], "url"))
+            if (startsWith(dummy_str_array[i], "url"))
                 singlegroup["url"] = trim(dummy_str_array[i].substr(dummy_str_array[i].find('=') + 1));
-            else if(startsWith(dummy_str_array[i], "interval"))
+            else if (startsWith(dummy_str_array[i], "interval"))
                 singlegroup["interval"] = trim(dummy_str_array[i].substr(dummy_str_array[i].find('=') + 1));
-            else if(startsWith(dummy_str_array[i], "policy-path"))
+            else if (startsWith(dummy_str_array[i], "policy-path"))
                 links.emplace_back(trim(dummy_str_array[i].substr(dummy_str_array[i].find('=') + 1)));
             else
                 singlegroup["proxies"].push_back(trim(dummy_str_array[i]));
@@ -1038,13 +1059,13 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
     parse_set.request_header = &request.headers;
     parse_set.sub_info = &subInfo;
     parse_set.authorized = !global.APIMode;
-    for(std::string &x : links)
+    for (std::string &x : links)
     {
-        //std::cerr<<"Fetching node data from url '"<<x<<"'."<<std::endl;
+        // std::cerr<<"Fetching node data from url '"<<x<<"'."<<std::endl;
         writeLog(0, "Fetching node data from url '" + x + "'.", LOG_LEVEL_INFO);
-        if(addNodes(x, nodes, 0, parse_set) == -1)
+        if (addNodes(x, nodes, 0, parse_set) == -1)
         {
-            if(global.skipFailedLinks)
+            if (global.skipFailedLinks)
                 writeLog(0, "The following link doesn't contain any valid node info: " + x, LOG_LEVEL_WARNING);
             else
             {
@@ -1054,8 +1075,8 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
         }
     }
 
-    //exit if found nothing
-    if(nodes.empty())
+    // exit if found nothing
+    if (nodes.empty())
     {
         *status_code = 400;
         return "No nodes were found!";
@@ -1077,16 +1098,16 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
 
     section.clear();
     ini.get_items("Proxy", section);
-    for(auto &x : section)
+    for (auto &x : section)
     {
         singlegroup.reset();
         name = x.first;
         content = x.second;
         dummy_str_array = split(content, ",");
-        if(dummy_str_array.empty())
+        if (dummy_str_array.empty())
             continue;
         content = trim(dummy_str_array[0]);
-        switch(hash_(content))
+        switch (hash_(content))
         {
         case "direct"_hash:
             singlegroup["name"] = name;
@@ -1112,38 +1133,40 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
     std::string strLine;
     std::stringstream ss;
     std::string::size_type lineSize;
-    for(std::string &x : dummy_str_array)
+    for (std::string &x : dummy_str_array)
     {
-        if(startsWith(x, "RULE-SET"))
+        if (startsWith(x, "RULE-SET"))
         {
             strArray = split(x, ",");
-            if(strArray.size() != 3)
+            if (strArray.size() != 3)
                 continue;
             content = webGet(strArray[1], proxy, global.cacheRuleset);
-            if(content.empty())
+            if (content.empty())
                 continue;
 
             ss << content;
             char delimiter = getLineBreak(content);
 
-            while(getline(ss, strLine, delimiter))
+            while (getline(ss, strLine, delimiter))
             {
                 lineSize = strLine.size();
-                if(lineSize && strLine[lineSize - 1] == '\r') //remove line break
+                if (lineSize && strLine[lineSize - 1] == '\r') // remove line break
                     strLine.erase(--lineSize);
-                if(!lineSize || strLine[0] == ';' || strLine[0] == '#' || (lineSize >= 2 && strLine[0] == '/' && strLine[1] == '/')) //empty lines and comments are ignored
+                if (!lineSize || strLine[0] == ';' || strLine[0] == '#' || (lineSize >= 2 && strLine[0] == '/' && strLine[1] == '/')) // empty lines and comments are ignored
                     continue;
-                else if(!std::any_of(ClashRuleTypes.begin(), ClashRuleTypes.end(), [&strLine](const std::string& type){return startsWith(strLine, type);})) //remove unsupported types
+                else if (!std::any_of(ClashRuleTypes.begin(), ClashRuleTypes.end(), [&strLine](const std::string &type)
+                                      { return startsWith(strLine, type); })) // remove unsupported types
                     continue;
                 strLine += strArray[2];
-                if(count_least(strLine, ',', 3))
+                if (count_least(strLine, ',', 3))
                     strLine = regReplace(strLine, "^(.*?,.*?)(,.*)(,.*)$", "$1$3$2");
                 rule.push_back(strLine);
             }
             ss.clear();
             continue;
         }
-        else if(!std::any_of(ClashRuleTypes.begin(), ClashRuleTypes.end(), [&strLine](const std::string& type){return startsWith(strLine, type);}))
+        else if (!std::any_of(ClashRuleTypes.begin(), ClashRuleTypes.end(), [&strLine](const std::string &type)
+                              { return startsWith(strLine, type); }))
             continue;
         rule.push_back(x);
     }
@@ -1161,7 +1184,7 @@ std::string getProfile(RESPONSE_CALLBACK_ARGS)
 
     std::string name = getUrlArg(argument, "name"), token = getUrlArg(argument, "token");
     string_array profiles = split(name, "|");
-    if(token.empty() || profiles.empty())
+    if (token.empty() || profiles.empty())
     {
         *status_code = 403;
         return "Forbidden";
@@ -1173,7 +1196,7 @@ std::string getProfile(RESPONSE_CALLBACK_ARGS)
         profile_content = vfs::vfs_get(name);
     }
     else */
-    if(fileExist(name))
+    if (fileExist(name))
     {
         profile_content = fileGet(name, true);
     }
@@ -1182,31 +1205,31 @@ std::string getProfile(RESPONSE_CALLBACK_ARGS)
         *status_code = 404;
         return "Profile not found";
     }
-    //std::cerr<<"Trying to load profile '" + name + "'.\n";
+    // std::cerr<<"Trying to load profile '" + name + "'.\n";
     writeLog(0, "Trying to load profile '" + name + "'.", LOG_LEVEL_INFO);
     INIReader ini;
-    if(ini.parse(profile_content) != INIREADER_EXCEPTION_NONE && !ini.section_exist("Profile"))
+    if (ini.parse(profile_content) != INIREADER_EXCEPTION_NONE && !ini.section_exist("Profile"))
     {
-        //std::cerr<<"Load profile failed! Reason: "<<ini.get_last_error()<<"\n";
+        // std::cerr<<"Load profile failed! Reason: "<<ini.get_last_error()<<"\n";
         writeLog(0, "Load profile failed! Reason: " + ini.get_last_error(), LOG_LEVEL_ERROR);
         *status_code = 500;
         return "Broken profile!";
     }
-    //std::cerr<<"Trying to parse profile '" + name + "'.\n";
+    // std::cerr<<"Trying to parse profile '" + name + "'.\n";
     writeLog(0, "Trying to parse profile '" + name + "'.", LOG_LEVEL_INFO);
     string_multimap contents;
     ini.get_items("Profile", contents);
-    if(contents.empty())
+    if (contents.empty())
     {
-        //std::cerr<<"Load profile failed! Reason: Empty Profile section\n";
+        // std::cerr<<"Load profile failed! Reason: Empty Profile section\n";
         writeLog(0, "Load profile failed! Reason: Empty Profile section", LOG_LEVEL_ERROR);
         *status_code = 500;
         return "Broken profile!";
     }
     auto profile_token = contents.find("profile_token");
-    if(profiles.size() == 1 && profile_token != contents.end())
+    if (profiles.size() == 1 && profile_token != contents.end())
     {
-        if(token != profile_token->second)
+        if (token != profile_token->second)
         {
             *status_code = 403;
             return "Forbidden";
@@ -1215,35 +1238,35 @@ std::string getProfile(RESPONSE_CALLBACK_ARGS)
     }
     else
     {
-        if(token != global.accessToken)
+        if (token != global.accessToken)
         {
             *status_code = 403;
             return "Forbidden";
         }
     }
     /// check if more than one profile is provided
-    if(profiles.size() > 1)
+    if (profiles.size() > 1)
     {
         writeLog(0, "Multiple profiles are provided. Trying to combine profiles...", LOG_TYPE_INFO);
         std::string all_urls, url;
         auto iter = contents.find("url");
-        if(iter != contents.end())
+        if (iter != contents.end())
             all_urls = iter->second;
-        for(size_t i = 1; i < profiles.size(); i++)
+        for (size_t i = 1; i < profiles.size(); i++)
         {
             name = profiles[i];
-            if(!fileExist(name))
+            if (!fileExist(name))
             {
                 writeLog(0, "Ignoring non-exist profile '" + name + "'...", LOG_LEVEL_WARNING);
                 continue;
             }
-            if(ini.parse_file(name) != INIREADER_EXCEPTION_NONE && !ini.section_exist("Profile"))
+            if (ini.parse_file(name) != INIREADER_EXCEPTION_NONE && !ini.section_exist("Profile"))
             {
                 writeLog(0, "Ignoring broken profile '" + name + "'...", LOG_LEVEL_WARNING);
                 continue;
             }
             url = ini.get("Profile", "url");
-            if(!url.empty())
+            if (!url.empty())
             {
                 all_urls += "|" + url;
                 writeLog(0, "Profile url from '" + name + "' added.", LOG_LEVEL_INFO);
@@ -1276,9 +1299,9 @@ inline std::string intToStream(unsigned long long stream)
     char chrs[16] = {}, units[6] = {' ', 'K', 'M', 'G', 'T', 'P'};
     double streamval = stream;
     unsigned int level = 0;
-    while(streamval > 1024.0)
+    while (streamval > 1024.0)
     {
-        if(level >= 5)
+        if (level >= 5)
             break;
         level++;
         streamval /= 1024.0;
@@ -1295,18 +1318,18 @@ std::string subInfoToMessage(std::string subinfo)
     std::string upload = getUrlArg(subinfo, "upload"), download = getUrlArg(subinfo, "download"), total = getUrlArg(subinfo, "total"), expire = getUrlArg(subinfo, "expire");
     ull used = to_number<ull>(upload, 0) + to_number<ull>(download, 0), tot = to_number<ull>(total, 0);
     auto expiry = to_number<time_t>(expire, 0);
-    if(used != 0)
+    if (used != 0)
         useddata = intToStream(used);
-    if(tot != 0)
+    if (tot != 0)
         totaldata = intToStream(tot);
-    if(expiry != 0)
+    if (expiry != 0)
     {
         char buffer[30];
         struct tm *dt = localtime(&expiry);
         strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M", dt);
         expirydata.assign(buffer);
     }
-    if(useddata == "N/A" && totaldata == "N/A" && expirydata == "N/A")
+    if (useddata == "N/A" && totaldata == "N/A" && expirydata == "N/A")
         retdata = "Not Available";
     else
         retdata += "Stream Used: " + useddata + " Stream Total: " + totaldata + " Expiry Time: " + expirydata;
@@ -1315,40 +1338,40 @@ std::string subInfoToMessage(std::string subinfo)
 
 int simpleGenerator()
 {
-    //std::cerr<<"\nReading generator configuration...\n";
+    // std::cerr<<"\nReading generator configuration...\n";
     writeLog(0, "Reading generator configuration...", LOG_LEVEL_INFO);
     std::string config = fileGet("generate.ini"), path, profile, content;
-    if(config.empty())
+    if (config.empty())
     {
-        //std::cerr<<"Generator configuration not found or empty!\n";
+        // std::cerr<<"Generator configuration not found or empty!\n";
         writeLog(0, "Generator configuration not found or empty!", LOG_LEVEL_ERROR);
         return -1;
     }
 
     INIReader ini;
-    if(ini.parse(config) != INIREADER_EXCEPTION_NONE)
+    if (ini.parse(config) != INIREADER_EXCEPTION_NONE)
     {
-        //std::cerr<<"Generator configuration broken! Reason:"<<ini.get_last_error()<<"\n";
+        // std::cerr<<"Generator configuration broken! Reason:"<<ini.get_last_error()<<"\n";
         writeLog(0, "Generator configuration broken! Reason:" + ini.get_last_error(), LOG_LEVEL_ERROR);
         return -2;
     }
-    //std::cerr<<"Read generator configuration completed.\n\n";
+    // std::cerr<<"Read generator configuration completed.\n\n";
     writeLog(0, "Read generator configuration completed.\n", LOG_LEVEL_INFO);
 
     string_array sections = ini.get_section_names();
-    if(!global.generateProfiles.empty())
+    if (!global.generateProfiles.empty())
     {
-        //std::cerr<<"Generating with specific artifacts: \""<<gen_profile<<"\"...\n";
+        // std::cerr<<"Generating with specific artifacts: \""<<gen_profile<<"\"...\n";
         writeLog(0, "Generating with specific artifacts: \"" + global.generateProfiles + "\"...", LOG_LEVEL_INFO);
         string_array targets = split(global.generateProfiles, ","), new_targets;
-        for(std::string &x : targets)
+        for (std::string &x : targets)
         {
             x = trim(x);
-            if(std::find(sections.cbegin(), sections.cend(), x) != sections.cend())
+            if (std::find(sections.cbegin(), sections.cend(), x) != sections.cend())
                 new_targets.emplace_back(std::move(x));
             else
             {
-                //std::cerr<<"Artifact \""<<x<<"\" not found in generator settings!\n";
+                // std::cerr<<"Artifact \""<<x<<"\" not found in generator settings!\n";
                 writeLog(0, "Artifact \"" + x + "\" not found in generator settings!", LOG_LEVEL_ERROR);
                 return -3;
             }
@@ -1357,28 +1380,28 @@ int simpleGenerator()
         sections.shrink_to_fit();
     }
     else
-        //std::cerr<<"Generating all artifacts...\n";
+        // std::cerr<<"Generating all artifacts...\n";
         writeLog(0, "Generating all artifacts...", LOG_LEVEL_INFO);
 
     string_multimap allItems;
     std::string proxy = parseProxy(global.proxySubscription);
-    for(std::string &x : sections)
+    for (std::string &x : sections)
     {
         Request request;
         Response response;
         response.status_code = 200;
-        //std::cerr<<"Generating artifact '"<<x<<"'...\n";
+        // std::cerr<<"Generating artifact '"<<x<<"'...\n";
         writeLog(0, "Generating artifact '" + x + "'...", LOG_LEVEL_INFO);
         ini.enter_section(x);
-        if(ini.item_exist("path"))
+        if (ini.item_exist("path"))
             path = ini.get("path");
         else
         {
-            //std::cerr<<"Artifact '"<<x<<"' output path missing! Skipping...\n\n";
+            // std::cerr<<"Artifact '"<<x<<"' output path missing! Skipping...\n\n";
             writeLog(0, "Artifact '" + x + "' output path missing! Skipping...\n", LOG_LEVEL_ERROR);
             continue;
         }
-        if(ini.item_exist("profile"))
+        if (ini.item_exist("profile"))
         {
             profile = ini.get("profile");
             request.argument.emplace("name", profile);
@@ -1388,15 +1411,15 @@ int simpleGenerator()
         }
         else
         {
-            if(ini.get_bool("direct"))
+            if (ini.get_bool("direct"))
             {
                 std::string url = ini.get("url");
                 content = fetchFile(url, proxy, global.cacheSubscription);
-                if(content.empty())
+                if (content.empty())
                 {
-                    //std::cerr<<"Artifact '"<<x<<"' generate ERROR! Please check your link.\n\n";
+                    // std::cerr<<"Artifact '"<<x<<"' generate ERROR! Please check your link.\n\n";
                     writeLog(0, "Artifact '" + x + "' generate ERROR! Please check your link.\n", LOG_LEVEL_ERROR);
-                    if(sections.size() == 1)
+                    if (sections.size() == 1)
                         return -1;
                 }
                 // add UTF-8 BOM
@@ -1405,31 +1428,32 @@ int simpleGenerator()
             }
             ini.get_items(allItems);
             allItems.emplace("expand", "true");
-            for(auto &y : allItems)
+            for (auto &y : allItems)
             {
-                if(y.first == "path")
+                if (y.first == "path")
                     continue;
                 request.argument.emplace(y.first, y.second);
             }
             content = subconverter(request, response);
         }
-        if(response.status_code != 200)
+        if (response.status_code != 200)
         {
-            //std::cerr<<"Artifact '"<<x<<"' generate ERROR! Reason: "<<content<<"\n\n";
+            // std::cerr<<"Artifact '"<<x<<"' generate ERROR! Reason: "<<content<<"\n\n";
             writeLog(0, "Artifact '" + x + "' generate ERROR! Reason: " + content + "\n", LOG_LEVEL_ERROR);
-            if(sections.size() == 1)
+            if (sections.size() == 1)
                 return -1;
             continue;
         }
         fileWrite(path, content, true);
-        auto iter = std::find_if(response.headers.begin(), response.headers.end(), [](auto y){ return y.first == "Subscription-UserInfo"; });
-        if(iter != response.headers.end())
+        auto iter = std::find_if(response.headers.begin(), response.headers.end(), [](auto y)
+                                 { return y.first == "Subscription-UserInfo"; });
+        if (iter != response.headers.end())
             writeLog(0, "User Info for artifact '" + x + "': " + subInfoToMessage(iter->second), LOG_LEVEL_INFO);
-        //std::cerr<<"Artifact '"<<x<<"' generate SUCCESS!\n\n";
+        // std::cerr<<"Artifact '"<<x<<"' generate SUCCESS!\n\n";
         writeLog(0, "Artifact '" + x + "' generate SUCCESS!\n", LOG_LEVEL_INFO);
         eraseElements(response.headers);
     }
-    //std::cerr<<"All artifact generated. Exiting...\n";
+    // std::cerr<<"All artifact generated. Exiting...\n";
     writeLog(0, "All artifact generated. Exiting...", LOG_LEVEL_INFO);
     return 0;
 }
@@ -1442,13 +1466,13 @@ std::string renderTemplate(RESPONSE_CALLBACK_ARGS)
     std::string path = getUrlArg(argument, "path");
     writeLog(0, "Trying to render template '" + path + "'...", LOG_LEVEL_INFO);
 
-    if(!startsWith(path, global.templatePath) || !fileExist(path))
+    if (!startsWith(path, global.templatePath) || !fileExist(path))
     {
         *status_code = 404;
         return "Not found";
     }
     std::string template_content = fetchFile(path, parseProxy(global.proxyConfig), global.cacheConfig);
-    if(template_content.empty())
+    if (template_content.empty())
     {
         *status_code = 400;
         return "File empty or out of scope";
@@ -1456,7 +1480,7 @@ std::string renderTemplate(RESPONSE_CALLBACK_ARGS)
     template_args tpl_args;
     tpl_args.global_vars = global.templateVars;
 
-    //load request arguments as template variables
+    // load request arguments as template variables
     string_map req_arg_map;
     for (auto &x : argument)
     {
@@ -1465,7 +1489,7 @@ std::string renderTemplate(RESPONSE_CALLBACK_ARGS)
     tpl_args.request_params = req_arg_map;
 
     std::string output_content;
-    if(render_template(template_content, tpl_args, output_content, global.templatePath) != 0)
+    if (render_template(template_content, tpl_args, output_content, global.templatePath) != 0)
     {
         *status_code = 400;
         writeLog(0, "Render failed with error.", LOG_LEVEL_WARNING);
