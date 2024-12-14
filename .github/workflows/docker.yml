@@ -1,16 +1,19 @@
 name: Publish Docker Image
-on: 
+on:
   push:
-    branches: [ master ]
-    tags:
+    branches: [main]
+    paths:
       - '**'
-
-concurrency: 
+      - '!.github/**'
+      - '!CHANGELOG.md'
+      - '!sub-web/**'
+  workflow_dispatch:
+concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
 env:
-  REGISTRY_IMAGE: tindy2013/subconverter
+  REGISTRY_IMAGE: fireflylzh/subconverter
 
 jobs:
   build:
@@ -22,25 +25,29 @@ jobs:
           - platform: linux/386
             os: ubuntu-latest
           - platform: linux/arm/v7
-            os: [self-hosted, linux, ARM]
+            os: ubuntu-latest
           - platform: linux/arm64
-            os: [self-hosted, linux, ARM64]
+            os: ubuntu-latest
     runs-on: ${{ matrix.os }}
+    outputs:
+      ver: ${{ steps.set-ver.outputs.sha_short }}
+
     name: Build ${{ matrix.platform }} Image
     steps:
       - name: Prepare
         run: |
           platform=${{ matrix.platform }}
-          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV    
-               
+          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
+      - name: Setup timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: 'Asia/Shanghai'
       - name: Checkout base
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
-
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
+        uses: docker/setup-buildx-action@v3.7.1
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
@@ -49,38 +56,33 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=raw,value=latest,enable={{is_default_branch}}
-
       - name: Docker login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.3.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Get commit SHA
         if: github.ref == 'refs/heads/master'
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
+        id: set-ver
+        run: echo "sha_short=$(date +%y.%m%d.%H%M-)$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Build and export
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6.10.0
         with:
           platforms: ${{ matrix.platform }}
           context: scripts/
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            SHA=${{ steps.vars.outputs.sha_short }}
+            SHA=${{ steps.set-ver.outputs.sha_short }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
-
       - name: Export digest
         run: |
           rm -rf /tmp/digests
           mkdir -p /tmp/digests
           digest="${{ steps.build.outputs.digest }}"
           touch "/tmp/digests/${digest#sha256:}"
-
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: digest-${{ env.PLATFORM_PAIR }}
           path: /tmp/digests/*
@@ -93,15 +95,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download digests
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.8
         with:
           path: /tmp/digests
           pattern: digest-*
           merge-multiple: true
-
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
+        uses: docker/setup-buildx-action@v3.7.1
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
@@ -110,19 +110,34 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=raw,value=latest,enable={{is_default_branch}}
-
       - name: Docker login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.3.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)      
-    
+            $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
+
+  docker_publish:
+    runs-on: ubuntu-latest
+    env:
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+    steps:
+      - uses: actions/checkout@v4.2.2
+      # https://github.com/marketplace/actions/push-to-ghcr
+      - name: Build and publish a Docker image for ${{ github.repository }}
+        uses: macbre/push-to-ghcr@master
+        with:
+          dockerfile: ./scripts/Dockerfile
+          image_name: ${{ github.repository }} # it will be lowercased internally
+          github_token: ${{env.GIT_TOKEN}}
+          # optionally push to the Docker Hub (docker.io)
+          docker_io_token: ${{ secrets.DOCKER_IO_ACCESS_TOKEN }} # see https://hub.docker.com/settings/security
+          # customize the username to be used when pushing to the Docker Hub
+          docker_io_user: fireflylzh # see https://github.com/macbre/push-to-ghcr/issues/14
