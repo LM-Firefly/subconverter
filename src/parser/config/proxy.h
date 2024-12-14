@@ -21,13 +21,15 @@ enum class ProxyType
     HTTPS,
     SOCKS5,
     WireGuard,
+    VLESS,
     Hysteria,
-    Hysteria2
+    Hysteria2,
+    TUIC
 };
 
 inline String getProxyTypeName(ProxyType type)
 {
-    switch(type)
+    switch (type)
     {
     case ProxyType::Shadowsocks:
         return "SS";
@@ -47,10 +49,14 @@ inline String getProxyTypeName(ProxyType type)
         return "SOCKS5";
     case ProxyType::WireGuard:
         return "WireGuard";
+    case ProxyType::VLESS:
+        return "Vless";
     case ProxyType::Hysteria:
         return "Hysteria";
     case ProxyType::Hysteria2:
         return "Hysteria2";
+    case ProxyType::TUIC:
+        return "TUIC";
     default:
         return "Unknown";
     }
@@ -110,23 +116,46 @@ struct Proxy
     String TestUrl;
     String ClientId;
 
+    String Fingerprint;
+    String GRPCServiceName;
+    String GRPCMode;
+    String ShortId;
+    String Flow;
+    String PacketEncoding;
+    tribool XUDP;
+    bool FlowShow = false;
+
     String Ports;
     String Up;
     uint32_t UpSpeed;
     String Down;
     uint32_t DownSpeed;
+    String Auth;
     String AuthStr;
     String SNI;
-    String Fingerprint;
+    String Insecure;
     String Ca;
     String CaStr;
+    String Alpn;
+    std::vector<String> AlpnList;
     uint32_t RecvWindowConn;
     uint32_t RecvWindow;
     tribool DisableMtuDiscovery;
     uint32_t HopInterval;
-    StringArray Alpn;
-
     uint32_t CWND = 0;
+
+    String Uuid;
+    String Ip;
+    String Heartbeatinterval;
+    String Disablesni;
+    String Reducertt;
+    String Requesttimeout;
+    String Udprelaymode;
+    String Congestioncontroller;
+    String Maxudprelaypacketsize;
+    String Fastopen;
+    String Maxopenstreams;
+    String Sni;
 };
 
 #define SS_DEFAULT_GROUP "SSProvider"
@@ -137,7 +166,9 @@ struct Proxy
 #define TROJAN_DEFAULT_GROUP "TrojanProvider"
 #define SNELL_DEFAULT_GROUP "SnellProvider"
 #define WG_DEFAULT_GROUP "WireGuardProvider"
+#define XRAY_DEFAULT_GROUP "XRayProvider"
 #define HYSTERIA_DEFAULT_GROUP "HysteriaProvider"
 #define HYSTERIA2_DEFAULT_GROUP "Hysteria2Provider"
+#define TUIC_DEFAULT_GROUP "TUICProvider"
 
 #endif // PROXY_H_INCLUDED
