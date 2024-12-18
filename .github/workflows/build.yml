@@ -1,18 +1,119 @@
-name: GitHub CI
-on: 
-  push:
-    branches: [ master ]
-    tags:
-      - '**'
-  workflow_dispatch:
-  pull_request:
+name: Publish GitHub Releases
 
-concurrency: 
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**'
+      - '!.github/**'
+      - '!CHANGELOG.md'
+      - '!sub-web/**'
+  workflow_dispatch:
+concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    env:
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+    outputs:
+      changed: ${{steps.build_changelog.outputs.changelog}}
+      ver: ${{ steps.set-ver.outputs.version }}
+    steps:
+      - name: Setup timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: 'Asia/Shanghai'
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{env.GIT_TOKEN}}
+      - id: set-ver
+        run: |
+          echo "version=$(date +%y.%m%d.%H%M-)$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Build CHANGELOG
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v5
+        with:
+          configurationJson: |
+            {
+                "categories": [
+                    {
+                        "title": "## 🚀 Features",
+                        "labels": [
+                            "feature"
+                        ],
+                        "empty_content": "No Features, No Bug 🎉 🎉 🎉 "
+                    },
+                    {
+                        "title": "## 🐛 Fixes",
+                        "labels": [
+                            "fix"
+                        ]
+                    },
+                    {
+                        "title": "## 📦 sub-web",
+                        "labels": ["sub-web"]
+                    }
+                ],
+                "ignore_labels": [
+                    "ignore"
+                ],
+                "sort": {
+                    "order": "ASC",
+                    "on_property": "mergedAt"
+                },
+                "template": "## *** 📜 CHANGELOG 📜 ***\n\n### #{{CHANGELOG}}\n\n## <details><summary>Uncategorized</summary>- #{{UNCATEGORIZED}}</details>",
+                "pr_template": "- 🔨 #{{TITLE}}\n   - PR: ##{{NUMBER}}",
+                "empty_template": "## *** 📜 CHANGELOG 📜 ***\n\n###  💫 Just have fun, nothing has changed. \n### 📝 Check the Full Changelog for more information. ${{steps.build_changelog.outputs.changes}}",
+                "label_extractor": [
+                    {
+                        "pattern": "(.) (.+)",
+                        "target": "$1",
+                        "flags": "gu"
+                    },
+                    {
+                        "pattern": "\\[Issue\\]",
+                        "on_property": "title",
+                        "method": "match"
+                    }
+                ],
+                "duplicate_filter": {
+                    "pattern": "\\[ABC-....\\]",
+                    "on_property": "title",
+                    "method": "match"
+                },
+                "transformers": [
+                    {
+                        "pattern": "[\\-\\*] (\\[(...|TEST|CI|SKIP)\\])( )?(.+?)\n(.+?[\\-\\*] )(.+)",
+                        "target": "- $4\n  - $6"
+                    }
+                ],
+                "trim_values": false,
+                "max_tags_to_fetch": 200,
+                "max_pull_requests": 200,
+                "max_back_track_time_days": 180
+            }
+          ignorePreReleases: false
+          owner: LM-Firefly
+          repo: subconverter
+          outputFile: CHANGELOG.md
+          token: ${{ env.GIT_TOKEN }}
+      - name: Commit CHANGELOG
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_email: mail@example.com
+          default_author: github_actions
+          message: "Updated CHANGELOG.md. Check what's happened. 🎉 "
+          add: '-A'
+        env:
+          token: ${{env.GIT_TOKEN}}
+
   linux_build:
+    needs: prepare
     strategy:
       matrix:
         include:
@@ -24,36 +125,54 @@ jobs:
             os: ubuntu-latest
           - arch: armv7
             artifact: subconverter_armv7
-            os: [self-hosted, linux, ARM]
+            os: ubuntu-latest
           - arch: aarch64
             artifact: subconverter_aarch64
-            os: [self-hosted, linux, ARM64]
+            os: ubuntu-latest
+          - arch: armhf
+            artifact: subconverter_armhf
+            os: ubuntu-latest
     runs-on: ${{ matrix.os }}
+    env:
+      CHANGE: ${{ needs.prepare.outputs.changed }}
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+      VERSION: ${{ needs.prepare.outputs.ver }}
     name: Linux ${{ matrix.arch }} Build
     steps:
-    - name: Checkout base
-      uses: actions/checkout@v4
-    - name: Add commit id into version
-      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-      run: SHA=$(git rev-parse --short HEAD) && sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1-'"$SHA"'/' src/version.h
-    - name: Build
-      run: docker run --rm -v $GITHUB_WORKSPACE:/root/workdir multiarch/alpine:${{ matrix.arch }}-latest-stable /bin/sh -c "apk add bash git nodejs npm && cd /root/workdir && chmod +x scripts/build.alpine.release.sh && bash scripts/build.alpine.release.sh"
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.artifact }}
-        path: subconverter/
-    - name: Package Release
-      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-      run: tar czf ${{ matrix.artifact }}.tar.gz subconverter
-    - name: Draft Release
-      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        files: ${{ matrix.artifact }}.tar.gz
-        draft: true
+      - name: Setup timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: 'Asia/Shanghai'
+      - name: Checkout base
+        uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Add commit id into version
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        run: sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1 '"${{env.VERSION}}"'/' src/version.h
+      - name: Build
+        run: docker run --rm -v $GITHUB_WORKSPACE:/root/workdir multiarch/alpine:${{ matrix.arch }}-latest-stable /bin/sh -c "apk add bash git nodejs npm && cd /root/workdir && chmod +x scripts/build.alpine.release.sh && bash scripts/build.alpine.release.sh"
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}.${{ env.VERSION }}
+          path: subconverter/
+      - name: Package Release
+        #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+        run: tar czf ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz subconverter
+      - name: Prepare Release
+        #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Sub+SimpleWeb.${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          token: ${{env.GIT_TOKEN}}
+          draft: false
+          prerelease: false
+          files: ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz
 
   macos_build:
+    needs: prepare
     strategy:
       matrix:
         include:
@@ -64,35 +183,48 @@ jobs:
             artifact: subconverter_darwinarm
             os: macos-14
     runs-on: ${{ matrix.os }}
+    env:
+      CHANGE: ${{ needs.prepare.outputs.changed }}
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+      VERSION: ${{ needs.prepare.outputs.ver }}
     name: macOS ${{ matrix.arch }} Build
     steps:
-    - name: Checkout base
-      uses: actions/checkout@v4
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - name: Add commit id into version
-      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-      run: SHA=$(git rev-parse --short HEAD) && sed -i -e 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1-'"$SHA"'/' src/version.h
-    - name: Build
-      run: bash scripts/build.macos.release.sh
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.artifact }}
-        path: subconverter/
-    - name: Package Release
-      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-      run: tar czf ${{ matrix.artifact }}.tar.gz subconverter
-    - name: Draft Release
-      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        files: ${{ matrix.artifact }}.tar.gz
-        draft: true
-  
+      - name: Setup timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: 'Asia/Shanghai'
+      - name: Checkout base
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Add commit id into version
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        run: sed -i -e 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1-'"${{env.VERSION}}"'/' src/version.h
+      - name: Build
+        run: bash scripts/build.macos.release.sh
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}.${{ env.VERSION }}
+          path: subconverter/
+      - name: Package Release
+        #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+        run: tar czf ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz subconverter
+      - name: Prepare Release
+        #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Sub+SimpleWeb.${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          token: ${{env.GIT_TOKEN}}
+          draft: false
+          prerelease: false
+          files: ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz
+
   windows_build:
+    needs: prepare
     strategy:
       matrix:
         include:
@@ -105,44 +237,83 @@ jobs:
             env: x86_64
             msystem: MINGW64
     runs-on: windows-latest
+    env:
+      CHANGE: ${{ needs.prepare.outputs.changed }}
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+      VERSION: ${{ needs.prepare.outputs.ver }}
     name: Windows ${{ matrix.arch }} Build
     defaults:
       run:
         shell: msys2 {0}
     steps:
-    - name: Checkout base
-      uses: actions/checkout@v4
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '16'
-    - name: Setup MSYS2
-      uses: msys2/setup-msys2@v2
-      with:
-        update: true
-        install: base-devel git mingw-w64-${{ matrix.env }}-gcc mingw-w64-${{ matrix.env }}-cmake mingw-w64-${{ matrix.env }}-pcre2 patch
-        msystem: ${{ matrix.msystem }}
-        path-type: inherit
-    - name: Add commit id into version
-      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-      run: SHA=$(git rev-parse --short HEAD) && sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1-'"$SHA"'/' src/version.h
-    - name: Build
-      run: bash scripts/build.windows.release.sh
-    - name: Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.artifact }}
-        path: subconverter/
-    - name: Package Release
-      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-      run: 7z a ${{ matrix.artifact }}.7z subconverter/
-    - name: Draft Release
-      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-      uses: softprops/action-gh-release@v2
-      with:
-        files: ${{ matrix.artifact }}.7z
-        draft: true
+      - name: Setup timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneWindows: 'Asia/Shanghai'
+      - name: Checkout base
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: base-devel git mingw-w64-${{ matrix.env }}-gcc mingw-w64-${{ matrix.env }}-cmake mingw-w64-${{ matrix.env }}-pcre2 patch
+          msystem: ${{ matrix.msystem }}
+          path-type: inherit
+      - name: Add commit id into version
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        run: sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1 '"${{env.VERSION}}"'/' src/version.h
+      - name: Build
+        run: bash scripts/build.windows.release.sh
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}.${{ env.VERSION }}
+          path: subconverter/
+      - name: Package Release
+        #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+        run: 7z a ${{ matrix.artifact }}.${{ env.VERSION }}.7z subconverter/
+      - name: Prepare Release
+        #      if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Sub+SimpleWeb.${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          token: ${{env.GIT_TOKEN}}
+          draft: false
+          prerelease: false
+          files: ${{ matrix.artifact }}.${{ env.VERSION }}.7z
+
+  prerelease:
+    name: Publish build
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      CHANGE: ${{ needs.prepare.outputs.changed }}
+      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
+      VERSION: ${{ needs.prepare.outputs.ver }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{env.GIT_TOKEN}}
+      - name: Complete Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          append_body: true
+          body: ${{ env.CHANGE }}
+          #          body_path: CHANGELOG.md
+          generate_release_notes: true
+          name: Sub+SimpleWeb.${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          token: ${{env.GIT_TOKEN}}
+          draft: false
+          prerelease: false
+          files: CHANGELOG.md
