@@ -2,6 +2,8 @@ name: Publish Docker Image
 on:
   push:
     branches: [main]
+    tags:
+      - 'v0.9.*'
     paths:
       - '**'
       - '!.github/**'
@@ -14,9 +16,11 @@ concurrency:
 
 env:
   REGISTRY_IMAGE: fireflylzh/subconverter
+  GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
 
 jobs:
   build:
+    name: Build and Push  ${{ matrix.platform }} Docker image to multiple registries
     strategy:
       matrix:
         include:
@@ -29,10 +33,14 @@ jobs:
           - platform: linux/arm64
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
     outputs:
       ver: ${{ steps.set-ver.outputs.sha_short }}
 
-    name: Build ${{ matrix.platform }} Image
     steps:
       - name: Prepare
         run: |
@@ -42,39 +50,55 @@ jobs:
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: 'Asia/Shanghai'
-      - name: Checkout base
+      - name: Check out the repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Get commit SHA
+        id: set-ver
+        run: echo "sha_short=$(date +%y.%m%d.%H%M-)$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Docker meta
+      - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY_IMAGE }}
+          images: |
+            ${{ env.REGISTRY_IMAGE }}
+            ghcr.io/${{ github.repository }}
           tags: |
-            type=semver,pattern={{version}}
+            type=raw,value=v0.9.0-${{ steps.set-ver.outputs.sha_short }}
             type=raw,value=latest,enable={{is_default_branch}}
-      - name: Docker login
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Get commit SHA
-        if: github.ref == 'refs/heads/master'
-        id: set-ver
-        run: echo "sha_short=$(date +%y.%m%d.%H%M-)$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name: Build and export
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{env.GIT_TOKEN}}
+      - name: Build and push Docker images
         id: build
         uses: docker/build-push-action@v6
         with:
           platforms: ${{ matrix.platform }}
           context: scripts/
+          push: true
+          tags: ${{ steps.set-ver.outputs.sha_short }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             SHA=${{ steps.set-ver.outputs.sha_short }}
+            VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: subconverter
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
       - name: Export digest
         run: |
           rm -rf /tmp/digests
@@ -123,22 +147,3 @@ jobs:
   #      - name: Inspect image
   #        run: |
   #          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
-
-  docker_publish:
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      GIT_TOKEN: ${{secrets.ACTIONS_TOKEN}}
-    steps:
-      - uses: actions/checkout@v4
-      # https://github.com/marketplace/actions/push-to-ghcr
-      - name: Build and publish a Docker image for ${{ github.repository }}
-        uses: macbre/push-to-ghcr@master
-        with:
-          dockerfile: ./scripts/Dockerfile
-          image_name: ${{ github.repository }} # it will be lowercased internally
-          github_token: ${{env.GIT_TOKEN}}
-          # optionally push to the Docker Hub (docker.io)
-          docker_io_token: ${{ secrets.DOCKER_IO_ACCESS_TOKEN }} # see https://hub.docker.com/settings/security
-          # customize the username to be used when pushing to the Docker Hub
-          docker_io_user: fireflylzh # see https://github.com/macbre/push-to-ghcr/issues/14
