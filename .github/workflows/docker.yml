@@ -87,7 +87,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           context: scripts/
           push: true
-          tags: ${{ steps.set-ver.outputs.sha_short }}
+          tags: v0.9.0-${{ steps.set-ver.outputs.sha_short }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             SHA=${{ steps.set-ver.outputs.sha_short }}
