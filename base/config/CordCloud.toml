@@ -1,155 +1,27 @@
 version = 1
-[common]
-# API mode, set to true to prevent loading local subscriptions or serving local files directly
-api_mode = true
+[custom]
+enable_rule_generator = true
+overwrite_original_rules = true
 
-# Access token used for performing critical action through Web interface
-api_access_token = "password"
+clash_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+surge_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+surfboard_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+mellow_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+quan_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+quanx_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+loon_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+sssub_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+singbox_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
 
-# Default URLs, used when no URL is provided in request, use "|" to separate multiple subscription links, supports local files/URL
-default_url = []
-
-# Insert subscription links to requests. Can be used to add node(s) to all exported subscriptions.
-enable_insert = true
-
-# URLs to insert before subscription links, can be used to add node(s) to all exported subscriptions, supports local files/URL
-insert_url = [""]
-
-# Prepend inserted URLs to subscription links. Nodes in insert_url will be added to groups first with non-group-specific match pattern.
-prepend_insert_url = true
-
-# Exclude nodes which remarks match the following patterns. Supports regular expression.
 exclude_remarks = [
     "((到期)|(剩余流量)|(时间)|(官网)|(产品)|(先购买套餐)|(流量消耗)|(更新订阅)|(套餐到期)|(.*流量.*剩.*天)|(■等级警报■)|(\\(限速\\))|(\\[限速\\])|(\\[游戏\\])|(\\[游戏专用\\])|(\\[将下线\\])|(.*耗尽.*)|(近期下线)|(游戏专线)|(维护)|(测试节点)|(防失联地址)|(官方地址)|(官方网站)|(群组))",
 ]
 
-# Only include nodes which remarks match the following patterns. Supports regular expression.
-# include_remarks = ["V3.*港"]
-
-# Enable script support for filtering nodes
-enable_filter = false
-# Script used for filtering nodes. Supports inline script and script path. A "filter" function with 1 argument which is a node should be defined in the script.
-# Example: Inline script: set value to content of script.
-#          Script path: set value to "path:/path/to/script.js".
-#filter_script = '''
-#function filter(node) {
-#    const info = JSON.parse(node.ProxyInfo);
-#    if(info.EncryptMethod.includes('chacha20'))
-# 	    return true;
-#    return false;
-# }
-# '''
-
-# Setting an external config file as default when none is specified, supports local files/URL
-# default_external_config = "config/example_external_config.toml"
-
-# The file scope limit of the 'rule_base' options in external configs.
-base_path = "base"
-
-# Clash config base used by the generator, supports local files/URL
-clash_rule_base = "base/all-base.tpl"
-
-# Surge config base used by the generator, supports local files/URL
-surge_rule_base = "base/all-base.tpl"
-
-# Surfboard config base used by the generator, supports local files/URL
-surfboard_rule_base = "base/all-base.tpl"
-
-# Mellow config base used by the generator, supports local files/URL
-mellow_rule_base = "base/all-base.tpl"
-
-# Quantumult config base used by the generator, supports local files/URL
-quan_rule_base = "base/all-base.tpl"
-
-# Quantumult X config base used by the generator, supports local files/URL
-quanx_rule_base = "base/all-base.tpl"
-
-# Loon config base used by the generator, supports local files/URL
-loon_rule_base = "base/all-base.tpl"
-
-# Shadowsocks Android config base used by the generator, supports local files/URL
-sssub_rule_base = "base/all-base.tpl"
-
-# sing-box config base used by the generator, supports local files/URL
-singbox_rule_base = "base/all-base.tpl"
-
-# Proxy used to download rulesets or subscriptions, set to NONE or empty to disable it, set to SYSTEM to use system proxy.
-# Accept cURL-supported proxies (http:// https:// socks4a:// socks5://)
-
-proxy_config = "SYSTEM"
-proxy_ruleset = "SYSTEM"
-proxy_subscription = "SYSTEM"
-
-# Append a proxy type string ([SS] [SSR] [VMess]) to node remark.
-append_proxy_type = false
-
-# When requesting /sub, reload this config file first.
-reload_conf_on_request = false
-
-[[userinfo.stream_rule]]
-# Rules to extract stream data from node
-# Format: full_match_regex|new_format_regex
-# where new_format_regex should be like "total=$1&left=$2&used=$3"
-match = '^剩余流量：(.*?)\|总流量：(.*)$'
-replace = 'total=$2&left=$1'
-
-[[userinfo.stream_rule]]
-match = '^剩余流量：(.*?) (.*)$'
-replace = 'total=$1&left=$2'
-
-[[userinfo.stream_rule]]
-match = '^Bandwidth: (.*?)/(.*)$'
-replace = 'used=$1&total=$2'
-
-[[userinfo.stream_rule]]
-match = '^.*剩余(.*?)(?:\s*?)@(?:.*)$'
-replace = 'total=$1'
-
-[[userinfo.time_rule]]
-# Rules to extract expire time data from node
-# Format: full_match_regex|new_format_regex
-# where new_format_regex should follow this example: yyyy:mm:dd:hh:mm:ss
-match = '^过期时间：(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$'
-replace = '$1:$2:$3:$4:$5:$6'
-
-[[userinfo.time_rule]]
-match = '^到期时间:(\d+)-(\d+)-(\d+)$'
-replace = '$1:$2:$3:0:0:0'
-
-[[userinfo.time_rule]]
-match = '^Smart Access expire: (\d+)/(\d+)/(\d+)$'
-replace = '$1:$2:$3:0:0:0'
 
 [node_pref]
-# udp_flag = true
-# tcp_fast_open_flag = false
-# skip_cert_verify_flag = true
-# tls13_flag = false
-
-# sort_flag = false
-# Script used for sorting nodes. A "compare" function with 2 arguments which are the 2 nodes to be compared should be defined in the script. Supports inline script and script path.
-# Examples can be seen at the filter_script option in [common] section.
-# sort_script = '''
-# function compare(node_a, node_b) {
-#   return info_a.Remark > info_b.Remark;
-# }
-# '''
-
-filter_deprecated_nodes = true
-append_sub_userinfo = true
-clash_use_new_field_name = true
-
-# Generate style of the proxies and proxy groups section of Clash subscriptions.
-# Supported styles: block, flow, compact
-# Block: - name: name1    Flow: - {name: name1, key: value}    Compact: [{name: name1, key: value},{name: name2, key: value}]
-#         key: value           - {name: name2, key: value}
-#       - name: name2
-#         key: value
+udp_flag = true
 clash_proxies_style = "block"
 clash_proxy_groups_style = "block"
-
-# add Clash mode to sing-box rules, and add a GLOBAL group to end of outbounds
-singbox_add_clash_modes = true
 
 [[node_pref.rename_node]]
 match = "(解锁|)(\\|)(x.*)(\\|V2ray)"
@@ -339,27 +211,6 @@ replace = ""
 match = "\\(?((x|X)?(\\d+)(\\.?\\d+)?)((\\s?倍率?)|(x|X))\\)?"
 replace = "[x$1]"
 
-# import = "snippets/rename_node.toml"
-
-[managed_config]
-# Append a '#!MANAGED-CONFIG' info to Surge configurations
-write_managed_config = true
-
-# Address prefix for MANAGED-CONFIG info, without the trailing "/".
-managed_config_prefix = "http://127.0.0.1:25500"
-
-# Managed config update interval in seconds, determine how long the config will be updated.
-config_update_interval = 3600
-
-# If config_update_strict is set to true, Surge will require a force update after the interval.
-config_update_strict = true
-
-# Device ID to be written to rewrite scripts for some version of Quantumult X
-quanx_device_id = ""
-
-[surge_external_proxy]
-# surge_ssr_path = "/usr/bin/ssr-local"
-resolve_hostname = true
 
 [emojis]
 add_emoji = true
@@ -754,7 +605,7 @@ match = "(?i:\\bUS[A]?\\d*\\b|America|United.*?States|美国|[^-]美|波特兰|�
 emoji = "🇺🇸"
 
 [[emojis.emoji]]
-match = "(?i:\\bHK[G]?\\d*\\b|Hong.*?Kong|\\bHKT\\d*\\b|\\bHKBN\\d*\\b|\\bHGC\\d*\\b|\\bWTT\\d*\\b|\\bCMI\\d*\\b|\\bHK\\d*\\b|[^-]港|港(?!▷|回|转))"
+match = "(?i:\\bHK[G]?\\d*\\b|Hong.*?Kong|\\bHKT\\b|\\bHKBN\\b|\\bHGC\\b|\\bWTT\\b|\\bCMI\\b|\\bHK\\d*\\b|[^-]港|港(?!▷|回|转))"
 emoji = "🇭🇰"
 
 [[emojis.emoji]]
@@ -769,31 +620,12 @@ emoji = "🇹🇼"
 match = "(?i:\\bC[H]?N\\b|China|back|回国|中国[^-]|江苏[^-]|北京[^-]|上海[^-]|广州[^-]|深圳[^-]|杭州[^-]|常州[^-]|徐州[^-]|青岛[^-]|宁波[^-]|镇江[^-]|成都[^-]|河北[^-]|山西[^-]|辽宁[^-]|吉林[^-]|黑龙江[^-]|江苏[^-]|浙江[^-]|安徽[^-]|福建[^-]|江西[^-]|山东[^-]|河南[^-]|湖北[^-]|湖南[^-]|广东[^-]|海南[^-]|四川[^-]|贵州[^-]|云南[^-]|陕西[^-]|甘肃[^-]|青海[^-]|内蒙古[^-]|广西[^-]|西藏[^-]|宁夏[^-]|新疆[^-]|中.*(?!▷|回|转)|苏.*(?!▷|回|转)|京.*(?!▷|回|转)|沪.*(?!▷|回|转)|穗.*(?!▷|回|转)|深(?!▷|港)|杭.*(?!▷|回|转)|徐.*(?!▷|回|转)|青.*(?!▷|回|转)|甬.*(?!▷|回|转)|镇.*(?!▷|回|转)|禅.*(?!▷|回|转)|蓉.*(?!▷|回|转))"
 emoji = "🇨🇳"
 
-# import = "snippets/emoji.toml"
 
-# [[custom_groups]]
-# name = "Auto"
-# type = "url-test"
-# rule = [".*"]
-# url = "http://www.gstatic.com/generate_204"
-# interval = 300
-# tolerance = 150
-# lazy = true
-
-# [[custom_groups]]
-# name = "Proxy"
-# type = "select"
-# rule = [".*", "[]DIRECT"]
-# disable_udp = false
-
-# [[custom_groups]]
-# name = "LoadBalance"
-# type = "load-balance"
-# rule = [".*", "[]Proxy", "[]DIRECT"]
-# interval = 100
-# strategy = "consistent-hashing"
-# url = "http://www.gstatic.com/generate_204"
-
+[[custom_groups]]
+name = "🌮 手动选择"
+type = "select"
+disable_udp = false
+rule = [".*"]
 
 [[custom_groups]]
 name = "🍖 默认代理"
@@ -801,25 +633,51 @@ type = "select"
 disable_udp = false
 rule = [
     "[]🔄 延迟最低",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-手动选择",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-手动选择",
-    "[]🇺🇸 美国-延迟最低",
-    "[]🇺🇸 美国-手动选择",
-    "[]🇯🇵 日本-延迟最低",
-    "[]🇯🇵 日本-手动选择",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🇸🇬 新加坡-手动选择",
-    "[]🇰🇷 韩国-延迟最低",
-    "[]🇰🇷 韩国-手动选择",
-    "[]🇷🇺 俄罗斯-延迟最低",
-    "[]🇷🇺 俄罗斯-手动选择",
+    "[]🌮 手动选择",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🇩🇪 德国-轮询",
+    "[]🇩🇪 德国-TL",
     "[]🍱 冷门地区",
+    "[]🇺🇸 美国-轮询",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-Others",
+    "[]🇯🇵 日本-轮询",
+    "[]🇯🇵 日本-AWS",
+    "[]🇯🇵 日本-Azure",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇯🇵 日本-CloudN",
     "[]🇬🇧 英国-延迟最低",
-    "[]🇬🇧 英国-手动选择",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 深港专线",
+    "[]🇭🇰 香港-Others",
+    "[]🇷🇺 俄罗斯-Others",
+    "[]🇷🇺 俄罗斯-轮询",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+    "[]🇰🇷 韩国-轮询",
+    "[]🇰🇷 韩国-Azure",
+    "[]🇩🇪 德国-轮询",
+    "[]🇩🇪 德国-TL",
 ]
 
 [[custom_groups]]
@@ -827,6 +685,7 @@ name = "🌍 国外媒体"
 type = "select"
 disable_udp = false
 rule = [
+    "[]🌮 手动选择",
     "[]🇭🇰 香港-Media",
     "[]🇲🇴 澳门-Media",
     "[]🇹🇼 台湾-Media",
@@ -859,7 +718,38 @@ rule = [
     "[]🇹🇷 土耳其-Media",
     "[]🇺🇦 乌克兰-Media",
     "[]🇻🇳 越南-Media",
-    "[]🍖 默认代理",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-Others",
+    "[]🇯🇵 日本-CloudN",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇰🇷 韩国-轮询",
+    "[]🇰🇷 韩国-Azure",
+    "[]🇩🇪 德国-TL",
 ]
 
 [[custom_groups]]
@@ -867,24 +757,38 @@ name = "🎮 游戏服务"
 type = "select"
 disable_udp = false
 rule = [
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-手动选择",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-手动选择",
-    "[]🇺🇸 美国-延迟最低",
-    "[]🇺🇸 美国-手动选择",
-    "[]🇯🇵 日本-延迟最低",
-    "[]🇯🇵 日本-手动选择",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🇸🇬 新加坡-手动选择",
+    "[]🌮 手动选择",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 深港专线",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇯🇵 日本-CloudN",
     "[]🇬🇧 英国-延迟最低",
-    "[]🇬🇧 英国-手动选择",
-    "[]🇰🇷 韩国-延迟最低",
-    "[]🇰🇷 韩国-手动选择",
-    "[]🇷🇺 俄罗斯-延迟最低",
-    "[]🇷🇺 俄罗斯-手动选择",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+    "[]🇰🇷 韩国-Azure",
+    "[]🇩🇪 德国-TL",
     "[]🍖 默认代理",
 ]
 
@@ -895,14 +799,15 @@ disable_udp = false
 rule = [
     "[]🎯 直连服务",
     "(🇨🇳)",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-手动选择",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-手动选择",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🇸🇬 新加坡-手动选择",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
     "[]🍖 默认代理",
 ]
 
@@ -910,208 +815,13 @@ rule = [
 name = "🚧 终末策略"
 type = "select"
 disable_udp = false
-rule = ["[]🔄 延迟最低", "[]🎯 直连服务", "[]🌏 大陆服务", "(灭霸)", "[]🍖 默认代理"]
+rule = ["[]🔄 延迟最低", "[]🎯 直连服务", "[]🌏 大陆服务", "[]🍖 默认代理"]
 
 [[custom_groups]]
 name = "📡 视频解析"
 type = "select"
 disable_udp = false
 rule = ["[]🎯 直连服务", "[]🔄 延迟最低", "[]🌏 大陆服务", "[]🍖 默认代理"]
-
-[[custom_groups]]
-name = "📺 哔哩哔哩"
-type = "select"
-disable_udp = false
-rule = [
-    "[]🎯 直连服务",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-Media",
-    "[]🇲🇴 澳门-Media",
-    "[]🇹🇼 台湾-Media",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "(🇨🇳)",
-    "[]🇺🇸 美国-延迟最低",
-    "[]🇯🇵 日本-延迟最低",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🍱 冷门地区",
-    "[]🍖 默认代理",
-]
-
-[[custom_groups]]
-name = "🥝 爱奇艺"
-type = "select"
-disable_udp = false
-rule = [
-    "[]🎯 直连服务",
-    "[]🇭🇰 香港-Media",
-    "[]🇲🇴 澳门-Media",
-    "[]🇹🇼 台湾-Media",
-    "[]🇬🇧 英国-Media",
-    "[]🇺🇸 美国-Media",
-    "[]🇯🇵 日本-Media",
-    "[]🇸🇬 新加坡-Media",
-    "[]🇰🇷 韩国-Media",
-    "[]🇷🇺 俄罗斯-Media",
-    "[]🇮🇳 印度-Media",
-    "[]🇦🇷 阿根廷-Media",
-    "[]🇦🇹 奥地利-Media",
-    "[]🇦🇿 阿塞拜疆-Media",
-    "[]🇧🇬 保加利亚-Media",
-    "[]🇧🇷 巴西-Media",
-    "[]🇨🇭 瑞士-Media",
-    "[]🇨🇱 智利-Media",
-    "[]🇨🇴 哥伦比亚-Media",
-    "[]🇨🇿 捷克-Media",
-    "[]🇪🇬 埃及-Media",
-    "[]🇪🇸 西班牙-Media",
-    "[]🇫🇮 芬兰-Media",
-    "[]🇮🇱 以色列-Media",
-    "[]🇱🇻 拉脱维亚-Media",
-    "[]🇲🇾 马来西亚-Media",
-    "[]🇳🇱 荷兰-Media",
-    "[]🇵🇰 巴基斯坦-Media",
-    "[]🇵🇱 波兰-Media",
-    "[]🇹🇭 泰国-Media",
-    "[]🇹🇷 土耳其-Media",
-    "[]🇺🇦 乌克兰-Media",
-    "[]🇻🇳 越南-Media",
-    "(🇨🇳)",
-]
-
-[[custom_groups]]
-name = "🐷 网易音乐"
-type = "select"
-disable_udp = false
-rule = ["[]🎯 直连服务", "(网易云)", "(UnblockNetEaseMusic)", "(🇨🇳)", "[]🌏 大陆服务"]
-
-[[custom_groups]]
-name = "💊 小米服务"
-type = "select"
-disable_udp = false
-rule = [
-    "[]🎯 直连服务",
-    "(🇨🇳)",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇺🇸 美国-延迟最低",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🌏 大陆服务",
-    "[]🍖 默认代理",
-]
-
-[[custom_groups]]
-name = "🐱 阿里巴巴"
-type = "select"
-disable_udp = false
-rule = ["[]🎯 直连服务", "(🇨🇳)", "[]🌏 大陆服务"]
-
-[[custom_groups]]
-name = "🍎 苹果服务"
-type = "select"
-disable_udp = false
-rule = ["[]🍖 默认代理", "[]🔄 延迟最低", "[]🎯 直连服务"]
-
-[[custom_groups]]
-name = "🙈 谷歌服务"
-type = "select"
-disable_udp = false
-rule = [
-    "[]🔄 延迟最低",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-Media",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-Media",
-    "[]🇲🇴 澳门-手动选择",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-Media",
-    "[]🇭🇰 香港-手动选择",
-    "[]🇺🇸 美国-延迟最低",
-    "[]🇺🇸 美国-Media",
-    "[]🇺🇸 美国-手动选择",
-    "[]🇯🇵 日本-延迟最低",
-    "[]🇯🇵 日本-Media",
-    "[]🇯🇵 日本-手动选择",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🇸🇬 新加坡-Media",
-    "[]🇸🇬 新加坡-手动选择",
-    "[]🇷🇺 俄罗斯-延迟最低",
-    "[]🇷🇺 俄罗斯-Media",
-    "[]🇷🇺 俄罗斯-手动选择",
-    "[]🇰🇷 韩国-延迟最低",
-    "[]🇰🇷 韩国-Media",
-    "[]🇰🇷 韩国-手动选择",
-    "[]🇬🇧 英国-延迟最低",
-    "[]🇬🇧 英国-Media",
-    "[]🇬🇧 英国-手动选择",
-    "[]🇦🇷 阿根廷-Media",
-    "[]🇦🇹 奥地利-Media",
-    "[]🇦🇿 阿塞拜疆-Media",
-    "[]🇧🇬 保加利亚-Media",
-    "[]🇧🇷 巴西-Media",
-    "[]🇨🇭 瑞士-Media",
-    "[]🇨🇱 智利-Media",
-    "[]🇨🇴 哥伦比亚-Media",
-    "[]🇨🇿 捷克-Media",
-    "[]🇪🇬 埃及-Media",
-    "[]🇪🇸 西班牙-Media",
-    "[]🇫🇮 芬兰-Media",
-    "[]🇮🇱 以色列-Media",
-    "[]🇮🇳 印度-Media",
-    "[]🇱🇻 拉脱维亚-Media",
-    "[]🇲🇾 马来西亚-Media",
-    "[]🇳🇱 荷兰-Media",
-    "[]🇵🇰 巴基斯坦-Media",
-    "[]🇵🇱 波兰-Media",
-    "[]🇹🇭 泰国-Media",
-    "[]🇹🇷 土耳其-Media",
-    "[]🇺🇦 乌克兰-Media",
-    "[]🇻🇳 越南-Media",
-    "[]🍱 冷门地区",
-]
-
-[[custom_groups]]
-name = "🐻 LineTV"
-type = "select"
-disable_udp = false
-rule = [
-    "[]🇹🇼 台湾-Media",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-手动选择",
-    "[]🇯🇵 日本-Media",
-    "[]🇯🇵 日本-延迟最低",
-    "[]🇯🇵 日本-手动选择",
-]
-
-[[custom_groups]]
-name = "🐼 微软服务"
-type = "select"
-disable_udp = false
-rule = [
-    "[]🔄 延迟最低",
-    "[]🇺🇸 美国-延迟最低",
-    "[]🇺🇸 美国-手动选择",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-手动选择",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-手动选择",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🇸🇬 新加坡-手动选择",
-    "[]🇯🇵 日本-延迟最低",
-    "[]🇯🇵 日本-手动选择",
-    "[]🇬🇧 英国-延迟最低",
-    "[]🇬🇧 英国-手动选择",
-    "[]🍱 冷门地区",
-    "[]🌏 大陆服务",
-    "[]🎯 直连服务",
-]
 
 [[custom_groups]]
 name = "🎥 奈飞影视"
@@ -1150,7 +860,259 @@ rule = [
     "[]🇹🇷 土耳其-Media",
     "[]🇺🇦 乌克兰-Media",
     "[]🇻🇳 越南-Media",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-HiNet-FB",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-Others",
+    "[]🇯🇵 日本-CloudN",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇯🇵 日本-AWS",
+    "[]🇯🇵 日本-Azure",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇷🇺 俄罗斯-Others",
+    "[]🇷🇺 俄罗斯-轮询",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇰🇷 韩国-Azure",
+    "[]🇩🇪 德国-TL",
+]
+
+[[custom_groups]]
+name = "🐷 网易音乐"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "(网易云)", "(UnblockNetEaseMusic)", "(🇨🇳)", "[]🌏 大陆服务"]
+
+[[custom_groups]]
+name = "🍎 苹果服务"
+type = "select"
+disable_udp = false
+rule = ["[]🍖 默认代理", "[]🔄 延迟最低", "[]🎯 直连服务"]
+
+[[custom_groups]]
+name = "📺 哔哩哔哩"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🎯 直连服务",
+    "(🇨🇳)",
+    "[]🌮 手动选择",
+    "[]🇭🇰 香港-Media",
+    "[]🇲🇴 澳门-Media",
+    "[]🇹🇼 台湾-Media",
+    "[]🇯🇵 日本-AWS",
+    "[]🇯🇵 日本-Azure",
+    "[]🇯🇵 日本-CloudN",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 深港专线",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🇺🇸 美国-轮询",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-Others",
+    "[]🍱 冷门地区",
+]
+
+[[custom_groups]]
+name = "🙈 谷歌服务"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🔄 延迟最低",
+    "[]🌮 手动选择",
+    "[]🇺🇸 美国-轮询",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-Others",
+    "[]🇯🇵 日本-轮询",
+    "[]🇯🇵 日本-AWS",
+    "[]🇯🇵 日本-Azure",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇯🇵 日本-CloudN",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 深港专线",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🍱 冷门地区",
+    "[]🇷🇺 俄罗斯-Others",
+    "[]🇷🇺 俄罗斯-轮询",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+    "[]🇰🇷 韩国-轮询",
+    "[]🇰🇷 韩国-Azure",
+    "[]🇩🇪 德国-轮询",
+    "[]🇩🇪 德国-TL",
+]
+
+[[custom_groups]]
+name = "🥝 爱奇艺"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🎯 直连服务",
+    "[]🌮 手动选择",
+    "[]🇭🇰 香港-Media",
+    "[]🇲🇴 澳门-Media",
+    "[]🇹🇼 台湾-Media",
+    "[]🇬🇧 英国-Media",
+    "[]🇺🇸 美国-Media",
+    "[]🇯🇵 日本-Media",
+    "[]🇸🇬 新加坡-Media",
+    "[]🇰🇷 韩国-Media",
+    "[]🇷🇺 俄罗斯-Media",
+    "[]🇮🇳 印度-Media",
+    "[]🇦🇷 阿根廷-Media",
+    "[]🇦🇹 奥地利-Media",
+    "[]🇦🇿 阿塞拜疆-Media",
+    "[]🇧🇬 保加利亚-Media",
+    "[]🇧🇷 巴西-Media",
+    "[]🇨🇭 瑞士-Media",
+    "[]🇨🇱 智利-Media",
+    "[]🇨🇴 哥伦比亚-Media",
+    "[]🇨🇿 捷克-Media",
+    "[]🇪🇬 埃及-Media",
+    "[]🇪🇸 西班牙-Media",
+    "[]🇫🇮 芬兰-Media",
+    "[]🇮🇱 以色列-Media",
+    "[]🇱🇻 拉脱维亚-Media",
+    "[]🇲🇾 马来西亚-Media",
+    "[]🇳🇱 荷兰-Media",
+    "[]🇵🇰 巴基斯坦-Media",
+    "[]🇵🇱 波兰-Media",
+    "[]🇹🇭 泰国-Media",
+    "[]🇹🇷 土耳其-Media",
+    "[]🇺🇦 乌克兰-Media",
+    "[]🇻🇳 越南-Media",
+    "(🇨🇳)",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 深港专线",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+]
+
+[[custom_groups]]
+name = "🐻 LineTV"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🇹🇼 台湾-Media",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
     "[]🍖 默认代理",
+    "(台.*(?!▷|回|转)|TW|彰化)",
+]
+
+[[custom_groups]]
+name = "🐼 微软服务"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🔄 延迟最低",
+    "[]🌮 手动选择",
+    "[]🇺🇸 美国-轮询",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-Others",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 深港专线",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🍱 冷门地区",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+    "[]🇰🇷 韩国-轮询",
+    "[]🇰🇷 韩国-Azure",
+    "[]🇩🇪 德国-轮询",
+    "[]🇩🇪 德国-TL",
+    "[]🌏 大陆服务",
+    "[]🎯 直连服务",
 ]
 
 [[custom_groups]]
@@ -1159,20 +1121,32 @@ type = "select"
 disable_udp = false
 rule = [
     "[]🔄 延迟最低",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🇸🇬 新加坡-手动选择",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-手动选择",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-手动选择",
-    "[]🇬🇧 英国-延迟最低",
-    "[]🇬🇧 英国-手动选择",
-    "[]🇷🇺 俄罗斯-延迟最低",
-    "[]🇷🇺 俄罗斯-手动选择",
+    "[]🌮 手动选择",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+    "[]🇰🇷 韩国-轮询",
+    "[]🇰🇷 韩国-Azure",
+    "[]🇩🇪 德国-轮询",
+    "[]🇩🇪 德国-TL",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🇺🇸 美国-轮询",
     "[]🍱 冷门地区",
-    "[]🍖 默认代理",
+    "[]🇯🇵 日本-轮询",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇷🇺 俄罗斯-Others",
+    "[]🇷🇺 俄罗斯-轮询",
 ]
 
 [[custom_groups]]
@@ -1181,24 +1155,44 @@ type = "select"
 disable_udp = false
 rule = [
     "[]🔄 延迟最低",
-    "[]🇺🇸 美国-延迟最低",
-    "[]🇺🇸 美国-手动选择",
-    "[]🇯🇵 日本-延迟最低",
-    "[]🇯🇵 日本-手动选择",
-    "[]🇬🇧 英国-延迟最低",
-    "[]🇬🇧 英国-手动选择",
-    "[]🇭🇰 香港-延迟最低",
-    "[]🇭🇰 香港-手动选择",
-    "[]🇹🇼 台湾-延迟最低",
-    "[]🇹🇼 台湾-手动选择",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇲🇴 澳门-手动选择",
+    "[]🌮 手动选择",
+    "[]🇺🇸 美国-轮询",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-Others",
     "[]🍱 冷门地区",
-    "[]🍖 默认代理",
+    "[]🇯🇵 日本-轮询",
+    "[]🇯🇵 日本-AWS",
+    "[]🇯🇵 日本-Azure",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇯🇵 日本-CloudN",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 深港专线",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
 ]
 
 [[custom_groups]]
-name = "🤖 OpenAI"
+name = "🤖 OpenAi"
 type = "select"
 disable_udp = false
 rule = [
@@ -1238,16 +1232,42 @@ rule = [
 ]
 
 [[custom_groups]]
-name = "🥥 DNS Improvement"
+name = "💊 小米服务"
 type = "select"
 disable_udp = false
-rule = ["[]🎯 直连服务", "(🇨🇳)", "[]🔄 延迟最低", "[]🍖 默认代理"]
+rule = [
+    "[]🎯 直连服务",
+    "(🇨🇳)",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 香港-Others",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
+    "[]🌏 大陆服务",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🐱 阿里巴巴"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "(🇨🇳)", "[]🌏 大陆服务"]
 
 [[custom_groups]]
 name = "🚦 DMCA Sensitive"
 type = "select"
 disable_udp = false
-rule = ["[]🎯 直连服务", "[]🌏 大陆服务", "(灭霸)", "[]🍖 默认代理"]
+rule = ["[]🎯 直连服务", "[]🌏 大陆服务", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "🥥 DNS Improvement"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "(🇨🇳)", "[]🔄 延迟最低", "[]🍖 默认代理"]
 
 [[custom_groups]]
 name = "🕸️ 局域网服务"
@@ -1259,151 +1279,1073 @@ rule = ["[]🎯 直连服务", "[]🍖 默认代理"]
 name = "🚀 SpeedTest"
 type = "select"
 disable_udp = false
-rule = ["[]🎯 直连服务", "[]🍖 默认代理", ".*"]
+rule = ["[]🎯 直连服务", "[]🌮 手动选择"]
+
+[[custom_groups]]
+name = "🇹🇼 台湾-HiNet"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇹🇼.*台HiNet(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇼 台湾-Seednet"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇹🇼.*台Seednet(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇼 台湾-HiNet-FB"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇹🇼 台湾-HiNet", "((?i)^🇹🇼.*台HiNet(?!▷|回|转))"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇼 台湾-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇹🇼 台湾-HiNet", "[]🇹🇼 台湾-Seednet", "((?i)^🇹🇼.*台TFN(?!▷|回|转))"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-AWS"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇭🇰.*港AWS.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-Azure"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇭🇰.*港Azure.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇭🇰 香港-BGP"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇭🇰.*港BGP.*(?!▷|回|转))",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-HGC"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇭🇰.*HGC.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-HKBN"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇭🇰.*HKBN.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-HKT"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇭🇰.*HKT.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇭🇰 香港-M247"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇭🇰.*港M247.*(?!▷|回|转))",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-NTT"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇭🇰.*NTT.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇭🇰 香港-WTT"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇭🇰.*WTT.*(?!▷|回|转))",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇭🇰 香港-LS"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇭🇰.*港LS)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 深港专线"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇭🇰.*不限速|深港临时专线)", "((?i)^🇭🇰.*深港(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-Others"
+type = "url-test"
+disable_udp = false
+rule = [
+    "((?i)^🇭🇰.*港CI)",
+    "((?i)^🇭🇰.*港icable)",
+    "((?i)^🇭🇰.*港阿里云)",
+    "((?i)^🇭🇰.*港(?!▷|AWS|Azure|HGC|HKBN|HKT|NTT))",
+    "[]REJECT",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
 
 [[custom_groups]]
 name = "🇭🇰 香港-延迟最低"
 type = "url-test"
 disable_udp = false
-rule = ["(^🇭🇰.*(?!▷|回|转))", "[]REJECT"]
+rule = [
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 香港-Others",
+    "[]🇭🇰 深港专线",
+]
 url = "https://www.google-analytics.com/generate_204"
 interval = 180
 tolerance = 20
 lazy = true
 
 [[custom_groups]]
-name = "🇭🇰 香港-手动选择"
-type = "select"
+name = "🇭🇰 香港-轮询"
+type = "fallback"
 disable_udp = false
-rule = ["(^🇭🇰.*(?!▷|回|转))", "[]REJECT"]
-
-[[custom_groups]]
-name = "🇲🇴 澳门-延迟最低"
-type = "url-test"
-disable_udp = false
-rule = ["(^🇲🇴.*(?!▷|回|转))", "[]REJECT"]
+rule = [
+    "[]🇭🇰 香港-延迟最低",
+    "[]🇭🇰 香港-AWS",
+    "[]🇭🇰 香港-Azure",
+    "[]🇭🇰 香港-HGC",
+    "[]🇭🇰 香港-HKBN",
+    "[]🇭🇰 香港-HKT",
+    "[]🇭🇰 香港-NTT",
+    "[]🇭🇰 香港-Others",
+    "[]🇭🇰 深港专线",
+]
 url = "https://www.google-analytics.com/generate_204"
 interval = 180
 tolerance = 20
 lazy = true
-
-[[custom_groups]]
-name = "🇲🇴 澳门-手动选择"
-type = "select"
-disable_udp = false
-rule = ["(^🇲🇴.*(?!▷|回|转))", "[]REJECT"]
-
-[[custom_groups]]
-name = "🇹🇼 台湾-延迟最低"
-type = "url-test"
-disable_udp = false
-rule = ["(^🇹🇼.*(?!▷|回|转))", "[]REJECT"]
-url = "https://www.google-analytics.com/generate_204"
-interval = 180
-tolerance = 20
-lazy = true
-
-[[custom_groups]]
-name = "🇹🇼 台湾-手动选择"
-type = "select"
-disable_udp = false
-rule = ["(^🇹🇼.*(?!▷|回|转))", "[]REJECT"]
-
-[[custom_groups]]
-name = "🇺🇸 美国-延迟最低"
-type = "url-test"
-disable_udp = false
-rule = ["(^🇺🇸.*(?!▷|回|转))", "[]REJECT"]
-url = "https://www.google-analytics.com/generate_204"
-interval = 180
-tolerance = 20
-lazy = true
-
-[[custom_groups]]
-name = "🇺🇸 美国-手动选择"
-type = "select"
-disable_udp = false
-rule = ["(^🇺🇸.*(?!▷|回|转))", "[]REJECT"]
-
-[[custom_groups]]
-name = "🇯🇵 日本-延迟最低"
-type = "url-test"
-disable_udp = false
-rule = ["(^🇯🇵.*(?!▷|回|转))", "[]REJECT"]
-url = "https://www.google-analytics.com/generate_204"
-interval = 180
-tolerance = 20
-lazy = true
-
-[[custom_groups]]
-name = "🇯🇵 日本-手动选择"
-type = "select"
-disable_udp = false
-rule = ["(^🇯🇵.*(?!▷|回|转))", "[]REJECT"]
-
-[[custom_groups]]
-name = "🇰🇷 韩国-延迟最低"
-type = "url-test"
-disable_udp = false
-rule = ["(^🇰🇷.*(?!▷|回|转))", "[]REJECT"]
-url = "https://www.google-analytics.com/generate_204"
-interval = 180
-tolerance = 20
-lazy = true
-
-[[custom_groups]]
-name = "🇰🇷 韩国-手动选择"
-type = "select"
-disable_udp = false
-rule = ["(^🇰🇷.*(?!▷|回|转))", "[]REJECT"]
-
-[[custom_groups]]
-name = "🇸🇬 新加坡-延迟最低"
-type = "url-test"
-disable_udp = false
-rule = ["(^🇸🇬.*(?!▷|回|转))", "[]REJECT"]
-url = "https://www.google-analytics.com/generate_204"
-interval = 180
-tolerance = 20
-lazy = true
-
-[[custom_groups]]
-name = "🇸🇬 新加坡-手动选择"
-type = "select"
-disable_udp = false
-rule = ["(^🇸🇬.*(?!▷|回|转))", "[]REJECT"]
-
-[[custom_groups]]
-name = "🇷🇺 俄罗斯-延迟最低"
-type = "url-test"
-disable_udp = false
-rule = ["(^🇷🇺.*(?!▷|回|转))", "[]REJECT"]
-url = "https://www.google-analytics.com/generate_204"
-interval = 180
-tolerance = 20
-lazy = true
-
-[[custom_groups]]
-name = "🇷🇺 俄罗斯-手动选择"
-type = "select"
-disable_udp = false
-rule = ["(^🇷🇺.*(?!▷|回|转))", "[]REJECT"]
 
 [[custom_groups]]
 name = "🇬🇧 英国-延迟最低"
 type = "url-test"
 disable_udp = false
-rule = ["(^🇬🇧.*(?!▷|回|转))", "[]REJECT"]
+rule = ["((?i)^🇬🇧.*伦敦|英.*(?!▷|回|转))", "[]REJECT"]
 url = "https://www.google-analytics.com/generate_204"
 interval = 180
 tolerance = 20
 lazy = true
 
 [[custom_groups]]
-name = "🇬🇧 英国-手动选择"
-type = "select"
+name = "🇺🇸 美国-AWS"
+type = "url-test"
 disable_udp = false
-rule = ["(^🇬🇧.*(?!▷|回|转))", "[]REJECT"]
+rule = ["((?i)^🇺🇸.*美.*AWS)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-Azure"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*Azure)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-BGP"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*BGP)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-CC"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*CC)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-Cera"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*Cera)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-CH"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*CH)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-CN2"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*CN2)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-CT"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*CT)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-DO"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*DO)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-DS"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*DS)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-EN"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*EN)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-GF"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*GF)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-GIA"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*GIA(?!D))",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-GIAD"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*GIAD)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-HE"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*HE)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-INAP"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*INAP)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-JS"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*JS)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-KT"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*KT)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-LN"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*Ln)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-M247"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*M247)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-MC"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*MC)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-NHN"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*NHN)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-QN"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*QN(?!C))",
+#     "((?i)^🇺🇸.*美.*QN[0-9])",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-QNC"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*QNC)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-QP"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*QP)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-RN"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇺🇸.*美.*RN)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-RS"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*RS)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-XS"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*XS)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇺🇸 美国-ANCH"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇺🇸.*美.*安畅)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-Others"
+type = "url-test"
+disable_udp = false
+rule = [
+    "((?i)^🇺🇸.*美.*DP)",
+    "((?i)^🇺🇸.*美.*VM)",
+    "((?i)^🇺🇸.*美(?!▷|AWS|Azure|Cera|CT|DO|HE|JS|LN|RN))",
+    "[]REJECT",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = [
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-Others",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-轮询"
+type = "fallback"
+disable_udp = false
+rule = [
+    "[]🇺🇸 美国-延迟最低",
+    "[]🇺🇸 美国-AWS",
+    "[]🇺🇸 美国-Azure",
+    "[]🇺🇸 美国-Cera",
+    "[]🇺🇸 美国-CT",
+    "[]🇺🇸 美国-DO",
+    "[]🇺🇸 美国-HE",
+    "[]🇺🇸 美国-JS",
+    "[]🇺🇸 美国-LN",
+    "[]🇺🇸 美国-RN",
+    "[]🇺🇸 美国-Others",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-AWS"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇯🇵.*日.*AWS)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-Azure"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇯🇵.*日.*Azure)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-CloudN"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇯🇵.*日.*CloudN)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇯🇵 日本-GMO"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇯🇵.*日.*GMO)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇯🇵 日本-IDCF"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇯🇵.*日.*IDCF)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇯🇵 日本-IIJ"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇯🇵.*日.*IIJ.*(?!▷|回|转))",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-M247"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇯🇵.*日.*M247)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-NHN"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇯🇵.*日.*NHN)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-NTT"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇯🇵.*日.*NTT)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-Webarena"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇯🇵.*日.*Webarena)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇯🇵 日本-Others"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇯🇵.*日.*阿里云)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = [
+    "[]🇯🇵 日本-CloudN",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇯🇵 日本-AWS",
+    "[]🇯🇵 日本-Azure",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-轮询"
+type = "fallback"
+disable_udp = false
+rule = [
+    "[]🇯🇵 日本-延迟最低",
+    "[]🇯🇵 日本-CloudN",
+    "[]🇯🇵 日本-M247",
+    "[]🇯🇵 日本-NHN",
+    "[]🇯🇵 日本-NTT",
+    "[]🇯🇵 日本-Webarena",
+    "[]🇯🇵 日本-AWS",
+    "[]🇯🇵 日本-Azure",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇷🇺 俄罗斯-伯力"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇷🇺.*俄伯力)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-Others"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇷🇺.*新西伯利亚)", "((?i)^🇷🇺.*莫斯科)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇷🇺 俄罗斯-Others", "((?i)^🇷🇺.*)"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇷🇺 俄罗斯-延迟最低", "[]🇷🇺 俄罗斯-Others"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-AWS"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇸🇬.*新AWS)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-Azure"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇸🇬.*新Azure)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-DO"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇸🇬.*新DO)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-NTT"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇸🇬.*新NTT(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇸🇬 新加坡-Others"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇸🇬.*新(?!▷|Azure|AWS|DO|NTT))",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇸🇬 新加坡-AWS", "[]🇸🇬 新加坡-Azure", "[]🇸🇬 新加坡-DO", "[]🇸🇬 新加坡-NTT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-轮询"
+type = "fallback"
+disable_udp = false
+rule = [
+    "[]🇸🇬 新加坡-延迟最低",
+    "[]🇸🇬 新加坡-AWS",
+    "[]🇸🇬 新加坡-Azure",
+    "[]🇸🇬 新加坡-DO",
+    "[]🇸🇬 新加坡-NTT",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇰🇷 韩国-AWS"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇰🇷.*韩.*AWS)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-Azure"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇰🇷.*韩.*Azure)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇰🇷 韩国-NHN"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇰🇷.*韩.*NHN)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇰🇷 韩国-KT"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇰🇷.*韩KT)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🇰🇷 韩国-Others"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇰🇷 韩国-Azure"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇰🇷 韩国-延迟最低", "[]🇰🇷 韩国-Azure"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇩🇪 德国-TL"
+type = "url-test"
+disable_udp = false
+rule = ["((?i)^🇩🇪.*德.*TL)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇩🇪 德国-GIA"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇩🇪.*德.*GIA)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+[[custom_groups]]
+name = "🇩🇪 德国-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇩🇪 德国-TL"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇩🇪 德国-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇩🇪 德国-延迟最低", "[]🇩🇪 德国-TL"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+# [[custom_groups]]
+# name = "🇦🇺 澳大利亚-延迟最低"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^🇦🇺.*悉尼AWS)",
+#     "[]REJECT",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
+
+# [[custom_groups]]
+# name = "🍄 低倍率节点"
+# type = "url-test"
+# disable_udp = false
+# rule = [
+#     "((?i)^\\(x0\\))",
+# ]
+# url = "https://www.google-analytics.com/generate_204"
+# interval = 180
+# tolerance = 20
+# lazy = true
 
 [[custom_groups]]
 name = "🔄 延迟最低"
@@ -1412,14 +2354,15 @@ disable_udp = false
 rule = [
     "[]🇺🇸 美国-延迟最低",
     "[]🇭🇰 香港-延迟最低",
-    "[]🇲🇴 澳门-延迟最低",
-    "[]🇹🇼 台湾-延迟最低",
+    "[]🇹🇼 台湾-HiNet",
+    "[]🇹🇼 台湾-Seednet",
     "[]🇯🇵 日本-延迟最低",
     "[]🇷🇺 俄罗斯-延迟最低",
-    "[]🇸🇬 新加坡-延迟最低",
-    "[]🇬🇧 英国-延迟最低",
-    "[]🇰🇷 韩国-延迟最低",
+    "[]🇩🇪 德国-延迟最低",
     "[]🍱 冷门地区",
+    "[]🇸🇬 新加坡-延迟最低",
+    "[]🇰🇷 韩国-延迟最低",
+    "[]🇬🇧 英国-延迟最低",
 ]
 url = "https://www.google-analytics.com/generate_204"
 interval = 180
@@ -1774,14 +2717,11 @@ type = "select"
 disable_udp = false
 rule = ["[]REJECT", "[]🎯 直连服务", "[]🍖 默认代理"]
 
-# [[custom_groups]]
-# name = "⛔️ 广告服务"
-# type = "select"
-# disable_udp = false
-# rule = [
-#     "[]REJECT",
-#     "[]🎯 直连服务",
-# ]
+[[custom_groups]]
+name = "⛔️ 广告服务"
+type = "select"
+disable_udp = false
+rule = ["[]REJECT", "[]🎯 直连服务"]
 
 [[custom_groups]]
 name = "⏰ 时间校准"
@@ -1789,17 +2729,6 @@ type = "select"
 disable_udp = false
 rule = ["[]🎯 直连服务"]
 
-# import = "snippets/groups.toml"
-
-[ruleset]
-# Enable generating rules with rulesets
-enabled = true
-
-# Overwrite the existing rules in rule_base
-overwrite_original_rules = true
-
-# Perform a ruleset update on request
-update_ruleset_on_request = true
 
 [[rulesets]]
 group = "🥥 DNS Improvement"
@@ -1813,11 +2742,11 @@ ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/App
 type = "surge-ruleset"
 interval = 3600
 
-# [[rulesets]]
-# group = "⛔️ 广告服务"
-# ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list"
-# type = "surge-ruleset"
-# interval = 3600
+[[rulesets]]
+group = "⛔️ 广告服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list"
+type = "surge-ruleset"
+interval = 3600
 
 [[rulesets]]
 group = "⏰ 时间校准"
@@ -1892,8 +2821,8 @@ type = "surge-ruleset"
 interval = 3600
 
 [[rulesets]]
-group = "🤖 OpenAI"
-ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/OpenAI.list"
+group = "🤖 OpenAi"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/OpenAi.list"
 type = "surge-ruleset"
 interval = 3600
 
@@ -2007,14 +2936,14 @@ ruleset = "[]GEOIP,CN"
 group = "🚧 终末策略"
 ruleset = "[]MATCH"
 
-# import = "snippets/rulesets.toml"
-
-[template]
-template_path = ""
 
 [[template.globals]]
 key = "clash.mixed_port"
 value = "18888"
+
+# [[template_args]]
+# key = "clash.redir_port"
+# value = "18890"
 
 [[template.globals]]
 key = "clash.allow_lan"
@@ -2043,94 +2972,3 @@ value = "true"
 [[template.globals]]
 key = "singbox.mixed_port"
 value = "2080"
-
-
-[[aliases]]
-uri = "/clash"
-target = "/sub?target=clash"
-
-[[aliases]]
-uri = "/clashr"
-target = "/sub?target=clashr"
-
-[[aliases]]
-uri = "/surge"
-target = "/sub?target=surge"
-
-[[aliases]]
-uri = "/quan"
-target = "/sub?target=quan"
-
-[[aliases]]
-uri = "/quanx"
-target = "/sub?target=quanx"
-
-[[aliases]]
-uri = "/mellow"
-target = "/sub?target=mellow"
-
-[[aliases]]
-uri = "/surfboard"
-target = "/sub?target=surfboard"
-
-[[aliases]]
-uri = "/loon"
-target = "/sub?target=loon"
-
-[[aliases]]
-uri = "/singbox"
-target = "/sub?target=singbox"
-
-[[aliases]]
-uri = "/ss"
-target = "/sub?target=ss"
-
-[[aliases]]
-uri = "/ssd"
-target = "/sub?target=ssd"
-
-[[aliases]]
-uri = "/sssub"
-target = "/sub?target=sssub"
-
-[[aliases]]
-uri = "/ssr"
-target = "/sub?target=ssr"
-
-[[aliases]]
-uri = "/v2ray"
-target = "/sub?target=v2ray"
-
-[[aliases]]
-uri = "/trojan"
-target = "/sub?target=trojan"
-
-# [[tasks]]
-# name = "tick"
-# cronexp = "0/10 * * * * ?"
-# path = "tick.js"
-# timeout = 3
-
-[server]
-# Address to bind on for Web Server
-listen = "0.0.0.0"
-# Port to bind on for Web Server
-port = 25500
-# Root folder for web server, keep empty to disable
-serve_file_root = "./sub-web"
-
-[advanced]
-log_level = "debug"
-print_debug_info = true
-max_pending_connections = 10240
-max_concurrent_threads = 128
-max_allowed_rulesets = 0
-max_allowed_rules = 0
-max_allowed_download_size = 0
-enable_cache = false
-cache_subscription = 0
-cache_config = 0
-cache_ruleset = 0
-script_clean_context = true
-async_fetch_ruleset = true
-skip_failed_links = true
