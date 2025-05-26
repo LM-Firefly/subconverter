@@ -1,0 +1,2236 @@
+version = 1
+[custom]
+enable_rule_generator = true
+overwrite_original_rules = true
+
+clash_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+surge_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+surfboard_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+mellow_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+quan_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+quanx_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+loon_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+sssub_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+singbox_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+
+exclude_remarks = [
+    "((到期)|(剩余流量)|(时间)|(官网)|(产品)|(先购买套餐)|(流量消耗)|(更新订阅)|(套餐到期)|(.*流量.*剩.*天)|(■等级警报■)|(\\(限速\\))|(\\[限速\\])|(\\[游戏\\])|(\\[游戏专用\\])|(\\[将下线\\])|(.*耗尽.*)|(近期下线)|(游戏专线)|(维护)|(测试节点)|(防失联地址)|(官方地址)|(官方网站)|(群组))",
+]
+
+
+[node_pref]
+udp_flag = true
+clash_proxies_style = "block"
+clash_proxy_groups_style = "block"
+
+[[node_pref.rename_node]]
+match = "(解锁|)(\\|)(x.*)(\\|V2ray)"
+replace = "$[$3]"
+
+[[node_pref.rename_node]]
+match = "(..|...)(\\d\\d\\d\\d|\\d\\d\\d)(\\|)(Azure|HKT|CN2GIA)"
+replace = "$1$4$2"
+
+[[node_pref.rename_node]]
+match = "((^CordCloud - )|(关注TG@txwl666)|(一元机场:ssrsub.de))"
+replace = ""
+
+[[node_pref.rename_node]]
+match = "(标准)|(标准线路)|(线路)|(中转)|(直连)|(80端口)|(V\\d-)|(IEPL专线 )|(IPV6)|((海外\\|新疆专用))|((\u6d77\u5916\\|\u65b0\u7586\u4e13\u7528))"
+replace = ""
+
+[[node_pref.rename_node]]
+match = "(.*)( )(.*\\d)( \\| )(.*)"
+replace = "$1$3$5"
+
+[[node_pref.rename_node]]
+match = "(.*)(\\b\\d.*\\d\\b)(静态解锁|动态解锁|原生解锁|解锁|动态原生|静态原生|原生)"
+replace = "$1$2[M]"
+
+[[node_pref.rename_node]]
+match = "(.*)(\\d.*\\d)(\\|[\\w].*\\d)"
+replace = "$1$2"
+
+[[node_pref.rename_node]]
+match = "(.*)(NO)(.?\\d?\\d?\\d)$"
+replace = "$1 $3"
+
+# [[node_pref.rename_node]]
+# match = "(「|\u300c)(\\p{RI}\\p{RI})(」|\u300d)"
+# replace = "$2 "
+
+[[node_pref.rename_node]]
+match = "((CN\\d•)|^)(⓪|❶|❷|❸|❻)(TJ\\.|gR\\.|V2\\.|H2\\.|SS\\.)"
+replace = ""
+
+[[node_pref.rename_node]]
+match = "(商宽)|(\\d组)|(--)|(◆)"
+replace = ""
+
+[[node_pref.rename_node]]
+match = "^(.*)(?i:\\bHK[G]?\\d*\\b|Hong.*?Kong|\\bHKT\\d*\\b|\\bHKBN\\d*\\b|\\bHGC\\d*\\b|\\bWTT\\d*\\b|\\bCMI\\d*\\b|\\bHK\\d*\\b)([\u4e00-\u9fa5].*|\\d*)"
+replace = "香港 $2"
+
+[[node_pref.rename_node]]
+match = "^((「|\u300c)(🇭🇰)(」|\u300d))(.*)"
+replace = "香港 $5"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bUS[A]?\\d*\\b)|((「|\u300c)(🇺🇸)(」|\u300d)))(.*)"
+replace = "美国 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bJP[N]?\\d*\\b)|((「|\u300c)(🇯🇵)(」|\u300d)))(.*)"
+replace = "日本 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bTW[N]?\\d*\\b)|((「|\u300c)(🇹🇼)(」|\u300d)))(.*)"
+replace = "台湾 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bMO\\d*\\b)|((「|\u300c)(🇲🇴)(」|\u300d)))(.*)"
+replace = "澳门 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bSG[P]?\\d*\\b)|((「|\u300c)(🇸🇬)(」|\u300d)))(.*)"
+replace = "新加坡 $6"
+
+[[node_pref.rename_node]]
+match = "^(?i:\\bRU[S]?\\d*\\b)(.*)"
+replace = "俄罗斯 $2"
+
+[[node_pref.rename_node]]
+match = "^(\\bT[U]R\\b)(.*)"
+replace = "土耳其 $2"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bUK\\d*\\b|\\bGB[R]?\\d*\\b)|((「|\u300c)(🇬🇧)(」|\u300d)))(.*)"
+replace = "英国 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:(?<!North\\s)(\\bK[O]?R\\d*\\b))|((「|\u300c)(🇰🇷)(」|\u300d)))(.*)"
+replace = "韩国 $7"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bFR[A]?\\d*\\b)|((「|\u300c)(🇫🇷)(」|\u300d)))(.*)"
+replace = "法国 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bCA[N]?\\d*\\b)|((「|\u300c)(🇨🇦)(」|\u300d)))(.*)"
+replace = "加拿大 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bAU[S]?\\d*\\b)|((「|\u300c)(🇦🇺)(」|\u300d)))(.*)"
+replace = "澳大利亚 $6"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bC[H]?N\\b)|((「|\u300c)(🇨🇳)(」|\u300d)))(.*)"
+replace = "中国 $6"
+
+[[node_pref.rename_node]]
+match = "^(\\bRO\\d*\\b)(.*)"
+replace = "罗马尼亚 $2"
+
+[[node_pref.rename_node]]
+match = "^(\\bBR\\d*\\b)(.*)"
+replace = "巴西 $2"
+
+[[node_pref.rename_node]]
+match = "^((?i:\\bES[P]?\\d*\\b)|((「|\u300c)(🇪🇸)(」|\u300d)))(.*)"
+replace = "西班牙 $6"
+
+[[node_pref.rename_node]]
+match = "移动"
+replace = "CM"
+
+[[node_pref.rename_node]]
+match = "电信"
+replace = "CT"
+
+[[node_pref.rename_node]]
+match = "联通"
+replace = "CU"
+
+[[node_pref.rename_node]]
+match = "深港专线"
+replace = "深港"
+
+[[node_pref.rename_node]]
+match = "(转)"
+replace = "▷"
+
+[[node_pref.rename_node]]
+match = "((NF)|(NF\\*)|(BBC)|(abema)|(动画疯)|(Netflix)|(動畫瘋)|(Hulu)|(\\[注册Netflix\\])|(HBO)|(TVB)|(D\\+)|(Yp)|(Y2B P)|(AI)|(解锁流媒体)|(原生IP)|(原生)|( NF )|( D\\+ )|(流媒体)|(-M)|(解锁))"
+replace = "[M]"
+
+[[node_pref.rename_node]]
+match = "\\[M\\].*\\[M\\]"
+replace = "[M]"
+
+[[node_pref.rename_node]]
+match = "(\\w+|[\u4e00-\u9fa5]+)\\s\\1"
+replace = "$1 "
+
+[[node_pref.rename_node]]
+match = "\\[CM\\]|\\[CU\\]|\\[BT\\/PT专用\\]|\\[荐\\]|\\[Beta\\]|\\[移动\\]|\\[联通\\]|\\[综合\\]|\\[备用\\]|\\[阿里云\\]|\\[测试\\]|\\[v6\\]|高速|100m限速|CDN加速|Game|PPCW|Sakura"
+replace = ""
+
+# [[node_pref.rename_node]]
+# match = "(?!<=[\\]|\\)])$"
+# replace = "[x1]"
+
+[[node_pref.rename_node]]
+match = "(x|X)(\\d*.?\\d*\\d)"
+replace = "[x$2]"
+
+[[node_pref.rename_node]]
+match = "(.*)(\\[)(倍率:)(.*\\d)(\\])"
+replace = "$1[x$4]"
+
+[[node_pref.rename_node]]
+match = "(\\[x.*\\d\\])(.*)"
+replace = "$2$1"
+
+[[node_pref.rename_node]]
+match = "(.*)( )(.*\\d)(倍率)"
+replace = "$1[x$3]"
+
+[[node_pref.rename_node]]
+match = "(.*)(\\|)(x.*\\d)(倍率)"
+replace = "$1[$3]"
+
+[[node_pref.rename_node]]
+match = "(.*)( )(x.*\\d)"
+replace = "$1[$3]"
+
+[[node_pref.rename_node]]
+match = "\\[\\]"
+replace = ""
+
+[[node_pref.rename_node]]
+match = "\\(?((x|X)?(\\d+)(\\.?\\d+)?)((\\s?倍率?)|(x|X))\\)?"
+replace = "[x$1]"
+
+
+[emojis]
+add_emoji = true
+remove_old_emoji = true
+
+[[emojis.emoji]]
+match = "(?i:Bandwidth|expire|流量|时间|应急|过期)"
+emoji = "🏳️‍🌈"
+
+[[emojis.emoji]]
+match = "(NetEaseMusic|网易云音乐|网易云解锁)"
+emoji = "🎶"
+
+[[emojis.emoji]]
+match = "(\\bAL\\d*\\b|阿尔巴尼亚|Albania)"
+emoji = "🇦🇱"
+
+[[emojis.emoji]]
+match = "(\\bOM\\d*\\b|阿曼苏丹|马斯喀特|Muscat)"
+emoji = "🇴🇲"
+
+[[emojis.emoji]]
+match = "(\\bAZ\\d*\\b|阿塞拜疆|Azerbaijan)"
+emoji = "🇦🇿"
+
+[[emojis.emoji]]
+match = "(\\bEG\\d*\\b|埃及|Egypt)"
+emoji = "🇪🇬"
+
+[[emojis.emoji]]
+match = "(\\bEE\\d*\\b|爱沙尼亚|Estonia)"
+emoji = "🇪🇪"
+
+[[emojis.emoji]]
+match = "(\\bBH\\d*\\b|巴林|Bahrain)"
+emoji = "🇧🇭"
+
+[[emojis.emoji]]
+match = "(\\bBT\\d*\\b|不丹|Bhutan)"
+emoji = "🇧🇹"
+
+[[emojis.emoji]]
+match = "(\\bPA\\d*\\b|巴拿马|Panama)"
+emoji = "🇵🇦"
+
+[[emojis.emoji]]
+match = "(\\bBG\\d*\\b|保加利亚|Bulgaria)"
+emoji = "🇧🇬"
+
+[[emojis.emoji]]
+match = "(\\bMK\\d*\\b|北马其顿|Macedonia)"
+emoji = "🇲🇰"
+
+[[emojis.emoji]]
+match = "(\\bBA\\d*\\b|波黑共和国|波士尼亚与赫塞哥维纳|Bosnia|Herzegovina)"
+emoji = "🇧🇦"
+
+[[emojis.emoji]]
+match = "(\\bVA\\d*\\b|梵蒂冈|Vatican)"
+emoji = "🇻🇦"
+
+[[emojis.emoji]]
+match = "(\\bGE\\d*\\b|格鲁吉亚|Georgia)"
+emoji = "🇬🇪"
+
+[[emojis.emoji]]
+match = "(\\bKZ\\d*\\b|哈萨克斯坦|Kazakhstan)"
+emoji = "🇰🇿"
+
+[[emojis.emoji]]
+match = "(\\bKG\\d*\\b|吉尔吉斯斯坦|Kyrgyzstan)"
+emoji = "🇰🇬"
+
+[[emojis.emoji]]
+match = "(\\bKH\\d*\\b|柬埔寨|Cambodia)"
+emoji = "🇰🇭"
+
+[[emojis.emoji]]
+match = "(\\bHR\\d*\\b|克罗地亚|Croatia)"
+emoji = "🇭🇷"
+
+[[emojis.emoji]]
+match = "(\\bKE\\d*\\b|肯尼亚|Kenya)"
+emoji = "🇰🇪"
+
+[[emojis.emoji]]
+match = "(\\bLA\\d*\\b|老挝|Vientiane|Laos)"
+emoji = "🇱🇦"
+
+[[emojis.emoji]]
+match = "(\\bLV\\d*\\b|拉脱维亚|Latvia)"
+emoji = "🇱🇻"
+
+[[emojis.emoji]]
+match = "(\\bLT\\d*\\b|立陶宛|Lietuvos)"
+emoji = "🇱🇹"
+
+[[emojis.emoji]]
+match = "(\\bLU\\d*\\b|卢森堡|Luxemburg|Luxembourg)"
+emoji = "🇱🇺"
+
+[[emojis.emoji]]
+match = "(\\bMN\\d*\\b|蒙古|Монголулс|Mongolia)"
+emoji = "🇲🇳"
+
+[[emojis.emoji]]
+match = "(\\bPE\\d*\\b|秘鲁|Peru)"
+emoji = "🇵🇪"
+
+[[emojis.emoji]]
+match = "(\\bMM\\d*\\b|缅甸|Myanmar)"
+emoji = "🇲🇲"
+
+[[emojis.emoji]]
+match = "(\\bMX\\d*\\b|墨西哥|Mexico)"
+emoji = "🇲🇽"
+
+[[emojis.emoji]]
+match = "(\\bAQ\\d*\\b|南极|Antarctica)"
+emoji = "🇦🇶"
+
+[[emojis.emoji]]
+match = "(\\bNG\\d*\\b|尼日利亚|Nigeria)"
+emoji = "🇳🇬"
+
+[[emojis.emoji]]
+match = "(\\bPT\\d*\\b|葡萄牙|Portugal)"
+emoji = "🇵🇹"
+
+[[emojis.emoji]]
+match = "(\\bQA\\d*\\b|卡塔尔|Qatar)"
+emoji = "🇶🇦"
+
+[[emojis.emoji]]
+match = "(\\bRS\\d*\\b|塞尔维亚|Serbia)"
+emoji = "🇷🇸"
+
+[[emojis.emoji]]
+match = "(\\bCY\\d*\\b|塞浦路斯|Cyprus)"
+emoji = "🇨🇾"
+
+[[emojis.emoji]]
+match = "(\\bSK\\d*\\b|斯洛伐克|Slovensko)"
+emoji = "🇸🇰"
+
+[[emojis.emoji]]
+match = "(\\bSI\\d*\\b|斯洛文尼亚|Slovenia)"
+emoji = "🇸🇮"
+
+[[emojis.emoji]]
+match = "(\\bTN\\d*\\b|突尼斯|Tunisia)"
+emoji = "🇹🇳"
+
+[[emojis.emoji]]
+match = "(\\bUY\\d*\\b|乌拉圭|Uruguay)"
+emoji = "🇺🇾"
+
+[[emojis.emoji]]
+match = "(\\bGR\\d*\\b|希腊|Greece)"
+emoji = "🇬🇷"
+
+[[emojis.emoji]]
+match = "(\\bNZ\\d*\\b|新西兰|纽西兰|New Zealand)"
+emoji = "🇳🇿"
+
+[[emojis.emoji]]
+match = "(\\bIR\\d*\\b|伊朗|Iran)"
+emoji = "🇮🇷"
+
+[[emojis.emoji]]
+match = "(\\bJO\\d*\\b|约旦|Jordan)"
+emoji = "🇯🇴"
+
+[[emojis.emoji]]
+match = "(\\bCL\\d*\\b|智利|智力|Chile)"
+emoji = "🇨🇱"
+
+[[emojis.emoji]]
+match = "(\\bAC\\d*\\b|Ascension|阿森松)"
+emoji = "🇦🇨"
+
+[[emojis.emoji]]
+match = "(\\bAT\\d*\\b|Austria|Vienna|奥地利|维也纳)"
+emoji = "🇦🇹"
+
+[[emojis.emoji]]
+match = "(\\bBD\\d*\\b|Bengal|Bangladesh|孟加拉)"
+emoji = "🇧🇩"
+
+[[emojis.emoji]]
+match = "(\\bCO\\d*\\b|Colombia|哥伦比亚)"
+emoji = "🇨🇴"
+
+[[emojis.emoji]]
+match = "(\\bCR\\d*\\b|Costa Rica|哥斯达黎加)"
+emoji = "🇨🇷"
+
+[[emojis.emoji]]
+match = "(\\bCZ\\d*\\b|Czech|捷克)"
+emoji = "🇨🇿"
+
+[[emojis.emoji]]
+match = "(\\bEC\\d*\\b|Ecuador|厄瓜多尔)"
+emoji = "🇪🇨"
+
+[[emojis.emoji]]
+match = "(\\bEU\\d*\\b|Europe|欧洲)"
+emoji = "🇪🇺"
+
+[[emojis.emoji]]
+match = "(\\bFI\\d*\\b|Finland|Helsinki|芬兰|赫尔辛基)"
+emoji = "🇫🇮"
+
+[[emojis.emoji]]
+match = "(\\bHU\\d*\\b|Hungary|匈牙利)"
+emoji = "🇭🇺"
+
+[[emojis.emoji]]
+match = "(\\bIM\\d*\\b|IMAN|马恩岛|Mann)"
+emoji = "🇮🇲"
+
+[[emojis.emoji]]
+match = "(\\bID\\d*\\b|Indonesia|Jakarta|印尼|印度尼西亚|雅加达)"
+emoji = "🇮🇩"
+
+[[emojis.emoji]]
+match = "(\\bIE\\d*\\b|Ireland|Dublin|爱尔兰|都柏林)"
+emoji = "🇮🇪"
+
+[[emojis.emoji]]
+match = "(\\bIL\\d*\\b|Israel|以色列)"
+emoji = "🇮🇱"
+
+[[emojis.emoji]]
+match = "(\\bIT\\d*\\b|Italy|Milan|意大利|米兰)"
+emoji = "🇮🇹"
+
+[[emojis.emoji]]
+match = "(\\bMD\\d*\\b|Moldova|摩尔多瓦)"
+emoji = "🇲🇩"
+
+[[emojis.emoji]]
+match = "(\\bMA\\d*\\b|Morocco|摩洛哥)"
+emoji = "🇲🇦"
+
+[[emojis.emoji]]
+match = "(\\bNP\\d*\\b|Nepal|尼泊尔)"
+emoji = "🇳🇵"
+
+[[emojis.emoji]]
+match = "(\\bNO\\d*\\b|Norway|挪威)"
+emoji = "🇳🇴"
+
+[[emojis.emoji]]
+match = "(\\bPK\\d*\\b|Pakistan|巴基斯坦)"
+emoji = "🇵🇰"
+
+[[emojis.emoji]]
+match = "(\\bPR\\d*\\b|Puerto.*?Rico|波多黎各)"
+emoji = "🇵🇷"
+
+[[emojis.emoji]]
+match = "(\\bCH\\d*\\b|Switzerland|Zurich|瑞士|苏黎世)"
+emoji = "🇨🇭"
+
+[[emojis.emoji]]
+match = "(\\bVE\\d*\\b|Venezuela|委内瑞拉)"
+emoji = "🇻🇪"
+
+[[emojis.emoji]]
+match = "(\\bAR\\d*\\b|阿根廷|Argentina)"
+emoji = "🇦🇷"
+
+[[emojis.emoji]]
+match = "(\\bBE\\d*\\b|Belgium|比利时)"
+emoji = "🇧🇪"
+
+[[emojis.emoji]]
+match = "(\\bBR\\d*\\b|Brazil|Paulo|巴西|圣保罗)"
+emoji = "🇧🇷"
+
+[[emojis.emoji]]
+match = "(\\bMY\\d*\\b|Malaysia|马来西亚)"
+emoji = "🇲🇾"
+
+[[emojis.emoji]]
+match = "(\\bRO\\d*\\b|Romania|罗马尼亚)"
+emoji = "🇷🇴"
+
+[[emojis.emoji]]
+match = "(\\bSA\\d*\\b|Arabia|沙特)"
+emoji = "🇸🇦"
+
+[[emojis.emoji]]
+match = "(\\bSE\\d*\\b|Sweden|瑞典)"
+emoji = "🇸🇪"
+
+[[emojis.emoji]]
+match = "(\\bTH[A]\\b|Thailand|泰国|泰國|曼谷)"
+emoji = "🇹🇭"
+
+[[emojis.emoji]]
+match = "(\\bT[U]R\\b|Turkey|Türkiye|土耳其|伊斯坦布尔|土.*(?!▷|回|转))"
+emoji = "🇹🇷"
+
+[[emojis.emoji]]
+match = "(\\bUA\\d*\\b|Ukraine|乌克兰)"
+emoji = "🇺🇦"
+
+[[emojis.emoji]]
+match = "(\\bVN\\d*\\b|Vietnam|越南)"
+emoji = "🇻🇳"
+
+[[emojis.emoji]]
+match = "(\\bZA\\d*\\b|Africa|南非)"
+emoji = "🇿🇦"
+
+[[emojis.emoji]]
+match = "(?i:\\bAU[S]?\\d*\\b|Australia|Sydney|澳大利亚|澳洲|悉尼)"
+emoji = "🇦🇺"
+
+[[emojis.emoji]]
+match = "(?i:\\bD[N]?K\\b|Denmark|丹麦)"
+emoji = "🇩🇰"
+
+[[emojis.emoji]]
+match = "(?i:\\bDE[U]?\\d*\\b|Germany|法兰克福|德(国|意志)|中德|^德$|德.*(?!▷|回|转))"
+emoji = "🇩🇪"
+
+[[emojis.emoji]]
+match = "(?i:\\bES[P]?\\d*\\b|Spain|西班牙)"
+emoji = "🇪🇸"
+
+[[emojis.emoji]]
+match = "(?i:\\bFR[A]?\\d*\\b|France|Paris|法国|巴黎|法国.*(?!▷|回|转))"
+emoji = "🇫🇷"
+
+[[emojis.emoji]]
+match = "(?i:\\bIN[D]?\\d*\\b|India|Mumbai|印度|孟买|加尔各答|贾坎德|泰米尔纳德)"
+emoji = "🇮🇳"
+
+[[emojis.emoji]]
+match = "(?i:\\bIS[L]?\\d*\\b|Iceland|冰岛)"
+emoji = "🇮🇸"
+
+[[emojis.emoji]]
+match = "(?i:\\bKP\\d*\\b|North.*?Korea|朝鲜)"
+emoji = "🇰🇵"
+
+[[emojis.emoji]]
+match = "(?i:\\bNL[D]?\\d*\\b|Netherlands|荷兰|阿姆斯特丹)"
+emoji = "🇳🇱"
+
+[[emojis.emoji]]
+match = "(?i:\\bP[O]?H\\d*\\b|Philippines|菲律宾|马尼拉)"
+emoji = "🇵🇭"
+
+[[emojis.emoji]]
+match = "(?i:\\bP[O]?L\\b|Poland|波兰)"
+emoji = "🇵🇱"
+
+[[emojis.emoji]]
+match = "(?i:\\bUAE\\b|Dubai|阿联酋|迪拜)"
+emoji = "🇦🇪"
+
+[[emojis.emoji]]
+match = "(?i:\\bCA[N]?\\d*\\b|Canada|Toronto|Montreal|Vancouver|加拿大|蒙特利尔|温哥华|楓葉|枫叶|加(?!州|坡|拉|哥).*(?!▷|回|转))"
+emoji = "🇨🇦"
+
+[[emojis.emoji]]
+match = "(?i:\\bJP[N]?\\d*\\b|Japan|Tokyo|Osaka|Saitama|日本|东京|大阪|埼玉|[^-]日|日.*(?!▷|回|转)|沪日|穗日|川日|中日|泉日|杭日)"
+emoji = "🇯🇵"
+
+[[emojis.emoji]]
+match = "(?i:(?<!North\\s)(\\bK[O]?R\\d*\\b|Korea|首尔|韩|韓))"
+emoji = "🇰🇷"
+
+[[emojis.emoji]]
+match = "(?i:\\bRU[S]?\\d*\\b|Russia|Moscow|Petersburg|Siberia|伯力|莫斯科|圣彼得堡|西伯利亚|新西伯利亚|哈巴罗夫斯克|俄罗斯|[^-]俄|俄.*(?!▷|回|转)|京俄|杭俄)"
+emoji = "🇷🇺"
+
+[[emojis.emoji]]
+match = "(?i:\\bSG[P]?\\d*\\b|Singapore|新加坡|狮城|獅城|[^-]新|新(?!▷|西)|沪新|京新|泉新|穗新|深新|杭新)"
+emoji = "🇸🇬"
+
+[[emojis.emoji]]
+match = "(?i:\\bUK\\d*\\b|\\bGB[R]?\\d*\\b|England|United.*?Kingdom|London|英国|[^-]英|伦敦|英.*(?!▷|回|转))"
+emoji = "🇬🇧"
+
+[[emojis.emoji]]
+match = "(?i:\\bUS[A]?\\d*\\b|America|United.*?States|美国|[^-]美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|美.*(?!▷|回|转)|沪美|京美)"
+emoji = "🇺🇸"
+
+[[emojis.emoji]]
+match = "(?i:\\bHK[G]?\\d*\\b|Hong.*?Kong|\\bHKT\\d*\\b|\\bHKBN\\d*\\b|\\bHGC\\d*\\b|\\bWTT\\d*\\b|\\bCMI\\d*\\b|\\bHK\\d*\\b|[^-]港|港(?!▷|回|转))"
+emoji = "🇭🇰"
+
+[[emojis.emoji]]
+match = "(?i:\\bMO\\d*\\b|Macao|澳门|\\bCTM\\b|澳(?!大利亚).*(?!▷|回|转))"
+emoji = "🇲🇴"
+
+[[emojis.emoji]]
+match = "(?i:\\bTW[N]?\\d*\\b|Taiwan|新北|彰化|\\bCHT\\b|台湾|[^-]台|\\bHINET\\b|台.*(?!▷|回|转)|台北|台中)"
+emoji = "🇹🇼"
+
+[[emojis.emoji]]
+match = "(?i:\\bC[H]?N\\b|China|back|回国|中国[^-]|江苏[^-]|北京[^-]|上海[^-]|广州[^-]|深圳[^-]|杭州[^-]|常州[^-]|徐州[^-]|青岛[^-]|宁波[^-]|镇江[^-]|成都[^-]|河北[^-]|山西[^-]|辽宁[^-]|吉林[^-]|黑龙江[^-]|江苏[^-]|浙江[^-]|安徽[^-]|福建[^-]|江西[^-]|山东[^-]|河南[^-]|湖北[^-]|湖南[^-]|广东[^-]|海南[^-]|四川[^-]|贵州[^-]|云南[^-]|陕西[^-]|甘肃[^-]|青海[^-]|内蒙古[^-]|广西[^-]|西藏[^-]|宁夏[^-]|新疆[^-]|中.*(?!▷|回|转)|苏.*(?!▷|回|转)|京.*(?!▷|回|转)|沪.*(?!▷|回|转)|穗.*(?!▷|回|转)|深(?!▷|港)|杭.*(?!▷|回|转)|徐.*(?!▷|回|转)|青.*(?!▷|回|转)|甬.*(?!▷|回|转)|镇.*(?!▷|回|转)|禅.*(?!▷|回|转)|蓉.*(?!▷|回|转))"
+emoji = "🇨🇳"
+
+
+[[custom_groups]]
+name = "🍖 默认代理"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🔄 延迟最低",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🇰🇷 韩国-SUB1",
+    "[]🇰🇷 韩国-SUB2",
+    "[]🇰🇷 韩国-SUB3",
+    "[]🇷🇺 俄罗斯-SUB1",
+    "[]🇷🇺 俄罗斯-SUB2",
+    "[]🇷🇺 俄罗斯-SUB3",
+    "[]🍱 冷门地区",
+    "[]🇭🇰 香港-轮询",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇺🇸 美国-轮询",
+    "[]🇯🇵 日本-轮询",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇷🇺 俄罗斯-轮询",
+    "[]🇸🇬 新加坡-轮询",
+    "[]🇰🇷 韩国-轮询",
+]
+
+[[custom_groups]]
+name = "🌍 国外媒体"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🇭🇰 香港-Media",
+    "[]🇲🇴 澳门-Media",
+    "[]🇹🇼 台湾-Media",
+    "[]🇬🇧 英国-Media",
+    "[]🇺🇸 美国-Media",
+    "[]🇯🇵 日本-Media",
+    "[]🇸🇬 新加坡-Media",
+    "[]🇰🇷 韩国-Media",
+    "[]🇷🇺 俄罗斯-Media",
+    "[]🇮🇳 印度-Media",
+    "[]🇦🇷 阿根廷-Media",
+    "[]🇦🇹 奥地利-Media",
+    "[]🇦🇿 阿塞拜疆-Media",
+    "[]🇧🇬 保加利亚-Media",
+    "[]🇧🇷 巴西-Media",
+    "[]🇨🇭 瑞士-Media",
+    "[]🇨🇱 智利-Media",
+    "[]🇨🇴 哥伦比亚-Media",
+    "[]🇨🇿 捷克-Media",
+    "[]🇪🇬 埃及-Media",
+    "[]🇪🇸 西班牙-Media",
+    "[]🇫🇮 芬兰-Media",
+    "[]🇮🇱 以色列-Media",
+    "[]🇱🇻 拉脱维亚-Media",
+    "[]🇲🇾 马来西亚-Media",
+    "[]🇳🇱 荷兰-Media",
+    "[]🇵🇰 巴基斯坦-Media",
+    "[]🇵🇱 波兰-Media",
+    "[]🇹🇭 泰国-Media",
+    "[]🇹🇷 土耳其-Media",
+    "[]🇺🇦 乌克兰-Media",
+    "[]🇻🇳 越南-Media",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🎮 游戏服务"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇰🇷 韩国-SUB1",
+    "[]🇰🇷 韩国-SUB2",
+    "[]🇰🇷 韩国-SUB3",
+    "[]🇷🇺 俄罗斯-SUB1",
+    "[]🇷🇺 俄罗斯-SUB2",
+    "[]🇷🇺 俄罗斯-SUB3",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🌏 大陆服务"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🎯 直连服务",
+    "(🇨🇳)",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇭🇰 香港-轮询",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🚧 终末策略"
+type = "select"
+disable_udp = false
+rule = ["[]🔄 延迟最低", "[]🎯 直连服务", "[]🌏 大陆服务", "(灭霸)", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "📡 视频解析"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "[]🔄 延迟最低", "[]🌏 大陆服务", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "📺 哔哩哔哩"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🎯 直连服务",
+    "[]🇭🇰 香港-Media",
+    "[]🇲🇴 澳门-Media",
+    "[]🇹🇼 台湾-Media",
+    "(🇨🇳)",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇺🇸 美国-轮询",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🍱 冷门地区",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🥝 爱奇艺"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🎯 直连服务",
+    "[]🇭🇰 香港-Media",
+    "[]🇲🇴 澳门-Media",
+    "[]🇹🇼 台湾-Media",
+    "[]🇬🇧 英国-Media",
+    "[]🇺🇸 美国-Media",
+    "[]🇯🇵 日本-Media",
+    "[]🇸🇬 新加坡-Media",
+    "[]🇰🇷 韩国-Media",
+    "[]🇷🇺 俄罗斯-Media",
+    "[]🇮🇳 印度-Media",
+    "[]🇦🇷 阿根廷-Media",
+    "[]🇦🇹 奥地利-Media",
+    "[]🇦🇿 阿塞拜疆-Media",
+    "[]🇧🇬 保加利亚-Media",
+    "[]🇧🇷 巴西-Media",
+    "[]🇨🇭 瑞士-Media",
+    "[]🇨🇱 智利-Media",
+    "[]🇨🇴 哥伦比亚-Media",
+    "[]🇨🇿 捷克-Media",
+    "[]🇪🇬 埃及-Media",
+    "[]🇪🇸 西班牙-Media",
+    "[]🇫🇮 芬兰-Media",
+    "[]🇮🇱 以色列-Media",
+    "[]🇱🇻 拉脱维亚-Media",
+    "[]🇲🇾 马来西亚-Media",
+    "[]🇳🇱 荷兰-Media",
+    "[]🇵🇰 巴基斯坦-Media",
+    "[]🇵🇱 波兰-Media",
+    "[]🇹🇭 泰国-Media",
+    "[]🇹🇷 土耳其-Media",
+    "[]🇺🇦 乌克兰-Media",
+    "[]🇻🇳 越南-Media",
+    "(🇨🇳)",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+]
+
+[[custom_groups]]
+name = "🐷 网易音乐"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "(网易云)", "(UnblockNetEaseMusic)", "(🇨🇳)", "[]🌏 大陆服务"]
+
+[[custom_groups]]
+name = "💊 小米服务"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🎯 直连服务",
+    "(🇨🇳)",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇭🇰 香港-轮询",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🌏 大陆服务",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🐱 阿里巴巴"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "(🇨🇳)", "[]🌏 大陆服务"]
+
+[[custom_groups]]
+name = "🍎 苹果服务"
+type = "select"
+disable_udp = false
+rule = ["[]🍖 默认代理", "[]🔄 延迟最低", "[]🎯 直连服务"]
+
+[[custom_groups]]
+name = "🙈 谷歌服务"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🔄 延迟最低",
+    "[]🇭🇰 香港-轮询",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇺🇸 美国-轮询",
+    "[]🇯🇵 日本-轮询",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇸🇬 新加坡-轮询",
+    "[]🇷🇺 俄罗斯-轮询",
+    "[]🇰🇷 韩国-轮询",
+    "[]🍱 冷门地区",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🇷🇺 俄罗斯-SUB1",
+    "[]🇷🇺 俄罗斯-SUB2",
+    "[]🇷🇺 俄罗斯-SUB3",
+    "[]🇰🇷 韩国-SUB1",
+    "[]🇰🇷 韩国-SUB2",
+    "[]🇰🇷 韩国-SUB3",
+]
+
+[[custom_groups]]
+name = "🐻 LineTV"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🇹🇼 台湾-Media",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇯🇵 日本-Media",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+]
+
+[[custom_groups]]
+name = "🐼 微软服务"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🔄 延迟最低",
+    "[]🇺🇸 美国-轮询",
+    "[]🇭🇰 香港-轮询",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇯🇵 日本-轮询",
+    "[]🇸🇬 新加坡-轮询",
+    "[]🇰🇷 韩国-轮询",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🍱 冷门地区",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🌏 大陆服务",
+    "[]🎯 直连服务",
+]
+
+[[custom_groups]]
+name = "🎥 奈飞影视"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🇭🇰 香港-Media",
+    "[]🇲🇴 澳门-Media",
+    "[]🇹🇼 台湾-Media",
+    "[]🇬🇧 英国-Media",
+    "[]🇺🇸 美国-Media",
+    "[]🇯🇵 日本-Media",
+    "[]🇸🇬 新加坡-Media",
+    "[]🇰🇷 韩国-Media",
+    "[]🇷🇺 俄罗斯-Media",
+    "[]🇮🇳 印度-Media",
+    "[]🇦🇷 阿根廷-Media",
+    "[]🇦🇹 奥地利-Media",
+    "[]🇦🇿 阿塞拜疆-Media",
+    "[]🇧🇬 保加利亚-Media",
+    "[]🇧🇷 巴西-Media",
+    "[]🇨🇭 瑞士-Media",
+    "[]🇨🇱 智利-Media",
+    "[]🇨🇴 哥伦比亚-Media",
+    "[]🇨🇿 捷克-Media",
+    "[]🇪🇬 埃及-Media",
+    "[]🇪🇸 西班牙-Media",
+    "[]🇫🇮 芬兰-Media",
+    "[]🇮🇱 以色列-Media",
+    "[]🇱🇻 拉脱维亚-Media",
+    "[]🇲🇾 马来西亚-Media",
+    "[]🇳🇱 荷兰-Media",
+    "[]🇵🇰 巴基斯坦-Media",
+    "[]🇵🇱 波兰-Media",
+    "[]🇹🇭 泰国-Media",
+    "[]🇹🇷 土耳其-Media",
+    "[]🇺🇦 乌克兰-Media",
+    "[]🇻🇳 越南-Media",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🇷🇺 俄罗斯-SUB1",
+    "[]🇷🇺 俄罗斯-SUB2",
+    "[]🇷🇺 俄罗斯-SUB3",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "📲 电报消息"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🔄 延迟最低",
+    "[]🇸🇬 新加坡-SUB1",
+    "[]🇸🇬 新加坡-SUB2",
+    "[]🇸🇬 新加坡-SUB3",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇭🇰 香港-轮询",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇺🇸 美国-轮询",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🍱 冷门地区",
+    "[]🇯🇵 日本-轮询",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇷🇺 俄罗斯-SUB1",
+    "[]🇷🇺 俄罗斯-SUB2",
+    "[]🇷🇺 俄罗斯-SUB3",
+    "[]🇷🇺 俄罗斯-轮询",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🎬 推趣影音"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🔄 延迟最低",
+    "[]🇺🇸 美国-轮询",
+    "[]🇺🇸 美国-SUB1",
+    "[]🇺🇸 美国-SUB2",
+    "[]🇺🇸 美国-SUB3",
+    "[]🍱 冷门地区",
+    "[]🇯🇵 日本-轮询",
+    "[]🇯🇵 日本-SUB1",
+    "[]🇯🇵 日本-SUB2",
+    "[]🇯🇵 日本-SUB3",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇭🇰 香港-轮询",
+    "[]🇭🇰 香港-SUB1",
+    "[]🇭🇰 香港-SUB2",
+    "[]🇭🇰 香港-SUB3",
+    "[]🇲🇴 澳门-轮询",
+    "[]🇲🇴 澳门-SUB1",
+    "[]🇲🇴 澳门-SUB2",
+    "[]🇲🇴 澳门-SUB3",
+    "[]🇹🇼 台湾-轮询",
+    "[]🇹🇼 台湾-SUB1",
+    "[]🇹🇼 台湾-SUB2",
+    "[]🇹🇼 台湾-SUB3",
+    "[]🍖 默认代理",
+]
+
+[[custom_groups]]
+name = "🤖 OpenAI"
+type = "select"
+disable_udp = false
+rule = [
+    "[]🍖 默认代理",
+    "[]🇺🇸 美国-Media",
+    "[]🇭🇰 香港-Media",
+    "[]🇲🇴 澳门-Media",
+    "[]🇹🇼 台湾-Media",
+    "[]🇬🇧 英国-Media",
+    "[]🇯🇵 日本-Media",
+    "[]🇸🇬 新加坡-Media",
+    "[]🇰🇷 韩国-Media",
+    "[]🇷🇺 俄罗斯-Media",
+    "[]🇮🇳 印度-Media",
+    "[]🇦🇷 阿根廷-Media",
+    "[]🇦🇹 奥地利-Media",
+    "[]🇦🇿 阿塞拜疆-Media",
+    "[]🇧🇬 保加利亚-Media",
+    "[]🇧🇷 巴西-Media",
+    "[]🇨🇭 瑞士-Media",
+    "[]🇨🇱 智利-Media",
+    "[]🇨🇴 哥伦比亚-Media",
+    "[]🇨🇿 捷克-Media",
+    "[]🇪🇬 埃及-Media",
+    "[]🇪🇸 西班牙-Media",
+    "[]🇫🇮 芬兰-Media",
+    "[]🇮🇱 以色列-Media",
+    "[]🇱🇻 拉脱维亚-Media",
+    "[]🇲🇾 马来西亚-Media",
+    "[]🇳🇱 荷兰-Media",
+    "[]🇵🇰 巴基斯坦-Media",
+    "[]🇵🇱 波兰-Media",
+    "[]🇹🇭 泰国-Media",
+    "[]🇹🇷 土耳其-Media",
+    "[]🇺🇦 乌克兰-Media",
+    "[]🇻🇳 越南-Media",
+]
+
+[[custom_groups]]
+name = "⛔️ 广告服务"
+type = "select"
+disable_udp = true
+rule = ["[]REJECT", "[]🎯 直连服务", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "🥥 DNS Improvement"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "(🇨🇳)", "[]🔄 延迟最低", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "🚦 DMCA Sensitive"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "[]🌏 大陆服务", "(灭霸)", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "🕸️ 局域网服务"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "🚀 SpeedTest"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "[]🍖 默认代理", ".*"]
+
+[[custom_groups]]
+name = "🇹🇼 台湾-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇹🇼 台湾-SUB1", "[]🇹🇼 台湾-SUB2", "[]🇹🇼 台湾-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇼 台湾-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇹🇼 台湾-延迟最低", "[]🇹🇼 台湾-SUB1", "[]🇹🇼 台湾-SUB2", "[]🇹🇼 台湾-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇹🇼 台湾-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇹🇼.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇼 台湾-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇹🇼.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇼 台湾-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇹🇼.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇲🇴 澳门-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇲🇴 澳门-SUB1", "[]🇲🇴 澳门-SUB2", "[]🇲🇴 澳门-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇲🇴 澳门-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇲🇴 澳门-延迟最低", "[]🇲🇴 澳门-SUB1", "[]🇲🇴 澳门-SUB2", "[]🇲🇴 澳门-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇲🇴 澳门-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇲🇴.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇲🇴 澳门-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇲🇴.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇲🇴 澳门-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇲🇴.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇭🇰 香港-SUB1", "[]🇭🇰 香港-SUB2", "[]🇭🇰 香港-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇭🇰 香港-延迟最低", "[]🇭🇰 香港-SUB1", "[]🇭🇰 香港-SUB2", "[]🇭🇰 香港-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇭🇰 香港-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇭🇰.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇭🇰.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇭🇰.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇬🇧 英国-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇬🇧.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇺🇸 美国-SUB1", "[]🇺🇸 美国-SUB2", "[]🇺🇸 美国-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇺🇸 美国-延迟最低", "[]🇺🇸 美国-SUB1", "[]🇺🇸 美国-SUB2", "[]🇺🇸 美国-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇺🇸 美国-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇺🇸.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇺🇸.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇺🇸.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇯🇵 日本-SUB1", "[]🇯🇵 日本-SUB2", "[]🇯🇵 日本-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇯🇵 日本-延迟最低", "[]🇯🇵 日本-SUB1", "[]🇯🇵 日本-SUB2", "[]🇯🇵 日本-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇯🇵 日本-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇯🇵.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 60
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇯🇵.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 60
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇯🇵.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 60
+lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇷🇺 俄罗斯-SUB1", "[]🇷🇺 俄罗斯-SUB2", "[]🇷🇺 俄罗斯-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇷🇺 俄罗斯-延迟最低", "[]🇷🇺 俄罗斯-SUB1", "[]🇷🇺 俄罗斯-SUB2", "[]🇷🇺 俄罗斯-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇷🇺.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 60
+lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇷🇺.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 60
+lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇷🇺.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 60
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇸🇬 新加坡-SUB1", "[]🇸🇬 新加坡-SUB2", "[]🇸🇬 新加坡-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇸🇬 新加坡-延迟最低", "[]🇸🇬 新加坡-SUB1", "[]🇸🇬 新加坡-SUB2", "[]🇸🇬 新加坡-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇸🇬.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇸🇬.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇸🇬.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-延迟最低"
+type = "url-test"
+disable_udp = false
+rule = ["[]🇰🇷 韩国-SUB1", "[]🇰🇷 韩国-SUB2", "[]🇰🇷 韩国-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-轮询"
+type = "fallback"
+disable_udp = false
+rule = ["[]🇰🇷 韩国-延迟最低", "[]🇰🇷 韩国-SUB1", "[]🇰🇷 韩国-SUB2", "[]🇰🇷 韩国-SUB3"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+
+[[custom_groups]]
+name = "🇰🇷 韩国-SUB1"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=0!!(^🇰🇷.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-SUB2"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=1!!(^🇰🇷.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-SUB3"
+type = "url-test"
+disable_udp = false
+rule = ["!!GROUPID=2!!(^🇰🇷.*(?!▷|回|转))", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🔄 延迟最低"
+type = "url-test"
+disable_udp = false
+rule = [
+    "[]🇺🇸 美国-延迟最低",
+    "[]🇭🇰 香港-延迟最低",
+    "[]🇲🇴 澳门-延迟最低",
+    "[]🇹🇼 台湾-延迟最低",
+    "[]🇯🇵 日本-延迟最低",
+    "[]🇷🇺 俄罗斯-延迟最低",
+    "[]🇸🇬 新加坡-延迟最低",
+    "[]🇬🇧 英国-延迟最低",
+    "[]🇰🇷 韩国-延迟最低",
+    "[]🍱 冷门地区",
+]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🍱 冷门地区"
+type = "url-test"
+disable_udp = false
+rule = ["(^(?!🇨🇳|🇺🇸|🇭🇰|🇲🇴|🇹🇼|🇯🇵|🇷🇺|🇸🇬|🇬🇧|🇰🇷|距离).*)", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇭🇰 香港-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇭🇰.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇲🇴 澳门-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇲🇴.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇼 台湾-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇹🇼.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇬🇧 英国-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇬🇧.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇸 美国-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇺🇸.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇯🇵 日本-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇯🇵.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇸🇬 新加坡-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇸🇬.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇰🇷 韩国-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇰🇷.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇷🇺 俄罗斯-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇷🇺.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇮🇳 印度-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇮🇳.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇦🇷 阿根廷-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇦🇷.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇦🇹 奥地利-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇦🇹.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇦🇿 阿塞拜疆-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇦🇿.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇧🇬 保加利亚-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇧🇬.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇧🇷 巴西-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇧🇷.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇨🇭 瑞士-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇨🇭.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇨🇱 智利-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇨🇱.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇨🇴 哥伦比亚-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇨🇴.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇨🇿 捷克-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇨🇿.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇪🇬 埃及-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇪🇬.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇪🇸 西班牙-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇪🇸.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇫🇮 芬兰-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇫🇮.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇮🇱 以色列-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇮🇱.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇱🇻 拉脱维亚-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇱🇻.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇲🇾 马来西亚-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇲🇾.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇳🇱 荷兰-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇳🇱.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇵🇰 巴基斯坦-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇵🇰.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇵🇱 波兰-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇵🇱.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇭 泰国-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇹🇭.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇹🇷 土耳其-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇹🇷.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇺🇦 乌克兰-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇺🇦.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🇻🇳 越南-Media"
+type = "url-test"
+disable_udp = false
+rule = ["(^🇻🇳.*\\[M\\])", "[]REJECT"]
+url = "https://www.google-analytics.com/generate_204"
+interval = 180
+tolerance = 20
+lazy = true
+
+[[custom_groups]]
+name = "🎯 直连服务"
+type = "select"
+disable_udp = false
+rule = ["[]DIRECT"]
+
+[[custom_groups]]
+name = "🍥 政府网站"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务", "[]🌏 大陆服务"]
+
+[[custom_groups]]
+name = "☠️ 软件验证"
+type = "select"
+disable_udp = false
+rule = ["[]REJECT", "[]🎯 直连服务", "[]🍖 默认代理"]
+
+[[custom_groups]]
+name = "⏰ 时间校准"
+type = "select"
+disable_udp = false
+rule = ["[]🎯 直连服务"]
+
+
+[[rulesets]]
+group = "🥥 DNS Improvement"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DNS.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "☠️ 软件验证"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/App-Activation.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "⛔️ 广告服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "⏰ 时间校准"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/NTP-Service.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🍎 苹果服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Apple.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "📺 哔哩哔哩"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/BiliBiliHMT.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "📺 哔哩哔哩"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/BiliBili.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🙈 谷歌服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Google.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🍥 政府网站"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Government-CN.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🥝 爱奇艺"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/iQIYI-Intl.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🥝 爱奇艺"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/iQIYI.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🐻 LineTV"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/LineTV.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🐼 微软服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Microsoft.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🐷 网易音乐"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/NeteaseMusic.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🎥 奈飞影视"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/Netflix.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🤖 OpenAI"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/OpenAI.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "📲 电报消息"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Telegram.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🎬 推趣影音"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Twitch.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "📡 视频解析"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Video-Crack.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "💊 小米服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Xiaomi.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🚦 DMCA Sensitive"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/DMCA-Sensitive.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🎯 直连服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/TeamViewer-CIDR.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🕸️ 局域网服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/LAN-Special-Apps.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🎮 游戏服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Game.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🌍 国外媒体"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/GlobalMedia.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🍖 默认代理"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🐱 阿里巴巴"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/Alibaba.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🌏 大陆服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🌏 大陆服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-CN.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🍖 默认代理"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-Global.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🚀 SpeedTest"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/SpeedTest.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🎯 直连服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Local-LAN.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🌏 大陆服务"
+ruleset = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/CN-IP.list"
+type = "surge-ruleset"
+interval = 3600
+
+[[rulesets]]
+group = "🌏 大陆服务"
+ruleset = "[]GEOIP,CN"
+
+[[rulesets]]
+group = "🚧 终末策略"
+ruleset = "[]MATCH"
+
+
+[[template.globals]]
+key = "clash.mixed_port"
+value = "18888"
+
+# [[template_args]]
+# key = "clash.redir_port"
+# value = "18890"
+
+[[template.globals]]
+key = "clash.allow_lan"
+value = "true"
+
+[[template.globals]]
+key = "clash.log_level"
+value = "info"
+
+[[template.globals]]
+key = "clash.api_port"
+value = "0.0.0.0:19090"
+
+[[template.globals]]
+key = "clash.routing_mark"
+value = "16666"
+
+[[template.globals]]
+key = "singbox.ipv6"
+value = "true"
+
+[[template.globals]]
+key = "singbox.allow_lan"
+value = "true"
+
+[[template.globals]]
+key = "singbox.mixed_port"
+value = "2080"
