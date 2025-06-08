@@ -51,6 +51,8 @@ jobs:
           echo "ui-ver=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Use Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
       - name: Get dependencies and build
         run: |
           cd sub-web
