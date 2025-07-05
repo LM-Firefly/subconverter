@@ -1,0 +1,3 @@
+[submodule "base/rules/LM-Firefly"]
+    path = base/rules/LM-Firefly
+    url = https://github.com/LM-Firefly/Rules.git
