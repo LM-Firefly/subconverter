@@ -1,6 +1,6 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 PROJECT(subconverter LANGUAGES CXX)
 SET(BUILD_TARGET_NAME ${PROJECT_NAME})
-CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/include/")
 
@@ -10,7 +10,7 @@ ENDIF()
 SET(CMAKE_CXX_STANDARD 20)
 
 IF(NOT MSVC)
-    ADD_COMPILE_OPTIONS(-Wall -Wextra -Wno-unused-parameter -Wno-unused-result)
+    ADD_COMPILE_OPTIONS(-Wall -Wextra -Wno-unused-parameter -Wno-unused-result -Wno-shadow -Wno-deprecated-declarations -Wno-deprecated-copy)
 ELSE()
     ADD_COMPILE_OPTIONS(/W4)
 ENDIF()
