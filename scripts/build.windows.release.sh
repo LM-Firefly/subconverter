@@ -1,58 +1,149 @@
 #!/bin/bash
-set -xe
+set -euo pipefail
 
-git clone https://github.com/curl/curl --depth=1 --branch curl-8_21_0
-cd curl
-cmake -DCMAKE_BUILD_TYPE=Release -DHTTP_ONLY=ON -DCURL_USE_SCHANNEL=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_CURL_EXE=OFF -DCMAKE_INSTALL_PREFIX="$MINGW_PREFIX" -G "Unix Makefiles" -DCURL_USE_LIBSSH2=OFF -DUSE_WIN32_IDN=ON -DCURL_USE_LIBPSL=OFF -DCURL_ZSTD=ON -DCURL_BROTLI=ON -DUSE_NGHTTP2=OFF .
-make install -j4
-cd ..
+# ============================================================================
+# Windows (MSYS2/MinGW) static build script for subconverter
+# ============================================================================
 
-git clone https://github.com/jbeder/yaml-cpp --depth=1
-cd yaml-cpp
-cmake -DCMAKE_BUILD_TYPE=Release -DYAML_CPP_BUILD_TESTS=OFF -DYAML_CPP_BUILD_TOOLS=OFF -DCMAKE_INSTALL_PREFIX="$MINGW_PREFIX" -G "Unix Makefiles" .
-make install -j4
-cd ..
+# 确定 MinGW 工具链架构：以编译器目标为准。
+# uname -m 在 MSYS2 下报告的是 MSYS 运行时架构（MINGW32 环境下仍为 x86_64），
+# 会导致 x86 任务误装 x86_64 工具链，与实际使用的编译器混用。
+if command -v gcc >/dev/null 2>&1; then
+    TARGET_TRIPLE=$(gcc -dumpmachine)
+    TARGET_ARCH=${TARGET_TRIPLE%%-*}
+elif [ "${MSYSTEM:-}" = "MINGW32" ]; then
+    TARGET_ARCH="i686"
+else
+    TARGET_ARCH=$(uname -m)
+fi
+[ "$TARGET_ARCH" = "i686" ] && TOOLCHAIN="mingw-w64-i686" || TOOLCHAIN="mingw-w64-x86_64"
 
-git clone https://github.com/ftk/quickjspp --depth=1
-cd quickjspp
-patch quickjs/quickjs-libc.c -i ../scripts/patches/0001-quickjs-libc-add-realpath-for-Windows.patch
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release .
-make quickjs -j4
-install -d "$MINGW_PREFIX/lib/quickjs/"
-install -m644 quickjs/libquickjs.a "$MINGW_PREFIX/lib/quickjs/"
-install -d "$MINGW_PREFIX/include/quickjs"
-install -m644 quickjs/quickjs.h quickjs/quickjs-libc.h "$MINGW_PREFIX/include/quickjs/"
-install -m644 quickjspp.hpp "$MINGW_PREFIX/include/"
-cd ..
+# 设置构建参数
+SRC_BUILD_JOBS=${SRC_BUILD_JOBS:-4}
+# 使用 Ninja：避免依赖 gmake —— PATH 上的外来 gmake（如 Strawberry Perl 自带的）在并行递归构建时会报 "invalid output sync mutex" 而中断
+CMAKE_GENERATOR="Ninja"
+CMAKE_COMMON_ARGS="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=$MINGW_PREFIX"
+step() { echo -e "\n==> $1\n"; }
 
-git clone https://github.com/PerMalmberg/libcron --depth=1
-cd libcron
-git submodule update --init
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$MINGW_PREFIX" .
-make libcron install -j4
-cd ..
+# --- 安装依赖包 ---
+step "Installing dependencies"
+PKGS=(
+    base-devel
+    ${TOOLCHAIN}-{toolchain,cmake,openssl,curl,zstd,pcre2,ninja}
+    ${TOOLCHAIN}-{nghttp2,nghttp3,ngtcp2,libssh2,libpsl}
+    ${TOOLCHAIN}-{libidn2,libunistring,libiconv,brotli,zlib}
+)
+# mbedtls 仅存在于 x86_64 仓库，mingw32 (i686) 仓库没有该包，可用时才安装
+if pacman -Si "${TOOLCHAIN}-mbedtls" >/dev/null 2>&1; then
+    PKGS+=("${TOOLCHAIN}-mbedtls")
+fi
+pacman -S --needed --noconfirm "${PKGS[@]}"
 
-git clone https://github.com/Tencent/rapidjson --depth=1
-cd rapidjson
-cmake -DRAPIDJSON_BUILD_DOC=OFF -DRAPIDJSON_BUILD_EXAMPLES=OFF -DRAPIDJSON_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX="$MINGW_PREFIX" -G "Unix Makefiles" .
-make install -j4
-cd ..
+# --- 更新规则（前置：规则源不可用时快速失败，不浪费编译时间）---
+step "Updating rules"
+(
+    python -m venv venv
+    # shellcheck disable=SC1091
+    source venv/$([ -f venv/Scripts/activate ] && echo Scripts || echo bin)/activate
+    pip install -q gitpython
+    python scripts/update_rules.py -c scripts/rules_config.conf
+)
 
-git clone https://github.com/ToruNiina/toml11 --branch "v4.4.0" --depth=1
-cd toml11
-cmake -DCMAKE_INSTALL_PREFIX="$MINGW_PREFIX" -G "Unix Makefiles" -DCMAKE_CXX_STANDARD=11 .
-make install -j4
-cd ..
+# --- 从源码构建静态库的辅助函数 ---
+# 用法: build_static_cmake <repo> <dir> [extra_args] [cmake_subdir] [build_target]
+build_static_cmake() {
+    local repo=$1 dir=$2 extra_args=${3:-} cmake_subdir=${4:-.} build_target=${5:-}
+    git clone --depth=1 "$repo" "$dir"
+    cmake -S "$dir/$cmake_subdir" -B "$dir/build" -G "$CMAKE_GENERATOR" $CMAKE_COMMON_ARGS $extra_args
+    cmake --build "$dir/build" -j "$SRC_BUILD_JOBS" ${build_target:+--target "$build_target"}
+    cmake --install "$dir/build"
+}
 
-rm -f C:/Strawberry/perl/bin/pkg-config C:/Strawberry/perl/bin/pkg-config.bat
-cmake -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" .
-make -j4
-rm subconverter.exe
-# shellcheck disable=SC2046
-g++ $(find CMakeFiles/subconverter.dir/src -name "*.obj") curl/lib/libcurl.a -o base/subconverter.exe -static -lpcre2-8 -l:quickjs/libquickjs.a -llibcron -lyaml-cpp -lbrotlidec -lbrotlicommon -lzstd -lz -liphlpapi -lsecur32 -lcrypt32 -lbcrypt -lws2_32 -lwsock32 -s
+# --- 构建 brotli 和 zstd（确保纯静态） ---
+step "Building brotli and zstd from source"
+build_static_cmake https://github.com/google/brotli brotli-src "-DBROTLI_DISABLE_TESTS=ON"
 
-python -m ensurepip
-python -m pip install gitpython
-python scripts/update_rules.py -c scripts/rules_config.conf
+build_static_cmake https://github.com/facebook/zstd zstd-src \
+    "-DZSTD_BUILD_SHARED=OFF -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF" \
+    "build/cmake" \
+    "libzstd_static"
 
-mv base subconverter
+# --- 清理导入库，强制使用静态库 ---
+step "Cleaning import libraries"
+for lib in brotli{dec,enc,common} zstd idn2 unistring iconv psl; do
+    rm -f "$MINGW_PREFIX/lib/lib${lib}.dll.a"
+done
+
+# --- 验证静态库存在 ---
+step "Verifying static libraries"
+REQUIRED_LIBS=(curl nghttp{2,3} ngtcp2 brotli{dec,enc,common} zstd idn2 unistring iconv psl ssh2 ssl crypto z)
+missing=()
+for lib in "${REQUIRED_LIBS[@]}"; do
+    [ -f "$MINGW_PREFIX/lib/lib${lib}.a" ] || missing+=("$lib")
+done
+if [ ${#missing[@]} -gt 0 ]; then
+    echo "Missing: ${missing[*]}"
+    exit 1
+fi
+echo "All required static libraries present"
+
+# --- 构建其他依赖库 ---
+step "Building additional dependencies"
+build_static_cmake https://github.com/jbeder/yaml-cpp yaml-cpp "-DYAML_CPP_BUILD_TESTS=OFF -DYAML_CPP_BUILD_TOOLS=OFF -DYAML_BUILD_SHARED_LIBS=OFF"
+
+build_static_cmake https://github.com/Tencent/rapidjson rapidjson "-DRAPIDJSON_BUILD_DOC=OFF -DRAPIDJSON_BUILD_EXAMPLES=OFF -DRAPIDJSON_BUILD_TESTS=OFF"
+
+build_static_cmake https://github.com/ToruNiina/toml11 toml11 "-DCMAKE_CXX_STANDARD=11"
+
+# libcron 需要子模块，用子 shell 处理
+step "Building libcron"
+git clone --depth=1 https://github.com/PerMalmberg/libcron
+(cd libcron && git submodule update --init)
+cmake -S libcron -B libcron/build -G "$CMAKE_GENERATOR" $CMAKE_COMMON_ARGS
+cmake --build libcron/build -j "$SRC_BUILD_JOBS" --target libcron
+cmake --install libcron/build
+
+# QuickJS 需要特殊处理（patch + 特殊 flags）
+step "Building quickjspp"
+(
+    git clone --depth=1 https://github.com/ftk/quickjspp
+    cd quickjspp
+    patch quickjs/quickjs-libc.c -i ../scripts/patches/0001-quickjs-libc-add-realpath-for-Windows.patch
+    sed -i 's/set(CMAKE_INTERPROCEDURAL_OPTIMIZATION[^)]*)/set(CMAKE_INTERPROCEDURAL_OPTIMIZATION FALSE)/' CMakeLists.txt
+    cmake -G "$CMAKE_GENERATOR" $CMAKE_COMMON_ARGS -DCMAKE_C_FLAGS="-D__MINGW_FENV_DEFINED" .
+    cmake --build . -j "$SRC_BUILD_JOBS" --target quickjs
+    install -Dm644 quickjs/libquickjs.a -t "$MINGW_PREFIX/lib/quickjs/"
+    install -Dm644 quickjs/{quickjs.h,quickjs-libc.h} -t "$MINGW_PREFIX/include/quickjs/"
+    install -Dm644 quickjspp.hpp -t "$MINGW_PREFIX/include/"
+)
+
+# --- 清理会干扰最终 configure 的 pkg-config 状态（紧贴 configure 执行）---
+step "Cleaning pkg-config state"
+rm -rf ~/.cache/pkgconfig 2>/dev/null || true
+# 移除 PATH 上可能被误用的外来 pkg-config（如 Strawberry Perl 自带的）
+rm -f /c/Strawberry/perl/bin/pkg-config{,.bat}
+
+# --- 构建 subconverter ---
+step "Building subconverter"
+cmake -S . -B build -G "$CMAKE_GENERATOR" $CMAKE_COMMON_ARGS \
+    -DCMAKE_PREFIX_PATH="$MINGW_PREFIX" \
+    -DCMAKE_EXE_LINKER_FLAGS="-static -static-libgcc -static-libstdc++ -Wl,--allow-multiple-definition -s" \
+    -DFORCE_STATIC_DEPS=ON \
+    -DCURL_INCLUDE_DIR="$MINGW_PREFIX/include" \
+    -DCURL_LIBRARY="$MINGW_PREFIX/lib/libcurl.a"
+
+cmake --build build -j "$SRC_BUILD_JOBS" --verbose 2>&1 | tee build.log
+
+# --- 验证无动态依赖 ---
+step "Verifying static linkage"
+if ldd build/subconverter.exe 2>/dev/null | grep -iE "(libcurl|libpcre2|libnghttp|libbrotli|libidn|libunistring|libzstd)" | grep -v "not found"; then
+    echo "Found unwanted DLL dependencies!"
+    exit 1
+fi
+
+# --- 打包 ---
+step "Packaging"
+mkdir -p subconverter
+cp -r build/subconverter.exe base/* subconverter/
+echo "Static build successful"
+ldd subconverter/subconverter.exe 2>/dev/null || echo "Pure static executable"
