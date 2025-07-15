@@ -5,6 +5,7 @@
 
 #include <sys/types.h>
 #include <dirent.h>
+#include <climits>
 
 #include "config/ruleset.h"
 #include "handler/interfaces.h"
@@ -35,11 +36,11 @@ void SetConsoleTitle(const std::string &title)
 
 void setcd(std::string &file)
 {
-    char szTemp[1024] = {}, filename[256] = {};
+    char szTemp[PATH_MAX] = {}, filename[PATH_MAX] = {};
     std::string path;
 #ifdef _WIN32
     char *pname = NULL;
-    DWORD retVal = GetFullPathName(file.data(), 1023, szTemp, &pname);
+    DWORD retVal = GetFullPathName(file.data(), PATH_MAX - 1, szTemp, &pname);
     if(!retVal)
         return;
     strcpy(filename, pname);
