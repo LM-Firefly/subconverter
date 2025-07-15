@@ -6,3 +6,8 @@ base/cache
 build
 .xmake
 build
+build.log
+转换前
+转换后
+comparison_report.json
+pkg/
