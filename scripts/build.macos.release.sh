@@ -1,7 +1,10 @@
 #!/bin/bash
 set -xe
 
-brew reinstall rapidjson zlib pcre2 pkgconfig
+export PATH="$(brew --prefix)/bin:$PATH"
+export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig"
+
+brew reinstall rapidjson zlib pcre2 pkgconfig curl nghttp2
 
 #git clone https://github.com/curl/curl --depth=1 --branch curl-7_88_1
 #cd curl
@@ -41,7 +44,7 @@ sudo install -d /usr/local/include/date/
 sudo install -m644 libcron/externals/date/include/date/* /usr/local/include/date/
 cd ..
 
-git clone https://github.com/ToruNiina/toml11 --branch="v4.3.0" --depth=1
+git clone https://github.com/ToruNiina/toml11 --depth=1
 cd toml11
 cmake -DCMAKE_CXX_STANDARD=11 .
 sudo make install -j6 > /dev/null
