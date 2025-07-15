@@ -70,7 +70,7 @@ def main():
             r = Repo.clone_from(url, repo_path)
         else:
             logging.info(f"repo {repo_path} exists")
-            
+
         try:
             if commit is not None:
                 logging.info(f"checking out to commit {commit}")
