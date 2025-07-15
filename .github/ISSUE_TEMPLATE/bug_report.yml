@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-         遇到问题请先尝试使用[Action](https://github.com/tindy2013/subconverter/actions)中的最新版本
+         遇到问题请先尝试使用[Action](https://github.com/LM-Firefly/subconverter/actions)中的最新版本
          如果是使用公共转换服务中遇到的问题，请先联系服务的提供者。
   - type: checkboxes
     id: version-check
