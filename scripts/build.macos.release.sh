@@ -1,7 +1,17 @@
 #!/bin/bash
 set -xe
 
-brew reinstall rapidjson zlib pcre2 pkgconfig
+brew reinstall rapidjson zlib pcre2 pkgconfig curl yaml-cpp
+
+# Set common flags so subproject CMake runs also receive them
+export PATH="$(brew --prefix)/bin:$PATH"
+export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig"
+BREW_PREFIX=$(brew --prefix)
+export CPPFLAGS="${CPPFLAGS} -I${BREW_PREFIX}/opt/zlib/include -I${BREW_PREFIX}/opt/curl/include"
+export LDFLAGS="${LDFLAGS} -L${BREW_PREFIX}/opt/zlib/lib -L${BREW_PREFIX}/opt/curl/lib"
+# Suppress specific warnings coming from third-party sources
+export CXXFLAGS="${CXXFLAGS} -Wno-shadow -Wno-deprecated-declarations -Wno-deprecated-copy"
+export CFLAGS="${CFLAGS} -Wno-shadow -Wno-deprecated-declarations -Wno-deprecated-copy"
 
 #git clone https://github.com/curl/curl --depth=1 --branch curl-7_88_1
 #cd curl
@@ -11,16 +21,9 @@ brew reinstall rapidjson zlib pcre2 pkgconfig
 #make -j8 > /dev/null
 #cd ..
 
-git clone https://github.com/jbeder/yaml-cpp --depth=1
-cd yaml-cpp
-cmake -DCMAKE_BUILD_TYPE=Release -DYAML_CPP_BUILD_TESTS=OFF -DYAML_CPP_BUILD_TOOLS=OFF . > /dev/null
-make -j6 > /dev/null
-sudo make install > /dev/null
-cd ..
-
 git clone https://github.com/ftk/quickjspp --depth=1
 cd quickjspp
-cmake -DCMAKE_BUILD_TYPE=Release .
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Wno-shadow -Wno-deprecated-declarations" .
 make quickjs -j6 > /dev/null
 sudo install -d /usr/local/lib/quickjs/
 sudo install -m644 quickjs/libquickjs.a /usr/local/lib/quickjs/
@@ -32,7 +35,7 @@ cd ..
 git clone https://github.com/PerMalmberg/libcron --depth=1
 cd libcron
 git submodule update --init
-cmake -DCMAKE_BUILD_TYPE=Release .
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Wno-shadow -Wno-deprecated-declarations" .
 make libcron -j6
 sudo install -m644 libcron/out/Release/liblibcron.a /usr/local/lib/
 sudo install -d /usr/local/include/libcron/
@@ -41,17 +44,17 @@ sudo install -d /usr/local/include/date/
 sudo install -m644 libcron/externals/date/include/date/* /usr/local/include/date/
 cd ..
 
-git clone https://github.com/ToruNiina/toml11 --branch="v4.3.0" --depth=1
+git clone https://github.com/ToruNiina/toml11 --depth=1
 cd toml11
-cmake -DCMAKE_CXX_STANDARD=11 .
+cmake -DCMAKE_CXX_STANDARD=11 -DCMAKE_CXX_FLAGS="-Wno-shadow -Wno-deprecated-declarations" .
 sudo make install -j6 > /dev/null
 cd ..
 
-cmake -DCMAKE_BUILD_TYPE=Release .
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Wno-shadow -Wno-deprecated-declarations" .
 make -j6
 rm subconverter
 # shellcheck disable=SC2046
-c++ -Xlinker -unexported_symbol -Xlinker "*" -o base/subconverter -framework CoreFoundation -framework Security $(find CMakeFiles/subconverter.dir/src/ -name "*.o") "$(brew --prefix zlib)/lib/libz.a" "$(brew --prefix pcre2)/lib/libpcre2-8.a" $(find . -name "*.a") -lcurl -O3
+c++ -Xlinker -unexported_symbol -Xlinker "*" -o base/subconverter -framework CoreFoundation -framework Security $(find CMakeFiles/subconverter.dir/src/ -name "*.o") "$(brew --prefix zlib)/lib/libz.a" "$(brew --prefix pcre2)/lib/libpcre2-8.a" $(find . -name "*.a") -L"$(brew --prefix)/lib" -lyaml-cpp -lcurl -O3
 
 python -m ensurepip
 sudo python -m pip install gitpython
