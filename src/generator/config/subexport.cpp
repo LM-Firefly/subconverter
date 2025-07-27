@@ -706,27 +706,25 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
             {
                 case "tcp"_hash:
                     singleproxy["network"] = x.TransferProtocol;
-                    if(!x.PublicKey.empty() && !x.ShortID.empty())
-                    {
-                        singleproxy["client-fingerprint"] = x.ClientFingerprint.empty() ? "chrome" : x.ClientFingerprint;
-                    }
-                    else if(!x.ClientFingerprint.empty())
-                    {
-                        singleproxy["client-fingerprint"] = x.ClientFingerprint;
-                    }
-                    else if(!x.Fingerprint.empty())
-                    {
+                    // 只有当使用REALITY或xtls-rprx-vision时才添加client-fingerprint
+                    if((!x.PublicKey.empty() || x.Flow == "xtls-rprx-vision") && x.TLSStr == "reality") {
+                        if(!x.ClientFingerprint.empty()) {
+                            singleproxy["client-fingerprint"] = x.ClientFingerprint;
+                        } else {
+                            singleproxy["client-fingerprint"] = "chrome";
+                        }
+                    } else if(!x.Fingerprint.empty()) {
                         singleproxy["client-fingerprint"] = x.Fingerprint;
                     }
-                    if(!x.PublicKey.empty())
-                    {
+                    // 只有当PublicKey不为空且使用REALITY时才添加reality-opts
+                    if (!x.PublicKey.empty() && x.TLSStr == "reality") {
                         singleproxy["reality-opts"]["public-key"] = x.PublicKey;
                     }
-                    if(!x.ShortID.empty())
-                    {
+                    // 只有当ShortID不为空且使用REALITY时才添加short-id
+                    if (!x.ShortID.empty() && x.TLSStr == "reality") {
                         singleproxy["reality-opts"]["short-id"] = "" + x.ShortID;
                     }
-                    if(!x.SupportX25519Mlkem768.is_undef())
+                    if(!x.SupportX25519Mlkem768.is_undef() && x.TLSStr == "reality")
                     {
                         singleproxy["reality-opts"]["support-x25519mlkem768"] = x.SupportX25519Mlkem768.get();
                     }
@@ -738,13 +736,9 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
                     break;
                 case "ws"_hash:
                     singleproxy["network"] = x.TransferProtocol;
-                    if(!x.ClientFingerprint.empty())
-                    {
-                        singleproxy["client-fingerprint"] = x.ClientFingerprint;
-                    }
-                    else if(!x.Fingerprint.empty())
-                    {
-                        singleproxy["client-fingerprint"] = x.Fingerprint;
+                    // WS协议下只有在使用REALITY或TLS时才添加client-fingerprint
+                    if((x.TLSSecure && !x.Fingerprint.empty()) || (x.TLSStr == "reality" && !x.ClientFingerprint.empty())) {
+                        singleproxy["client-fingerprint"] = x.ClientFingerprint.empty() ? x.Fingerprint : x.ClientFingerprint;
                     }
                     if(ext.clash_new_field_name)
                     {
@@ -783,30 +777,36 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
                     break;
                 case "grpc"_hash:
                     singleproxy["network"] = x.TransferProtocol;
-                    if(!x.PublicKey.empty() && !x.ShortID.empty())
-                    {
-                        singleproxy["client-fingerprint"] = x.ClientFingerprint.empty() ? "chrome" : x.ClientFingerprint;
+                    // gRPC协议下只有在使用REALITY时才添加client-fingerprint
+                    if(x.TLSStr == "reality") {
+                        if(!x.PublicKey.empty() && !x.ShortID.empty())
+                        {
+                            singleproxy["client-fingerprint"] = x.ClientFingerprint.empty() ? "chrome" : x.ClientFingerprint;
+                        }
+                        else if(!x.ClientFingerprint.empty())
+                        {
+                            singleproxy["client-fingerprint"] = x.ClientFingerprint;
+                        }
+                        else if(!x.Fingerprint.empty())
+                        {
+                            singleproxy["client-fingerprint"] = x.Fingerprint;
+                        }
                     }
-                    else if(!x.ClientFingerprint.empty())
-                    {
-                        singleproxy["client-fingerprint"] = x.ClientFingerprint;
-                    }
-                    else if(!x.Fingerprint.empty())
-                    {
-                        singleproxy["client-fingerprint"] = x.Fingerprint;
+                    // 只有当使用REALITY时才添加reality-opts相关字段
+                    if(x.TLSStr == "reality") {
+                        if(!x.PublicKey.empty())
+                        {
+                            singleproxy["reality-opts"]["public-key"] = x.PublicKey;
+                        }
+                        if(!x.ShortID.empty())
+                        {
+                            singleproxy["reality-opts"]["short-id"] = "" + x.ShortID;
+                        }
                     }
                     if(!x.GRPCMode.empty())
                     {
                         singleproxy["grpc-opts"]["grpc-mode"] = x.GRPCMode;
                         singleproxy["grpc-opts"]["grpc-service-name"] = x.GrpcServiceName;
-                    }
-                    if(!x.PublicKey.empty())
-                    {
-                        singleproxy["reality-opts"]["public-key"] = x.PublicKey;
-                    }
-                    if(!x.ShortID.empty())
-                    {
-                        singleproxy["reality-opts"]["short-id"] = "" + x.ShortID;
                     }
                     if(!x.SupportX25519Mlkem768.is_undef())
                     {
