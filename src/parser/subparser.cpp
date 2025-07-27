@@ -1290,27 +1290,27 @@ void explodeNetch(std::string netch, Proxy &node)
 
 void explodeClash(Node yamlnode, std::vector<Proxy> &nodes)
 {
+    std::string proxytype, ps, server, port, cipher, group, password, underlying_proxy; //common
+    std::string type = "none", id, aid = "0", net = "tcp", path, host, edge, tls, sni; //vmess
+    std::string plugin, pluginopts, pluginopts_mode, pluginopts_host, pluginopts_mux, pluginopts_version, pluginopts_password; //ss
+    std::string protocol, protoparam, obfs, obfsparam; //ssr
+    std::string fp, flow, mode; //trojan
+    std::string user; //socks
+    std::string ip, ipv6, private_key, public_key, mtu; //wireguard
+    std::string ports, obfs_protocol, up, up_speed, down, down_speed, auth, auth_str, fingerprint, ca, ca_str, recv_window_conn, recv_window, disable_mtu_discovery, hop_interval, alpn; //hysteria
+    std::string obfs_password, cwnd, ech_enable, ech_config, initial_stream_receive_window, max_stream_receive_window, initial_connection_receive_window, max_connection_receive_window; //hysteria2
+    std::string uuid, heartbeat_interval, disable_sni, reduce_rtt, request_timeout, udp_relay_mode, congestion_controller, max_udp_relay_packet_size, max_open_streams, fast_open;   //tuic
+    std::string idle_session_check_interval, idle_session_timeout, min_idle_session; // anytls
+    std::string multiplexing, transfer_protocol; // mieru
+    std::string sid, packet_encoding, v2ray_http_upgrade; // vless
+    string_array dns_server;
+    tribool udp, tfo, scv;
+    std::vector<std::string> alpnList;
     Node singleproxy;
     uint32_t index = nodes.size();
     const std::string section = yamlnode["proxies"].IsDefined() ? "proxies" : "Proxy";
     for(uint32_t i = 0; i < yamlnode[section].size(); i++)
     {
-        std::string proxytype, ps, server, port, cipher, group, password, underlying_proxy; //common
-        std::string type = "none", id, aid = "0", net = "tcp", path, host, edge, tls, sni; //vmess
-        std::string plugin, pluginopts, pluginopts_mode, pluginopts_host, pluginopts_mux, pluginopts_version, pluginopts_password; //ss
-        std::string protocol, protoparam, obfs, obfsparam; //ssr
-        std::string fp, flow, mode; //trojan
-        std::string user; //socks
-        std::string ip, ipv6, private_key, public_key, mtu; //wireguard
-        std::string ports, obfs_protocol, up, up_speed, down, down_speed, auth, auth_str, fingerprint, ca, ca_str, recv_window_conn, recv_window, disable_mtu_discovery, hop_interval, alpn; //hysteria
-        std::string obfs_password, cwnd, ech_enable, ech_config, initial_stream_receive_window, max_stream_receive_window, initial_connection_receive_window, max_connection_receive_window; //hysteria2
-        std::string uuid, heartbeat_interval, disable_sni, reduce_rtt, request_timeout, udp_relay_mode, congestion_controller, max_udp_relay_packet_size, max_open_streams, fast_open;   //tuic
-        std::string idle_session_check_interval, idle_session_timeout, min_idle_session; // anytls
-        std::string multiplexing, transfer_protocol; // mieru
-        std::string sid, packet_encoding, v2ray_http_upgrade; // vless
-        string_array dns_server;
-        tribool udp, tfo, scv;
-        std::vector<std::string> alpnList;
         Proxy node;
         singleproxy = yamlnode[section][i];
         singleproxy["type"] >>= proxytype;
