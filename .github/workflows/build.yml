@@ -24,7 +24,7 @@ jobs:
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: "Asia/Shanghai"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           token: ${{env.GIT_TOKEN}}
@@ -56,7 +56,7 @@ jobs:
     name: Linux ${{ matrix.arch }} Build
     steps:
       - name: Checkout base
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Add commit id into version
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         run: sed -i 's/\(v[0-9]\.[0-9]\.[0-9]\)/\1 '"${{env.VERSION}}"'/' src/version.h
@@ -100,7 +100,7 @@ jobs:
     name: macOS ${{ matrix.arch }} Build
     steps:
       - name: Checkout base
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -153,7 +153,7 @@ jobs:
         shell: msys2 {0}
     steps:
       - name: Checkout base
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Python
         uses: actions/setup-python@v5
         with:

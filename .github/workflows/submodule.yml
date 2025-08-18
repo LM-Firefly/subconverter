@@ -27,7 +27,7 @@ jobs:
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: 'Asia/Shanghai'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: 'true'
           token: ${{env.GIT_TOKEN}}
@@ -86,7 +86,7 @@ jobs:
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: 'Asia/Shanghai'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           token: ${{env.GIT_TOKEN}}
@@ -126,7 +126,7 @@ jobs:
 #        uses: szenius/set-timezone@v2.0
 #        with:
 #          timezoneLinux: "Asia/Shanghai"
-#      - uses: actions/checkout@v4
+#      - uses: actions/checkout@v5
 #        with:
 #          fetch-depth: 0
 #          token: ${{env.GIT_TOKEN}}
@@ -185,7 +185,7 @@ jobs:
 #      - name: Insert Changelog
 #        run: |
 #          echo "${{steps.build_changelog.outputs.changelog}}" >> $GITHUB_WORKSPACE/CHANGELOG.md
-#      - uses: actions/checkout@v4
+#      - uses: actions/checkout@v5
 #        with:
 #          fetch-depth: 0
 #          token: ${{env.GIT_TOKEN}}
@@ -208,7 +208,7 @@ jobs:
 #        uses: szenius/set-timezone@v2.0
 #        with:
 #          timezoneLinux: "Asia/Shanghai"
-#      - uses: actions/checkout@v4
+#      - uses: actions/checkout@v5
 #        with:
 #          fetch-depth: 0
 #          token: ${{env.GIT_TOKEN}}
@@ -232,7 +232,7 @@ jobs:
 #        uses: szenius/set-timezone@v2.0
 #        with:
 #          timezoneLinux: "Asia/Shanghai"
-#      - uses: actions/checkout@v4
+#      - uses: actions/checkout@v5
 #        with:
 #          fetch-depth: 0
 #          token: ${{env.GIT_TOKEN}}
