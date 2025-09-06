@@ -50,7 +50,7 @@ jobs:
           cd sub-web
           echo "ui-ver=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 'latest'
       - name: Get dependencies and build
