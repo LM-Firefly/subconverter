@@ -22,7 +22,11 @@ enum class ProxyType
     SOCKS5,
     WireGuard,
     Hysteria,
-    Hysteria2
+    Hysteria2,
+    VLESS,
+    TUIC,
+    AnyTLS,
+    Mieru
 };
 
 inline String getProxyTypeName(ProxyType type)
@@ -51,6 +55,14 @@ inline String getProxyTypeName(ProxyType type)
         return "Hysteria";
     case ProxyType::Hysteria2:
         return "Hysteria2";
+    case ProxyType::VLESS:
+        return "Vless";
+    case ProxyType::TUIC:
+        return "TUIC";
+    case ProxyType::AnyTLS:
+        return "AnyTLS";
+    case ProxyType::Mieru:
+        return "Mieru";
     default:
         return "Unknown";
     }
@@ -81,18 +93,50 @@ struct Proxy
     String FakeType;
     bool TLSSecure = false;
 
+    tribool SmuxEnabled;
+    int SmuxMaxConnections = 0;
+    int SmuxMaxStreams = 0;
+    int SmuxMinStreams = 0;
+    tribool SmuxPadding;
+    tribool SmuxStatistic;
+    tribool SmuxOnlyTcp;
+
+    String RestlsScript;
+    String ShortId;
+    tribool Tfo;
+    tribool PortHopping;
+    String PortRange;
+    String IpWhitelist;
+    String Psk;
+    String ScMaxTime;
+    String ScMaxSize;
+    String ScMinTime;
+    String ScMinSize;
+    String ScSize;
+    String ScTime;
+    String Smux;
+    tribool UnderlyingProxyEnable;
+
     String Host;
     String Path;
     String Edge;
+    StringArray H2Hosts; // h2-opts.host 数组
+    StringArray H2Paths; // h2-opts.path 数组
+    StringArray HTTPPaths; // http-opts.path 数组
+    std::map<String, StringArray> HTTPHeaders; // http-opts.headers 多值
+    StringArray GRPCServiceNames; // grpc-opts.grpc-service-name 数组
 
     String QUICSecure;
     String QUICSecret;
 
     tribool UDP;
+    tribool XUDP;
     tribool TCPFastOpen;
     tribool AllowInsecure;
     tribool TLS13;
+    tribool UDPoverTCP;
 
+    String IPVersion;
     String UnderlyingProxy;
 
     uint16_t SnellVersion = 0;
@@ -115,18 +159,63 @@ struct Proxy
     uint32_t UpSpeed;
     String Down;
     uint32_t DownSpeed;
+    String Auth;
     String AuthStr;
     String SNI;
+    String OBFSPassword;
     String Fingerprint;
     String Ca;
     String CaStr;
+    String Alpn;
+    std::vector<String> AlpnList;
     uint32_t RecvWindowConn;
     uint32_t RecvWindow;
     tribool DisableMtuDiscovery;
     uint32_t HopInterval;
-    StringArray Alpn;
-
     uint32_t CWND = 0;
+
+    String UUID;
+    String IP;
+    String HeartbeatInterval;
+    tribool DisableSNI;
+    tribool ReduceRTT;
+    uint32_t RequestTimeout;
+    String UdpRelayMode;
+    String CongestionController;
+    uint32_t MaxUdpRelayPacketSize;
+    tribool FastOpen;
+    uint32_t MaxOpenStreams;
+
+    String Flow;
+    uint32_t XTLS;
+    String PacketEncoding;
+    String ShortID;
+
+    String Network;
+    String ClientFingerprint;
+    String EchConfig;
+    tribool EchEnable;
+    tribool SupportX25519Mlkem768;
+    String GrpcServiceName;
+    String GRPCMode;
+    String WsPath;
+    String WsHeaders;
+    std::string WsEarlyDataHeaderName;
+    int WsMaxEarlyData = 0;
+    tribool V2rayHttpUpgrade;
+    tribool V2rayHttpUpgradeFastOpen;
+    
+    uint32_t InitialStreamReceiveWindow = 0;
+    uint32_t MaxStreamReceiveWindow = 0;
+    uint32_t InitialConnectionReceiveWindow = 0;
+    uint32_t MaxConnectionReceiveWindow = 0;
+
+    uint32_t IdleSessionCheckInterval;
+    uint32_t IdleSessionTimeout;
+    uint32_t MinIdleSession;
+
+    String Multiplexing;
+    String TLSStr;
 };
 
 #define SS_DEFAULT_GROUP "SSProvider"
@@ -139,5 +228,9 @@ struct Proxy
 #define WG_DEFAULT_GROUP "WireGuardProvider"
 #define HYSTERIA_DEFAULT_GROUP "HysteriaProvider"
 #define HYSTERIA2_DEFAULT_GROUP "Hysteria2Provider"
+#define VLESS_DEFAULT_GROUP "VlessProvider"
+#define TUIC_DEFAULT_GROUP "TUICProvider"
+#define ANYTLS_DEFAULT_GROUP "AnyTLSProvider"
+#define MIERU_DEFAULT_GROUP "MieruProvider"
 
 #endif // PROXY_H_INCLUDED
