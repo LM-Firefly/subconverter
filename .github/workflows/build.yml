@@ -159,7 +159,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
