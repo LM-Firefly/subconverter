@@ -41,6 +41,7 @@ int addNodes(std::string link, std::vector<Proxy> &allNodes, int groupID, parse_
     RegexMatchConfigs &time_rules = *parse_set.time_rules;
     string_icase_map *request_headers = parse_set.request_header;
     bool &authorized = parse_set.authorized;
+    string_icase_map custom_headers;
 
     ConfType linkType = ConfType::Unknow;
     std::vector<Proxy> nodes;
@@ -142,7 +143,14 @@ int addNodes(std::string link, std::vector<Proxy> &allNodes, int groupID, parse_
         writeLog(LOG_TYPE_INFO, "Downloading subscription data...");
         if(startsWith(link, "surge:///install-config")) //surge config link
             link = urlDecode(getUrlArg(link, "url"));
-        strSub = webGet(link, proxy, global.cacheSubscription, &extra_headers, request_headers);
+        // 处理自定义用户代理
+        if(request_headers)
+            custom_headers = *request_headers;
+        if(parse_set.custom_user_agent && !parse_set.custom_user_agent->empty())
+        {
+            custom_headers["User-Agent"] = *parse_set.custom_user_agent;
+        }
+        strSub = webGet(link, proxy, global.cacheSubscription, &extra_headers, &custom_headers);
         /*
         if(strSub.size() == 0)
         {
