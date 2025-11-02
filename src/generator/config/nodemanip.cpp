@@ -41,6 +41,7 @@ int addNodes(std::string link, std::vector<Proxy> &allNodes, int groupID, parse_
     RegexMatchConfigs &time_rules = *parse_set.time_rules;
     string_icase_map *request_headers = parse_set.request_header;
     bool &authorized = parse_set.authorized;
+    string_icase_map custom_headers;
 
     ConfType linkType = ConfType::Unknow;
     std::vector<Proxy> nodes;
@@ -142,7 +143,14 @@ int addNodes(std::string link, std::vector<Proxy> &allNodes, int groupID, parse_
         writeLog(LOG_TYPE_INFO, "Downloading subscription data...");
         if(startsWith(link, "surge:///install-config")) //surge config link
             link = urlDecode(getUrlArg(link, "url"));
-        strSub = webGet(link, proxy, global.cacheSubscription, &extra_headers, request_headers);
+        // 处理自定义用户代理
+        if(request_headers)
+            custom_headers = *request_headers;
+        if(parse_set.custom_user_agent && !parse_set.custom_user_agent->empty())
+        {
+            custom_headers["User-Agent"] = *parse_set.custom_user_agent;
+        }
+        strSub = webGet(link, proxy, global.cacheSubscription, &extra_headers, &custom_headers);
         /*
         if(strSub.size() == 0)
         {
@@ -410,6 +418,21 @@ void nodeRename(Proxy &node, const RegexMatchConfigs &rename_array, extra_settin
     return;
 }
 
+std::string extractEmoji(const std::string &remark)
+{
+    // Extract emoji from the beginning of remark
+    // Emoji flags are 4-byte sequences starting with 0xF0 0x9F
+    char emoji_id[2] = {(char)-16, (char)-97};
+    std::string emoji;
+    size_t pos = 0;
+    while(pos + 3 < remark.size() && remark[pos] == emoji_id[0] && remark[pos + 1] == emoji_id[1])
+    {
+        emoji.append(remark.substr(pos, 4));
+        pos += 4;
+    }
+    return emoji;
+}
+
 std::string removeEmoji(const std::string &orig_remark)
 {
     char emoji_id[2] = {(char)-16, (char)-97};
@@ -429,6 +452,12 @@ std::string removeEmoji(const std::string &orig_remark)
 std::string addEmoji(const Proxy &node, const RegexMatchConfigs &emoji_array, extra_settings &ext)
 {
     std::string real_rule, ret;
+    std::string original_emoji = extractEmoji(node.Remark);
+
+    if(global.printDbgInfo && !node.Remark.empty())
+    {
+        writeLog(LOG_TYPE_RENDER, std::string("addEmoji:input '") + node.Remark + "' originalEmoji='" + original_emoji + "' remove_emoji=" + (ext.remove_emoji ? "true" : "false"), LOG_LEVEL_DEBUG);
+    }
 
     for(const RegexMatchConfig &x : emoji_array)
     {
@@ -446,7 +475,17 @@ std::string addEmoji(const Proxy &node, const RegexMatchConfigs &emoji_array, ex
                     auto getEmoji = (std::function<std::string(const Proxy&)>) ctx.eval("getEmoji");
                     ret = getEmoji(node);
                     if(!ret.empty())
-                        result = ret + " " + node.Remark;
+                    {
+                        // Smart emoji handling: if original emoji equals new emoji, avoid duplication
+                        if(!ext.remove_emoji && !original_emoji.empty() && original_emoji == ret)
+                        {
+                            result = node.Remark; // Keep original remark as-is
+                        }
+                        else
+                        {
+                            result = ret + " " + node.Remark;
+                        }
+                    }
                 }
                 catch (qjs::exception)
                 {
@@ -460,7 +499,22 @@ std::string addEmoji(const Proxy &node, const RegexMatchConfigs &emoji_array, ex
         if(x.Replace.empty())
             continue;
         if(applyMatcher(x.Match, real_rule, node) && real_rule.size() && regFind(node.Remark, real_rule))
+        {
+            // Smart emoji handling: if original emoji equals new emoji, avoid duplication
+            if(!ext.remove_emoji && !original_emoji.empty() && original_emoji == x.Replace)
+            {
+                if(global.printDbgInfo)
+                    writeLog(LOG_TYPE_RENDER, std::string("addEmoji:matched_dedup '") + node.Remark + "' newEmoji='" + x.Replace + "' -> keep original", LOG_LEVEL_DEBUG);
+                return node.Remark; // Keep original remark as-is
+            }
+            if(global.printDbgInfo)
+                writeLog(LOG_TYPE_RENDER, std::string("addEmoji:matched_add '") + node.Remark + "' newEmoji='" + x.Replace + "' -> add emoji", LOG_LEVEL_DEBUG);
             return x.Replace + " " + node.Remark;
+        }
+    }
+    if(global.printDbgInfo && !node.Remark.empty())
+    {
+        writeLog(LOG_TYPE_RENDER, std::string("addEmoji:no_match '") + node.Remark + "' -> return as-is", LOG_LEVEL_DEBUG);
     }
     return node.Remark;
 }
