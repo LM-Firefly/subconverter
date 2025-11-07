@@ -1,177 +1,168 @@
 # short names
 [[rename_node]]
-match = "中国"
-replace = "中"
+match = "(解锁|)(\\|)(x.*)(\\|V2ray)"
+replace = "$[$3]"
 
 [[rename_node]]
-match = "徐州"
-replace = "徐"
+match = "(..|...)(\\d\\d\\d\\d|\\d\\d\\d)(\\|)(Azure|HKT|CN2GIA)"
+replace = "$1$4$2"
 
 [[rename_node]]
-match = "深圳"
-replace = "深"
+match = "((^CordCloud - )|(关注TG@txwl666)|(一元机场:ssrsub.de)|(机场推荐:dafei.de)|(机场推荐:)|(FIBERSTATE LLC)|(PCCW IMS)|(PCCW IMS LIMITED))"
+replace = ""
 
 [[rename_node]]
-match = "上海"
-replace = "沪"
+match = "(标准)|(标准线路)|(线路)|(中转)|(直连)|(80端口)|(V\\d-)|((IEPL)|(IEPL专线)|(IPLC)|(IPLC专线))|(IPV6)|((海外\\|新疆专用))|((\u6d77\u5916\\|\u65b0\u7586\u4e13\u7528)|(CLOUD))"
+replace = ""
 
 [[rename_node]]
-match = "广州"
-replace = "穗"
+match = "(.*)( )(.*\\d)( \\| )(.*)"
+replace = "$1$3$5"
 
 [[rename_node]]
-match = "宁波"
-replace = "甬"
+match = "(.*)(\\b\\d.*\\d\\b)(静态解锁|动态解锁|原生解锁|解锁|动态原生|静态原生|原生|家宽)"
+replace = "$1$2[M]"
 
 [[rename_node]]
-match = "贵阳"
-replace = "筑"
+match = "(.*)(\\d.*\\d)(\\|[\\w].*\\d)"
+replace = "$1$2"
 
 [[rename_node]]
-match = "武汉"
-replace = "汉"
+match = "(?i)(.*?\\p{Han})(?:NO)[.\\-]?(\\d+[A-Za-z0-9\\-]*)$"
+replace = "$1 $2"
+
+# [[rename_node]]
+# match = "(「|\u300c)(\\p{RI}\\p{RI})(」|\u300d)"
+# replace = "$2 "
 
 [[rename_node]]
-match = "南京"
-replace = "宁"
+match = "((CN\\d•)|^)(⓪|❶|❷|❸|❻)(TJ\\.|gR\\.|V2\\.|H2\\.|SS\\.)"
+replace = ""
 
 [[rename_node]]
-match = "天津"
-replace = "津"
+match = "(商宽)|(\\d组)|(--)|(◆)"
+replace = ""
 
 [[rename_node]]
-match = "北京"
-replace = "京"
+match = "^(.*)(?i:\\bHK[G]?\\d*\\b|Hong.*?Kong|\\bHKT\\d*\\b|\\bHKBN\\d*\\b|\\bHGC\\d*\\b|\\bWTT\\d*\\b|\\bCMI\\d*\\b|\\bHK\\d*\\b)([\u4e00-\u9fa5].*|\\d*)"
+replace = "🇭🇰 香港$2"
 
 [[rename_node]]
-match = "沈阳"
-replace = "沈"
+match = "^((「|\u300c)(🇭🇰)(」|\u300d))(.*)"
+replace = "🇭🇰 香港$5"
 
 [[rename_node]]
-match = "江苏"
-replace = "苏"
+match = "^(🇺🇸\\s*)?((?i:\\bUS[A]?\\d*\\b)|((「|\\u300c)(🇺🇸)(」|\\u300d)))\\s*(.*)"
+replace = "🇺🇸 美国$7"
 
 [[rename_node]]
-match = "浙江"
-replace = "浙"
+match = "^(🇯🇵\\s*)?((?i:\\bJP[N]?\\d*\\b)|((「|\\u300c)(🇯🇵)(」|\\u300d)))\\s*(.*)"
+replace = "🇯🇵 日本$7"
 
 [[rename_node]]
-match = "安徽"
-replace = "皖"
+match = "^(🇹🇼\\s*)?((?i:\\bTW[N]?\\d*\\b)|((「|\\u300c)(🇹🇼)(」|\\u300d)))\\s*(.*)"
+replace = "🇹🇼 台湾$7"
 
 [[rename_node]]
-match = "福建"
-replace = "闽"
+match = "^(🇲🇴\\s*)?((?i:\\bMO\\d*\\b)|((「|\\u300c)(🇲🇴)(」|\\u300d)))\\s*(.*)"
+replace = "🇲🇴 澳门$7"
 
 [[rename_node]]
-match = "湖南"
-replace = "湘"
+match = "^(🇸🇬\\s*)?((?i:\\bSG[P]?\\d*\\b)|((「|\\u300c)(🇸🇬)(」|\\u300d)))\\s*(.*)"
+replace = "🇸🇬 新加坡$7"
 
 [[rename_node]]
-match = "广东"
-replace = "粤"
+match = "^(?i:\\bRU[S]?\\d*\\b)(.*)"
+replace = "俄罗斯$2"
 
 [[rename_node]]
-match = "海南"
-replace = "琼"
+match = "^(\\bT[U]R\\b)(.*)"
+replace = "土耳其$2"
 
 [[rename_node]]
-match = "四川"
-replace = "川"
+match = "^(🇬🇧\\s*)?((?i:\\bUK\\d*\\b|\\bGB[R]?\\d*\\b)|((「|\\u300c)(🇬🇧)(」|\\u300d)))\\s*(.*)"
+replace = "🇬🇧 英国$7"
 
 [[rename_node]]
-match = "贵州"
-replace = "贵"
+match = "^(🇰🇷\\s*)?((?i:(\\b(?<!North\\s)\\bK(orea|OR|R)\\s?\\d*))|((「|\\u300c)(🇰🇷)(」|\\u300d)))\\s*(.*)"
+replace = "🇰🇷 韩国$8"
 
 [[rename_node]]
-match = "云南"
-replace = "云"
+match = "^(🇫🇷\\s*)?((?i:\\bFR[A]?\\d*\\b)|((「|\\u300c)(🇫🇷)(」|\\u300d)))\\s*(.*)"
+replace = "🇫🇷 法国$7"
 
 [[rename_node]]
-match = "青海"
-replace = "青"
+match = "^(🇨🇦\\s*)?((?i:\\bCA[N]?\\d*\\b)|((「|\\u300c)(🇨🇦)(」|\\u300d)))\\s*(.*)"
+replace = "🇨🇦 加拿大$7"
 
 [[rename_node]]
-match = "台湾"
-replace = "台"
+match = "^(🇦🇺\\s*)?((?i:\\bAU[S]?\\d*\\b)|((「|\\u300c)(🇦🇺)(」|\\u300d)))\\s*(.*)"
+replace = "🇦🇺 澳大利亚$7"
 
 [[rename_node]]
-match = "香港"
-replace = "港"
+match = "^(🇨🇳\\s*)?((?i:\\bC[H]?N\\b)|((「|\\u300c)(🇨🇳)(」|\\u300d)))\\s*(.*)"
+replace = "🇨🇳 中国$7"
 
 [[rename_node]]
-match = "澳门"
-replace = "澳"
+match = "^(\\bRO\\d*\\b)(.*)"
+replace = "罗马尼亚$2"
 
 [[rename_node]]
-match = "美国"
-replace = "美"
+match = "^(\\bBR\\d*\\b)(.*)"
+replace = "巴西$2"
 
 [[rename_node]]
-match = "英国"
-replace = "英"
+match = "^(🇪🇸\\s*)?((?i:\\bES[P]?\\d*\\b)|((「|\\u300c)(🇪🇸)(」|\\u300d)))\\s*(.*)"
+replace = "🇪🇸 西班牙$7"
 
 [[rename_node]]
-match = "加拿大"
-replace = "加"
+match = "移动"
+replace = "CM"
 
 [[rename_node]]
-match = "法国"
-replace = "法"
+match = "电信"
+replace = "CT"
 
 [[rename_node]]
-match = "德国"
-replace = "德"
+match = "联通"
+replace = "CU"
 
 [[rename_node]]
-match = "瑞士"
-replace = "瑞"
+match = "深港专线"
+replace = "深港"
 
 [[rename_node]]
-match = "日本"
-replace = "日"
+match = "(转)"
+replace = "▷"
 
 [[rename_node]]
-match = "韩国"
-replace = "韩"
+match = "((NF)|(NF\\*)|(BBC)|(abema)|(动画疯)|(Netflix)|(動畫瘋)|(Hulu)|(\\[注册Netflix\\])|(HBO)|(TVB)|(D\\+)|(Disney)|(Yp)|(Youtube)|(Y2B P)|(AI)|(解锁流媒体)|(原生IP)|(原生)|( NF )|( D\\+ )|(流媒体)|(-M)|(解锁)|(家宽))"
+replace = "[M]"
 
 [[rename_node]]
-match = "芬兰"
-replace = "芬"
+match = "\\[M\\].*\\[M\\]"
+replace = "[M]"
 
 [[rename_node]]
-match = "印度"
-replace = "印"
+match = "(\\w+|[\u4e00-\u9fa5]+)\\s\\1"
+replace = "$1 "
 
 [[rename_node]]
-match = "泰国"
-replace = "泰"
+match = "((?:\\p{RI}{2})|[\\x{2600}-\\x{27BF}\\x{1F300}-\\x{1F5FF}\\x{1F600}-\\x{1F64F}\\x{1F680}-\\x{1F6FF}\\x{1F900}-\\x{1F9FF}\\x{1FA70}-\\x{1FAFF}])\\1+"
+replace = "$1"
 
 [[rename_node]]
-match = "越南"
-replace = "越"
+match = "\\[CM\\]|\\[CU\\]|\\[BT\\/PT专用\\]|\\[荐\\]|\\[Beta\\]|\\[移动\\]|\\[联通\\]|\\[综合\\]|\\[备用\\]|\\[阿里云\\]|\\[测试\\]|\\[v6\\]|高速|100m限速|CDN加速|Game|PPCW|Sakura"
+replace = ""
 
 [[rename_node]]
-match = "新加坡"
-replace = "新"
+match = "(.*?)(?:\\[?倍率:?\\]?\\s*(\\d+(?:\\.\\d+)?)(?:\\s*倍(?:率)?)?|(?:x|X)(\\d+(?:\\.\\d+)?))(.*)"
+replace = "$1[x$2$3]$4"
 
 [[rename_node]]
-match = "意大利"
-replace = "意"
+match = "(.*)\\[x(\\d+(?:\\.\\d+)?)\\](.*)"
+replace = "$1$3[x$2]"
 
 [[rename_node]]
-match = "菲律宾"
-replace = "菲"
-
-[[rename_node]]
-match = "俄罗斯"
-replace = "俄"
-
-[[rename_node]]
-match = "土耳其"
-replace = "土"
-
-# times RE
-[[rename_node]]
-match = '\(?((x|X)?(\d+)(\.?\d+)?)((\s?倍率?)|(x|X))\)?'
-replace = "$1x"
+match = "\\[\\]"
+replace = ""
