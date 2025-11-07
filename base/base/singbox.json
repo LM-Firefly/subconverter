@@ -1,113 +1,137 @@
 {
-    "log": {
-        "disabled": false,
-        "level": "info",
-        "timestamp": true
-    },
-    "dns": {
-        "servers": [
-            {
-                "tag": "dns_proxy",
-                "address": "tls://1.1.1.1",
-                "address_resolver": "dns_resolver"
-            },
-            {
-                "tag": "dns_direct",
-                "address": "h3://dns.alidns.com/dns-query",
-                "address_resolver": "dns_resolver",
-                "detour": "DIRECT"
-            },
-            {
-                "tag": "dns_fakeip",
-                "address": "fakeip"
-            },
-            {
-                "tag": "dns_resolver",
-                "address": "223.5.5.5",
-                "detour": "DIRECT"
-            },
-            {
-                "tag": "block",
-                "address": "rcode://success"
-            }
-        ],
-        "rules": [
-            {
-                "outbound": [
-                    "any"
-                ],
-                "server": "dns_resolver"
-            },
-            {
-                "geosite": [
-                    "category-ads-all"
-                ],
-                "server": "dns_block",
-                "disable_cache": true
-            },
-            {
-                "geosite": [
-                    "geolocation-!cn"
-                ],
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
-                "server": "dns_fakeip"
-            },
-            {
-                "geosite": [
-                    "geolocation-!cn"
-                ],
-                "server": "dns_proxy"
-            }
-        ],
-        "final": "dns_direct",
-        "independent_cache": true,
-        "fakeip": {
-            "enabled": true,
-            "inet6_range": "fc00::\/18",
-            "inet4_range": "198.18.0.0\/15"
-        }
-    },
-    "ntp": {
-        "enabled": true,
-        "server": "time.apple.com",
-        "server_port": 123,
-        "interval": "30m",
+  "log": {
+    "disabled": false,
+    "level": "info",
+    "output": "box.log",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "type": "fakeip",
+        "tag": "fakeip",
+        "inet4_range": "28.0.0.0/8",
+        "inet6_range": "fc00::/18"
+      },
+      {
+        "type": "tls",
+        "tag": "local",
+        "server": "tls://223.5.5.5",
+        "server_port": 853,
         "detour": "DIRECT"
-    },
-    "inbounds": [
-        {
-            "type": "mixed",
-            "tag": "mixed-in",
-            "listen": "0.0.0.0",
-            "listen_port": 2080
-        },
-        {
-            "type": "tun",
-            "tag": "tun-in",
-            "inet4_address": "172.19.0.1/30",
-            "inet6_address": "fdfe:dcba:9876::1/126",
-            "auto_route": true,
-            "strict_route": true,
-            "stack": "mixed",
-            "sniff": true
-        }
+      },
+      {
+        "type": "tls",
+        "tag": "proxy",
+        "server": "tls://1.1.1.1",
+        "server_port": 853,
+        "detour": "proxy"
+      }
     ],
-    "outbounds": [],
-    "route": {
-        "rules": [],
-        "auto_detect_interface": true
-    },
-    "experimental": {
-        "cache_file": {
-            "enabled": true,
-            "store_fakeip": true
-        },
-        "clash_api": {
-            "external_controller": "127.0.0.1:9090",
-            "external_ui": "dashboard"
+    "rules": [
+      {
+        "query_type": ["A", "AAAA"],
+        "server": "fakeip"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "clash_mode": "rule",
+        "action": "route",
+        "server": "local"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "invert": true,
+        "clash_mode": "rule",
+        "action": "route",
+        "server": "proxy"
+      }
+    ],
+    "final": "",
+    "strategy": "prefer_ipv4"
+  },
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m",
+    "detour": "local"
+  },
+  "certificate": {},
+  "endpoints": [],
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "singtun",
+      "address": ["28.0.0.1/30", "fdfe:dcba:9876::1/126"],
+      "mtu": 9000,
+      "auto_route": true,
+      "iproute2_table_index": 2022,
+      "iproute2_rule_index": 9000,
+      "auto_redirect": false,
+      "auto_redirect_input_mark": "0x2023",
+      "auto_redirect_output_mark": "0x2024",
+      "strict_route": true,
+      "route_address": ["0.0.0.0/1", "128.0.0.0/1", "::/1", "8000::/1"],
+      "endpoint_independent_nat": false,
+      "udp_timeout": "5m",
+      "stack": "system",
+      "platform": {
+        "http_proxy": {
+          "enabled": false,
+          "server": "127.0.0.1",
+          "server_port": 18888
         }
+      },
+      "listen": "::",
+      "listen_port": 18888,
+      "tcp_fast_open": true,
+      "tcp_multi_path": false,
+      "udp_fragment": false
     }
+  ],
+  "outbounds": [],
+  "route": {
+    "rules": [
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "outbound": "direct"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "download_detour": "proxy"
+      }
+    ]
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "cache.db",
+      "cache_id": "",
+      "store_fakeip": true,
+      "store_rdrc": true,
+      "rdrc_timeout": ""
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:19090",
+      "external_ui": "",
+      "external_ui_download_url": "",
+      "external_ui_download_detour": "proxy",
+      "secret": "",
+      "default_mode": "rule",
+      "access_control_allow_origin": [],
+      "access_control_allow_private_network": false
+    },
+    "v2ray_api": {}
+  }
 }
