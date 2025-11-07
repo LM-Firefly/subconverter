@@ -1,153 +1,24 @@
 version = 1
-[common]
-# API mode, set to true to prevent loading local subscriptions or serving local files directly
-api_mode = true
+[custom]
+enable_rule_generator = true
+overwrite_original_rules = true
 
-# Access token used for performing critical action through Web interface
-api_access_token = "password"
+clash_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+surge_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+surfboard_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+mellow_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+quan_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+quanx_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+loon_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+sssub_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
+singbox_rule_base = "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Subconverter-base/all-base.tpl"
 
-# Default URLs, used when no URL is provided in request, use "|" to separate multiple subscription links, supports local files/URL
-default_url = []
-
-# Insert subscription links to requests. Can be used to add node(s) to all exported subscriptions.
-enable_insert = true
-
-# URLs to insert before subscription links, can be used to add node(s) to all exported subscriptions, supports local files/URL
-insert_url = [""]
-
-# Prepend inserted URLs to subscription links. Nodes in insert_url will be added to groups first with non-group-specific match pattern.
-prepend_insert_url = true
-
-# Exclude nodes which remarks match the following patterns. Supports regular expression.
-exclude_remarks = []
-
-# Only include nodes which remarks match the following patterns. Supports regular expression.
-# include_remarks = ["V3.*港"]
-
-# Enable script support for filtering nodes
-enable_filter = true
-# Script used for filtering nodes. Supports inline script and script path. A "filter" function with 1 argument which is a node should be defined in the script.
-# Example: Inline script: set value to content of script.
-#          Script path: set value to "path:/path/to/script.js".
-filter_script = '''
-function filter(node) {
-    const info = JSON.parse(node.ProxyInfo);
-    if (info.type === 'ss' && info.EncryptMethod.includes('chacha20-poly1305'))
- 	    return false;
-    return true;
-}
-'''
-
-# Setting an external config file as default when none is specified, supports local files/URL
-# default_external_config = "config/example_external_config.toml"
-
-# The file scope limit of the 'rule_base' options in external configs.
-base_path = "base"
-
-# Clash config base used by the generator, supports local files/URL
-clash_rule_base = "base/all-base.tpl"
-
-# Surge config base used by the generator, supports local files/URL
-surge_rule_base = "base/all-base.tpl"
-
-# Surfboard config base used by the generator, supports local files/URL
-surfboard_rule_base = "base/all-base.tpl"
-
-# Mellow config base used by the generator, supports local files/URL
-mellow_rule_base = "base/all-base.tpl"
-
-# Quantumult config base used by the generator, supports local files/URL
-quan_rule_base = "base/all-base.tpl"
-
-# Quantumult X config base used by the generator, supports local files/URL
-quanx_rule_base = "base/all-base.tpl"
-
-# Loon config base used by the generator, supports local files/URL
-loon_rule_base = "base/all-base.tpl"
-
-# Shadowsocks Android config base used by the generator, supports local files/URL
-sssub_rule_base = "base/all-base.tpl"
-
-# sing-box config base used by the generator, supports local files/URL
-singbox_rule_base = "base/all-base.tpl"
-
-# Proxy used to download rulesets or subscriptions, set to NONE or empty to disable it, set to SYSTEM to use system proxy.
-# Accept cURL-supported proxies (http:// https:// socks4a:// socks5://)
-
-proxy_config = "SYSTEM"
-proxy_ruleset = "SYSTEM"
-proxy_subscription = "SYSTEM"
-
-# Append a proxy type string ([SS] [SSR] [VMess]) to node remark.
-append_proxy_type = false
-
-# When requesting /sub, reload this config file first.
-reload_conf_on_request = false
-
-[[userinfo.stream_rule]]
-# Rules to extract stream data from node
-# Format: full_match_regex|new_format_regex
-# where new_format_regex should be like "total=$1&left=$2&used=$3"
-match = '^剩余流量：(.*?)\|总流量：(.*)$'
-replace = 'total=$2&left=$1'
-
-[[userinfo.stream_rule]]
-match = '^剩余流量：(.*?) (.*)$'
-replace = 'total=$1&left=$2'
-
-[[userinfo.stream_rule]]
-match = '^Bandwidth: (.*?)/(.*)$'
-replace = 'used=$1&total=$2'
-
-[[userinfo.stream_rule]]
-match = '^.*剩余(.*?)(?:\s*?)@(?:.*)$'
-replace = 'total=$1'
-
-[[userinfo.time_rule]]
-# Rules to extract expire time data from node
-# Format: full_match_regex|new_format_regex
-# where new_format_regex should follow this example: yyyy:mm:dd:hh:mm:ss
-match = '^过期时间：(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$'
-replace = '$1:$2:$3:$4:$5:$6'
-
-[[userinfo.time_rule]]
-match = '^到期时间:(\d+)-(\d+)-(\d+)$'
-replace = '$1:$2:$3:0:0:0'
-
-[[userinfo.time_rule]]
-match = '^Smart Access expire: (\d+)/(\d+)/(\d+)$'
-replace = '$1:$2:$3:0:0:0'
+# exclude_remarks = []
 
 [node_pref]
-# udp_flag = true
-# tcp_fast_open_flag = false
-# skip_cert_verify_flag = true
-# tls13_flag = false
-
-# sort_flag = false
-# Script used for sorting nodes. A "compare" function with 2 arguments which are the 2 nodes to be compared should be defined in the script. Supports inline script and script path.
-# Examples can be seen at the filter_script option in [common] section.
-# sort_script = '''
-# function compare(node_a, node_b) {
-#   return info_a.Remark > info_b.Remark;
-# }
-# '''
-
-filter_deprecated_nodes = true
-append_sub_userinfo = true
-clash_use_new_field_name = true
-
-# Generate style of the proxies and proxy groups section of Clash subscriptions.
-# Supported styles: block, flow, compact
-# Block: - name: name1    Flow: - {name: name1, key: value}    Compact: [{name: name1, key: value},{name: name2, key: value}]
-#         key: value           - {name: name2, key: value}
-#       - name: name2
-#         key: value
+udp_flag = true
 clash_proxies_style = "block"
 clash_proxy_groups_style = "block"
-
-# add Clash mode to sing-box rules, and add a GLOBAL group to end of outbounds
-singbox_add_clash_modes = true
 
 [[node_pref.rename_node]]
 match = "(解锁|)(\\|)(x.*)(\\|V2ray)"
@@ -325,28 +196,6 @@ replace = "$1$3[x$2]"
 match = "\\[\\]"
 replace = ""
 
-
-# import = "snippets/rename_node.toml"
-
-[managed_config]
-# Append a '#!MANAGED-CONFIG' info to Surge configurations
-write_managed_config = true
-
-# Address prefix for MANAGED-CONFIG info, without the trailing "/".
-managed_config_prefix = "http://127.0.0.1:25500"
-
-# Managed config update interval in seconds, determine how long the config will be updated.
-config_update_interval = 3600
-
-# If config_update_strict is set to true, Surge will require a force update after the interval.
-config_update_strict = true
-
-# Device ID to be written to rewrite scripts for some version of Quantumult X
-quanx_device_id = ""
-
-[surge_external_proxy]
-# surge_ssr_path = "/usr/bin/ssr-local"
-resolve_hostname = true
 
 [emojis]
 add_emoji = true
@@ -767,32 +616,6 @@ emoji = "🇨🇳"
 [[emojis.emoji]]
 match = "((^🇪🇺)|(\\bEU(?:[-_\\s]?\\d+|_)?\\b)|(Europe)|(欧洲))"
 emoji = "🇪🇺"
-
-
-# import = "snippets/emoji.toml"
-
-# [[custom_groups]]
-# name = "Auto"
-# type = "url-test"
-# rule = [".*"]
-# url = "http://www.gstatic.com/generate_204"
-# interval = 300
-# tolerance = 150
-# lazy = true
-
-# [[custom_groups]]
-# name = "Proxy"
-# type = "select"
-# rule = [".*", "[]DIRECT"]
-# disable_udp = false
-
-# [[custom_groups]]
-# name = "LoadBalance"
-# type = "load-balance"
-# rule = [".*", "[]Proxy", "[]DIRECT"]
-# interval = 100
-# strategy = "consistent-hashing"
-# url = "http://www.gstatic.com/generate_204"
 
 
 [[custom_groups]]
@@ -2022,17 +1845,6 @@ type = "select"
 disable_udp = false
 rule = ["[]🎯 直连服务"]
 
-# import = "snippets/groups.toml"
-
-[ruleset]
-# Enable generating rules with rulesets
-enabled = true
-
-# Overwrite the existing rules in rule_base
-overwrite_original_rules = true
-
-# Perform a ruleset update on request
-update_ruleset_on_request = true
 
 [[rulesets]]
 group = "🥥 DNS Improvement"
@@ -2240,14 +2052,14 @@ ruleset = "[]GEOIP,CN"
 group = "🚧 终末策略"
 ruleset = "[]MATCH"
 
-# import = "snippets/rulesets.toml"
-
-[template]
-template_path = ""
 
 [[template.globals]]
 key = "clash.mixed_port"
 value = "18888"
+
+# [[template_args]]
+# key = "clash.redir_port"
+# value = "18890"
 
 [[template.globals]]
 key = "clash.allow_lan"
@@ -2276,94 +2088,3 @@ value = "true"
 [[template.globals]]
 key = "singbox.mixed_port"
 value = "2080"
-
-
-[[aliases]]
-uri = "/clash"
-target = "/sub?target=clash"
-
-[[aliases]]
-uri = "/clashr"
-target = "/sub?target=clashr"
-
-[[aliases]]
-uri = "/surge"
-target = "/sub?target=surge"
-
-[[aliases]]
-uri = "/quan"
-target = "/sub?target=quan"
-
-[[aliases]]
-uri = "/quanx"
-target = "/sub?target=quanx"
-
-[[aliases]]
-uri = "/mellow"
-target = "/sub?target=mellow"
-
-[[aliases]]
-uri = "/surfboard"
-target = "/sub?target=surfboard"
-
-[[aliases]]
-uri = "/loon"
-target = "/sub?target=loon"
-
-[[aliases]]
-uri = "/singbox"
-target = "/sub?target=singbox"
-
-[[aliases]]
-uri = "/ss"
-target = "/sub?target=ss"
-
-[[aliases]]
-uri = "/ssd"
-target = "/sub?target=ssd"
-
-[[aliases]]
-uri = "/sssub"
-target = "/sub?target=sssub"
-
-[[aliases]]
-uri = "/ssr"
-target = "/sub?target=ssr"
-
-[[aliases]]
-uri = "/v2ray"
-target = "/sub?target=v2ray"
-
-[[aliases]]
-uri = "/trojan"
-target = "/sub?target=trojan"
-
-# [[tasks]]
-# name = "tick"
-# cronexp = "0/10 * * * * ?"
-# path = "tick.js"
-# timeout = 3
-
-[server]
-# Address to bind on for Web Server
-listen = "0.0.0.0"
-# Port to bind on for Web Server
-port = 25500
-# Root folder for web server, keep empty to disable
-serve_file_root = "./sub-web"
-
-[advanced]
-log_level = "debug"
-print_debug_info = true
-max_pending_connections = 10240
-max_concurrent_threads = 128
-max_allowed_rulesets = 0
-max_allowed_rules = 0
-max_allowed_download_size = 0
-enable_cache = false
-cache_subscription = 0
-cache_config = 0
-cache_ruleset = 0
-script_clean_context = true
-async_fetch_ruleset = true
-skip_failed_links = true
