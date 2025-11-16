@@ -1022,10 +1022,7 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
             {
                 case "tcp"_hash:
                     singleproxy["network"] = x.TransferProtocol;
-                    if(!x.Host.empty())
-                        singleproxy["host"] = x.Host;
-                    if(!x.Path.empty())
-                        singleproxy["path"] = x.Path;
+                    // For plain TCP, avoid emitting host/path; use servername or reality-opts instead
                     // For REALITY or vision flow, ensure client-fingerprint is set
                     if(!x.PublicKey.empty() || x.Flow == "xtls-rprx-vision")
                     {
