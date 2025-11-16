@@ -17,6 +17,8 @@ using string_pair_array = std::vector<std::pair<std::string, std::string>>;
 
 std::vector<std::string> split(const std::string &s, const std::string &separator);
 std::vector<std::string_view> split(std::string_view s, char separator);
+// Split string at first separator only, useful for key-value pairs where value may contain separator
+std::vector<std::string> splitKeyValue(const std::string &s, const std::string &separator);
 void split(std::vector<std::string_view> &result, std::string_view s, char separator);
 std::string join(const string_array &arr, const std::string &delimiter);
 
