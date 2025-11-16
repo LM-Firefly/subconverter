@@ -18,11 +18,12 @@ pacman -S --needed --noconfirm \
     ${TOOLCHAIN}-{libidn2,libunistring,libiconv,brotli,zlib}
 
 # 从源码构建静态库的辅助函数
+# 用法: build_static_cmake <repo> <dir> [extra_args] [cmake_subdir] [build_target]
 build_static_cmake() {
-    local repo=$1 dir=$2 extra_args=$3
+    local repo=$1 dir=$2 extra_args=$3 cmake_subdir=${4:-.} build_target=$5
     git clone --depth=1 "$repo" "$dir"
-    cmake -S "$dir" -B "$dir/build" -G "$CMAKE_GENERATOR" $CMAKE_COMMON_ARGS $extra_args
-    cmake --build "$dir/build" -j $SRC_BUILD_JOBS
+    cmake -S "$dir/$cmake_subdir" -B "$dir/build" -G "$CMAKE_GENERATOR" $CMAKE_COMMON_ARGS $extra_args
+    cmake --build "$dir/build" -j $SRC_BUILD_JOBS ${build_target:+--target $build_target}
     cmake --install "$dir/build"
 }
 
@@ -30,14 +31,10 @@ build_static_cmake() {
 echo "=== Building brotli and zstd from source ==="
 build_static_cmake https://github.com/google/brotli brotli-src "-DBROTLI_DISABLE_TESTS=ON"
 
-# zstd 需要特殊处理（CMake在子目录）
-ZSTD_VERSION=1.5.6
-curl -sL "https://github.com/facebook/zstd/archive/refs/tags/v${ZSTD_VERSION}.tar.gz" | \
-    tar -xz --exclude="*/tests" --exclude="*/contrib"
-cmake -S "zstd-${ZSTD_VERSION}/build/cmake" -B "zstd-build" -G "$CMAKE_GENERATOR" $CMAKE_COMMON_ARGS \
-    -DZSTD_BUILD_SHARED=OFF -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF
-cmake --build zstd-build -j $SRC_BUILD_JOBS --target libzstd_static
-cmake --install zstd-build
+build_static_cmake https://github.com/facebook/zstd zstd-src \
+    "-DZSTD_BUILD_SHARED=OFF -DZSTD_BUILD_PROGRAMS=OFF -DZSTD_BUILD_TESTS=OFF" \
+    "build/cmake" \
+    "libzstd_static"
 
 # 清理导入库，强制使用静态库
 echo "=== Cleaning import libraries ==="
@@ -46,8 +43,7 @@ for lib in brotli{dec,enc,common} zstd idn2 unistring iconv psl; do
 done
 
 # 验证静态库存在
-REQUIRED_LIBS=(curl nghttp{2,3} ngtcp2 brotli{dec,enc,common} zstd 
-               idn2 unistring iconv psl ssh2 ssl crypto z)
+REQUIRED_LIBS=(curl nghttp{2,3} ngtcp2 brotli{dec,enc,common} zstd idn2 unistring iconv psl ssh2 ssl crypto z)
 echo "=== Verifying static libraries ==="
 missing=()
 for lib in "${REQUIRED_LIBS[@]}"; do
