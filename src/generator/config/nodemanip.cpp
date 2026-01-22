@@ -41,6 +41,7 @@ int addNodes(std::string link, std::vector<Proxy> &allNodes, int groupID, parse_
     RegexMatchConfigs &time_rules = *parse_set.time_rules;
     string_icase_map *request_headers = parse_set.request_header;
     bool &authorized = parse_set.authorized;
+    string_icase_map custom_headers;
 
     ConfType linkType = ConfType::Unknow;
     std::vector<Proxy> nodes;
@@ -142,7 +143,13 @@ int addNodes(std::string link, std::vector<Proxy> &allNodes, int groupID, parse_
         writeLog(LOG_TYPE_INFO, "Downloading subscription data...");
         if(startsWith(link, "surge:///install-config")) //surge config link
             link = urlDecode(getUrlArg(link, "url"));
-        strSub = webGet(link, proxy, global.cacheSubscription, &extra_headers, request_headers);
+        if(request_headers)
+            custom_headers = *request_headers;
+        if(parse_set.custom_user_agent && !parse_set.custom_user_agent->empty())
+        {
+            custom_headers["User-Agent"] = *parse_set.custom_user_agent;
+        }
+        strSub = webGet(link, proxy, global.cacheSubscription, &extra_headers, &custom_headers);
         /*
         if(strSub.size() == 0)
         {
@@ -426,12 +433,14 @@ std::string removeEmoji(const std::string &orig_remark)
     return remark;
 }
 
-std::string addEmoji(const Proxy &node, const RegexMatchConfigs &emoji_array, extra_settings &ext)
+std::string addEmoji(const Proxy &node, const RegexMatchConfigs &emoji_array, extra_settings &ext, const std::string &original_remark)
 {
     std::string real_rule, ret;
 
     for(const RegexMatchConfig &x : emoji_array)
     {
+        Proxy origNode = node;
+        origNode.Remark = original_remark;
         if(!x.Script.empty() && ext.authorized)
         {
             std::string result;
@@ -444,9 +453,21 @@ std::string addEmoji(const Proxy &node, const RegexMatchConfigs &emoji_array, ex
                 {
                     ctx.eval(script);
                     auto getEmoji = (std::function<std::string(const Proxy&)>) ctx.eval("getEmoji");
-                    ret = getEmoji(node);
+                    ret = getEmoji(origNode);
+                    if(ret.empty())
+                        ret = getEmoji(node);
                     if(!ret.empty())
-                        result = ret + " " + node.Remark;
+                    {
+                        std::string trimmed = trim(node.Remark);
+                        if(trimmed != removeEmoji(trimmed))
+                        {
+                            result = node.Remark;
+                        }
+                        else if(startsWith(trimmed, ret) || startsWith(trimmed, ret + " "))
+                            result = node.Remark;
+                        else
+                            result = ret + " " + node.Remark;
+                    }
                 }
                 catch (qjs::exception)
                 {
@@ -459,8 +480,24 @@ std::string addEmoji(const Proxy &node, const RegexMatchConfigs &emoji_array, ex
         }
         if(x.Replace.empty())
             continue;
-        if(applyMatcher(x.Match, real_rule, node) && real_rule.size() && regFind(node.Remark, real_rule))
+        if(applyMatcher(x.Match, real_rule, origNode) && real_rule.size() && regFind(original_remark, real_rule))
+        {
+            std::string trimmed = trim(node.Remark);
+            if(trimmed != removeEmoji(trimmed))
+                return node.Remark;
+            if(startsWith(trimmed, x.Replace) || startsWith(trimmed, x.Replace + " "))
+                return node.Remark;
             return x.Replace + " " + node.Remark;
+        }
+        if(applyMatcher(x.Match, real_rule, node) && real_rule.size() && regFind(node.Remark, real_rule))
+        {
+            std::string trimmed = trim(node.Remark);
+            if(trimmed != removeEmoji(trimmed))
+                return node.Remark;
+            if(startsWith(trimmed, x.Replace) || startsWith(trimmed, x.Replace + " "))
+                return node.Remark;
+            return x.Replace + " " + node.Remark;
+        }
     }
     return node.Remark;
 }
@@ -469,13 +506,30 @@ void preprocessNodes(std::vector<Proxy> &nodes, extra_settings &ext)
 {
     std::for_each(nodes.begin(), nodes.end(), [&ext](Proxy &x)
     {
+        std::string original_remark = x.Remark;
         if(ext.remove_emoji)
             x.Remark = trim(removeEmoji(x.Remark));
 
         nodeRename(x, ext.rename_array, ext);
 
         if(ext.add_emoji)
-            x.Remark = addEmoji(x, ext.emoji_array, ext);
+        {
+            Proxy tmp = x;
+            tmp.Remark = x.Remark;
+            std::string added = addEmoji(tmp, ext.emoji_array, ext, original_remark);
+            if(added != tmp.Remark)
+            {
+                if(added.size() >= tmp.Remark.size() && added.compare(added.size() - tmp.Remark.size(), tmp.Remark.size(), tmp.Remark) == 0)
+                {
+                    std::string prefix = added.substr(0, added.size() - tmp.Remark.size());
+                    x.Remark = prefix + x.Remark;
+                }
+                else
+                {
+                    x.Remark = added;
+                }
+            }
+        }
     });
 
     if(ext.sort_flag)
