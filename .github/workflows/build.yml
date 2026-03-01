@@ -67,7 +67,7 @@ jobs:
         run: tar czf ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz subconverter
       - name: Upload Release Asset
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ matrix.artifact }}
           path: ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz
@@ -105,7 +105,7 @@ jobs:
         run: tar czf ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz subconverter
       - name: Upload Release Asset
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ matrix.artifact }}
           path: ${{ matrix.artifact }}.${{ env.VERSION }}.tar.gz
@@ -157,7 +157,7 @@ jobs:
         run: 7z a ${{ matrix.artifact }}.${{ env.VERSION }}.7z subconverter/
       - name: Upload Release Asset
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ matrix.artifact }}
           path: ${{ matrix.artifact }}.${{ env.VERSION }}.7z
