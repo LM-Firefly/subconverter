@@ -39,7 +39,7 @@ int main(){std::to_string(0);}
 
 IF(NOT BUILD_STATIC_LIBRARY)
 
-ADD_EXECUTABLE(${BUILD_TARGET_NAME} 
+ADD_EXECUTABLE(${BUILD_TARGET_NAME}
     src/generator/config/nodemanip.cpp
     src/generator/config/ruleconvert.cpp
     src/generator/config/subexport.cpp
@@ -65,7 +65,8 @@ ADD_EXECUTABLE(${BUILD_TARGET_NAME}
     src/utils/regexp.cpp
     src/utils/string.cpp
     src/utils/system.cpp
-    src/utils/urlencode.cpp)
+    src/utils/urlencode.cpp
+    src/utils/age_decrypt.cpp)
 TARGET_INCLUDE_DIRECTORIES(${BUILD_TARGET_NAME} PRIVATE src)
 TARGET_LINK_DIRECTORIES(${BUILD_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR})
 
@@ -94,9 +95,9 @@ TARGET_INCLUDE_DIRECTORIES(${BUILD_TARGET_NAME} PRIVATE ${CURL_INCLUDE_DIRS})
 IF(FORCE_STATIC_DEPS AND MINGW)
     # Override with explicit static library path
     # Search in multiple possible locations
-    FIND_LIBRARY(CURL_STATIC_LIB 
+    FIND_LIBRARY(CURL_STATIC_LIB
         NAMES libcurl.a curl
-        PATHS 
+        PATHS
             ${CURL_LIBRARY_DIRS}
             ${CMAKE_PREFIX_PATH}/lib
             $ENV{MINGW_PREFIX}/lib
@@ -171,9 +172,9 @@ TARGET_COMPILE_DEFINITIONS(${BUILD_TARGET_NAME} PRIVATE -DYAML_CPP_STATIC_DEFINE
 # Force static PCRE2 when requested
 IF(FORCE_STATIC_DEPS AND MINGW)
     # Directly find the static archive
-    FIND_LIBRARY(PCRE2_STATIC_LIB 
+    FIND_LIBRARY(PCRE2_STATIC_LIB
         NAMES libpcre2-8.a pcre2-8
-        PATHS 
+        PATHS
             ${CMAKE_PREFIX_PATH}/lib
             $ENV{MINGW_PREFIX}/lib
             /mingw64/lib
@@ -182,8 +183,8 @@ IF(FORCE_STATIC_DEPS AND MINGW)
         REQUIRED)
     SET(PCRE2_LIBRARY ${PCRE2_STATIC_LIB})
     MESSAGE(STATUS "Forcing static PCRE2: ${PCRE2_STATIC_LIB}")
-    FIND_PATH(PCRE2_INCLUDE_DIR pcre2.h 
-        PATHS 
+    FIND_PATH(PCRE2_INCLUDE_DIR pcre2.h
+        PATHS
             ${CMAKE_PREFIX_PATH}/include
             $ENV{MINGW_PREFIX}/include
             /mingw64/include
@@ -211,6 +212,10 @@ TARGET_COMPILE_DEFINITIONS(${BUILD_TARGET_NAME} PRIVATE -DJS_SetHostUnhandledPro
 FIND_PACKAGE(LibCron REQUIRED)
 TARGET_INCLUDE_DIRECTORIES(${BUILD_TARGET_NAME} PRIVATE ${LIBCRON_INCLUDE_DIRS})
 TARGET_LINK_LIBRARIES(${BUILD_TARGET_NAME} ${LIBCRON_LIBRARIES})
+
+FIND_PACKAGE(OpenSSL REQUIRED)
+TARGET_INCLUDE_DIRECTORIES(${BUILD_TARGET_NAME} PRIVATE ${OPENSSL_INCLUDE_DIR})
+TARGET_LINK_LIBRARIES(${BUILD_TARGET_NAME} OpenSSL::SSL OpenSSL::Crypto)
 
 IF(WIN32)
     TARGET_LINK_LIBRARIES(${BUILD_TARGET_NAME} wsock32 ws2_32)
