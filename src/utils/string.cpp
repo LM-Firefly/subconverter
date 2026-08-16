@@ -45,6 +45,20 @@ std::vector<std::string_view> split(std::string_view s, char separator)
     return result;
 }
 
+std::vector<std::string> splitKeyValue(const std::string &s, const std::string &separator)
+{
+    std::vector<std::string> result;
+    string_size pos = s.find(separator);
+    if (pos == std::string::npos)
+        result.push_back(s);
+    else
+    {
+        result.push_back(s.substr(0, pos));
+        result.push_back(s.substr(pos + separator.size()));
+    }
+    return result;
+}
+
 std::string UTF8ToCodePoint(const std::string &data)
 {
     std::stringstream ss;
