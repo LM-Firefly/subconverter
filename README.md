@@ -2,14 +2,14 @@
 
 Utility to convert between various proxy subscription formats.
 
-[![Build Status](https://github.com/tindy2013/subconverter/actions/workflows/build.yml/badge.svg)](https://github.com/tindy2013/subconverter/actions)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/tags)
-[![GitHub release](https://img.shields.io/github/release/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/releases)
-[![GitHub license](https://img.shields.io/github/license/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/blob/master/LICENSE)
+[![Build Status](https://github.com/LM-Firefly/subconverter/actions/workflows/build.yml/badge.svg)](https://github.com/LM-Firefly/subconverter/actions)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/tindy2013/subconverter.svg)](https://github.com/LM-Firefly/subconverter/tags)
+[![GitHub release](https://img.shields.io/github/release/tindy2013/subconverter.svg)](https://github.com/LM-Firefly/subconverter/releases)
+[![GitHub license](https://img.shields.io/github/license/tindy2013/subconverter.svg)](https://github.com/LM-Firefly/subconverter/blob/master/LICENSE)
 
-[Docker README](https://github.com/tindy2013/subconverter/blob/master/README-docker.md)
+[Docker README](https://github.com/LM-Firefly/subconverter/blob/master/README-docker.md)
 
-[中文文档](https://github.com/tindy2013/subconverter/blob/master/README-cn.md)
+[中文文档](https://github.com/LM-Firefly/subconverter/blob/master/README-cn.md)
 
 - [subconverter](#subconverter)
   - [Supported Types](#supported-types)
@@ -21,33 +21,44 @@ Utility to convert between various proxy subscription formats.
 
 ## Supported Types
 
-| Type         | As Source  | As Target    | Target Name |
-| ------------ | :--------: | :----------: | ----------- |
-| Clash        |     ✓      |      ✓       | clash       |
-| ClashR       |     ✓      |      ✓       | clashr      |
-| Quantumult   |     ✓      |      ✓       | quan        |
-| Quantumult X |     ✓      |      ✓       | quanx       |
-| Loon         |     ✓      |      ✓       | loon        |
-| SS (SIP002)  |     ✓      |      ✓       | ss          |
-| SS Android   |     ✓      |      ✓       | sssub       |
-| SSD          |     ✓      |      ✓       | ssd         |
-| SSR          |     ✓      |      ✓       | ssr         |
-| Surfboard    |     ✓      |      ✓       | surfboard   |
-| Surge 2      |     ✓      |      ✓       | surge&ver=2 |
-| Surge 3      |     ✓      |      ✓       | surge&ver=3 |
-| Surge 4      |     ✓      |      ✓       | surge&ver=4 |
-| V2Ray        |     ✓      |      ✓       | v2ray       |
-| Telegram-liked HTTP/Socks 5 links |     ✓      |      ×       | Only as source |
+| Type                          | As Source | As Target | Target Name       |
+| ----------------------------- | :-------: | :-------: | ----------------- |
+| Clash                         |     ✓     |     ✓     | clash             |
+| ClashR                        |     ✓     |     ✓     | clashr            |
+| Quantumult (full config)      |     ✓     |     ✓     | quan              |
+| Quantumult X (full config)    |     ✓     |     ✓     | quanx             |
+| Loon                          |     ✓     |     ✓     | loon              |
+| Mellow                        |     ✓     |     ✓     | mellow            |
+| SS (SIP002)                   |     ✓     |     ✓     | ss                |
+| SS (Software Subscription/SIP008) |  ✓     |     ✓     | sssub             |
+| SSD                           |     ✓     |     ✓     | ssd               |
+| SSR                           |     ✓     |     ✓     | ssr               |
+| Surfboard                     |     ✓     |     ✓     | surfboard         |
+| Surge 4                       |     ✓     |     ✓     | surge&ver=4       |
+| Surge 5                       |     ✓     |     ✓     | surge&ver=5       |
+| Trojan                        |     ✓     |     ✓     | trojan            |
+| V2Ray / VLESS                 |     ✓     |     ✓     | v2ray             |
+| WireGuard                     |     ✓     |     ✓     | wireguard         |
+| sing-box                      |     ✓     |     ✓     | singbox           |
+| Telegram-liked HTTP/Socks 5 links |  ✓     |     ×     | Only as source    |
+| Mixed                         |     ×     |     ✓     | mixed             |
+| Auto                          |     ×     |     ✓     | auto              |
 
 Notice:
 
-1. Shadowrocket users should use `ss`, `ssr` or `v2ray` as target.
+1. Shadowrocket users should use `ss`, `ssr`, `v2ray` or `mixed` as target.
 
 2. You can add `&remark=` to Telegram-liked HTTP/Socks 5 links to set a remark for this node. For example:
 
    - tg://http?server=1.2.3.4&port=233&user=user&pass=pass&remark=Example
 
    - https://t.me/http?server=1.2.3.4&port=233&user=user&pass=pass&remark=Example
+
+3. When target type is `mixed`, it outputs all supported single proxy links (including WireGuard) as a Base64-encoded plain subscription.
+
+4. When target type is `auto`, the output target type is automatically determined based on the request's `User-Agent`.
+
+5. You can use `&ua=` to set a custom User-Agent for downloading subscriptions, and `&agekey=` to provide an X25519 private key for decrypting age-encrypted subscriptions.
 
 
 ---
@@ -95,7 +106,27 @@ Finally subscribe this link in Clash and you are done!
 
 ## Advanced Usage
 
-Please refer to [中文文档](https://github.com/tindy2013/subconverter/blob/master/README-cn.md#%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95).
+### Boolean field assignment logic
+
+Boolean fields like `udp`, `tfo` (TCP Fast Open), `scv` (skip-cert-verify) and `xudp` use a three-state (`true` / `false` / undefined) merge logic. The assignment priority from high to low is:
+
+1. **URL arguments** (e.g. `&udp=true`, `&tfo=false`): when explicitly specified, they override the source node's value
+2. **Source node fields** (e.g. `udp: true` in Clash YAML): when URL arguments are not specified, the source node's value is preserved
+3. **Global defaults** (e.g. `udp_flag`, `tfo_flag`, `skip_cert_verify_flag` in `pref`): used as fallback when neither URL arguments nor source node specify a value
+
+Output behavior in different scenarios:
+
+| URL argument | Source node has value | Output |
+|:---:|:---:|:---|
+| `udp=true` | true / false / none | always outputs `udp: true` |
+| `udp=false` | true / false / none | always outputs `udp: false` |
+| not specified | `udp: true` | outputs `udp: true` |
+| not specified | `udp: false` | outputs `udp: false` |
+| not specified | none | **field is omitted** (target client uses its own default) |
+
+> **Note**: When neither the URL argument nor the source node specifies a value, the field is **omitted** from the exported subscription (rather than being forced to `true` or `false`), so the target client's own defaults are preserved. `xudp` is only parsed from source nodes and does not support URL argument override.
+
+Please refer to [中文文档](https://github.com/LM-Firefly/subconverter/blob/master/README-cn.md#%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95).
 
 ## Auto Upload
 
