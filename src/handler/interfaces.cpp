@@ -74,11 +74,13 @@ const std::vector<UAProfile> UAMatchList = {
     {"Qv2ray","","","v2ray"},
     {"Shadowrocket","","","mixed"},
     {"Surfboard","","","surfboard"},
+    {"Surge","\\/([5-9][0-9]*\\.[0-9.]+).*x86","","surge",false,5}, /// Surge for Mac 5+
+    {"Surge","\\/([5-9][0-9]*\\.[0-9.]+)","","surge",false,5}, /// Surge iOS 5+
     {"Surge","\\/([0-9.]+).*x86","906","surge",false,4}, /// Surge for Mac (supports VMess)
-    {"Surge","\\/([0-9.]+).*x86","368","surge",false,3}, /// Surge for Mac (supports new rule types and Shadowsocks without plugin)
+    {"Surge","\\/([0-9.]+).*x86","368","surge",false,4}, /// Surge for Mac 3.x mapped to 4
     {"Surge","\\/([0-9.]+)","1419","surge",false,4}, /// Surge iOS 4 (first version)
-    {"Surge","\\/([0-9.]+)","900","surge",false,3}, /// Surge iOS 3 (approx)
-    {"Surge","","","surge",false,2}, /// any version of Surge as fallback
+    {"Surge","\\/([0-9.]+)","900","surge",false,4}, /// Surge iOS 3.x mapped to 4
+    {"Surge","","","surge",false,4}, /// any version of Surge as fallback
     {"Trojan-Qt5","","","trojan"},
     {"V2rayU","","","v2ray"},
     {"V2RayX","","","v2ray"}
@@ -137,12 +139,12 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
 {
     auto &argument = request.argument;
     int *status_code = &response.status_code;
-    /// type: 1 for Surge, 2 for Quantumult X, 3 for Clash domain rule-provider, 4 for Clash ipcidr rule-provider, 5 for Surge DOMAIN-SET, 6 for Clash classical ruleset
+    /// type: 1 for Surge, 2 for Quantumult X, 3 for Clash domain rule-provider, 4 for Clash ipcidr rule-provider, 5 for Surge DOMAIN-SET, 6 for Clash classical ruleset, 7 for Surge RULE-SET (non-domain only)
     std::string url = urlSafeBase64Decode(getUrlArg(argument, "url")), type = getUrlArg(argument, "type"), group = urlSafeBase64Decode(getUrlArg(argument, "group"));
     std::string output_content, dummy;
     int type_int = to_int(type, 0);
 
-    if(url.empty() || type.empty() || (type_int == 2 && group.empty()) || (type_int < 1 || type_int > 6))
+    if(url.empty() || type.empty() || (type_int == 2 && group.empty()) || (type_int < 1 || type_int > 7))
     {
         *status_code = 400;
         return "Invalid request!";
@@ -252,6 +254,13 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
             output_content += "  - ";
         default:
             break;
+        case 7:
+            // Non-domain only RULE-SET: skip DOMAIN, DOMAIN-SUFFIX, DOMAIN-KEYWORD
+            if(startsWith(strLine, "DOMAIN,") || startsWith(strLine, "DOMAIN-SUFFIX,") || startsWith(strLine, "DOMAIN-KEYWORD,"))
+                continue;
+            if(!std::any_of(SurgeRuleTypes.begin(), SurgeRuleTypes.end(), [&strLine](const std::string& type){return startsWith(strLine, type);}))
+                continue;
+            break;
         }
 
         lineSize = strLine.size();
@@ -290,6 +299,9 @@ std::string getRuleset(RESPONSE_CALLBACK_ARGS)
             break;
         }
     }
+    // For DOMAIN-SET (type=5) and RULE-SET non-domain (type=7), return comment if empty to avoid Surge compatibility issues with empty rule files
+    if(output_content.empty() && (type_int == 5 || type_int == 7))
+        output_content = "# no matching rules\n";
     return output_content;
 }
 
@@ -306,7 +318,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
 
     std::string argTarget = getUrlArg(argument, "target"), argSurgeVer = getUrlArg(argument, "ver");
     tribool argClashNewField = getUrlArg(argument, "new_name");
-    int intSurgeVer = !argSurgeVer.empty() ? to_int(argSurgeVer, 3) : 3;
+    int intSurgeVer = !argSurgeVer.empty() ? to_int(argSurgeVer, 5) : 5;
     if(argTarget == "auto")
         matchUserAgent(request.headers["User-Agent"], argTarget, argClashNewField, intSurgeVer);
 
@@ -334,6 +346,8 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     std::string argCustomGroups = urlSafeBase64Decode(getUrlArg(argument, "groups")), argCustomRulesets = urlSafeBase64Decode(getUrlArg(argument, "ruleset")), argExternalConfig = getUrlArg(argument, "config");
     std::string argDeviceID = getUrlArg(argument, "dev_id"), argFilename = getUrlArg(argument, "filename"), argUpdateInterval = getUrlArg(argument, "interval"), argUpdateStrict = getUrlArg(argument, "strict");
     std::string argRenames = getUrlArg(argument, "rename"), argFilterScript = getUrlArg(argument, "filter_script");
+    std::string argUserAgent = getUrlArg(argument, "ua");
+    std::string argAgeKey = getUrlArg(argument, "agekey");
 
     /// switches with default value
     tribool argUpload = getUrlArg(argument, "upload"), argEmoji = getUrlArg(argument, "emoji"), argAddEmoji = getUrlArg(argument, "add_emoji"), argRemoveEmoji = getUrlArg(argument, "remove_emoji");
@@ -341,7 +355,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     tribool argSort = getUrlArg(argument, "sort"), argUseSortScript = getUrlArg(argument, "sort_script");
     tribool argGenClashScript = getUrlArg(argument, "script"), argEnableInsert = getUrlArg(argument, "insert");
     tribool argSkipCertVerify = getUrlArg(argument, "scv"), argFilterDeprecated = getUrlArg(argument, "fdn"), argExpandRulesets = getUrlArg(argument, "expand"), argAppendUserinfo = getUrlArg(argument, "append_info");
-    tribool argPrependInsert = getUrlArg(argument, "prepend"), argGenClassicalRuleProvider = getUrlArg(argument, "classic"), argTLS13 = getUrlArg(argument, "tls13");
+    tribool argPrependInsert = getUrlArg(argument, "prepend"), argUseDomainSet = getUrlArg(argument, "classic"), argTLS13 = getUrlArg(argument, "tls13");
 
     std::string base_content, output_content;
     ProxyGroupConfigs lCustomProxyGroups = global.customProxyGroups;
@@ -426,7 +440,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     ext.filter_deprecated = argFilterDeprecated.get(global.filterDeprecated);
     ext.clash_new_field_name = argClashNewField.get(global.clashUseNewField);
     ext.clash_script = argGenClashScript.get();
-    ext.clash_classical_ruleset = argGenClassicalRuleProvider.get();
+    ext.use_domain_set = argUseDomainSet.get();
     if(!argExpandRulesets)
         ext.clash_new_field_name = true;
     else
@@ -534,7 +548,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     if (!argIncludeRemark.empty())
     {
         // Check if the delimiter ` is present
-        if (argIncludeRemark.find('`') != std::string::npos) 
+        if (argIncludeRemark.find('`') != std::string::npos)
         {
             // Split argIncludeRemark using ` as the delimiter
             string_array splitIncludeRemarks = split(argIncludeRemark, "`");
@@ -543,7 +557,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
             for (const auto& remark : splitIncludeRemarks)
              {
                 if (!remark.empty() && regValid(remark)) // Validate each split element using regValid
-                { 
+                {
                     tempValidRemarks.push_back(remark);
                 }
             }
@@ -569,7 +583,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
             for (const auto& remark : splitExcludeRemarks)
             {
                 if (!remark.empty() && regValid(remark)) // Validate each split element using regValid
-                { 
+                {
                     tempValidRemarks.push_back(remark);
                 }
             }
@@ -610,6 +624,8 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
     parse_set.sub_info = &subInfo;
     parse_set.authorized = authorized;
     parse_set.request_header = &request.headers;
+    parse_set.custom_user_agent = &argUserAgent;
+    parse_set.age_secret_key = &argAgeKey;
     parse_set.js_runtime = ext.js_runtime;
     parse_set.js_context = ext.js_context;
 
@@ -767,7 +783,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         {
             YAML::Node yamlnode;
             proxyToClash(nodes, yamlnode, dummy_group, argTarget == "clashr", ext);
-            output_content = YAML::Dump(yamlnode);
+            output_content = formatterShortId(YAML::Dump(yamlnode));
         }
         else
         {
@@ -818,7 +834,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
             *status_code = 400;
             return base_content;
         }
-        output_content = proxyToSurge(nodes, base_content, lRulesetContent, lCustomProxyGroups, -3, ext);
+        output_content = proxyToSurfboard(nodes, base_content, lRulesetContent, lCustomProxyGroups, ext);
         if(argUpload)
             uploadGist("surfboard", argUploadPath, output_content, true);
 
@@ -877,9 +893,15 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         break;
     case "mixed"_hash:
         writeLog(0, "Generate target: Standard Subscription", LOG_LEVEL_INFO);
-        output_content = proxyToSingle(nodes, 15, ext);
+        output_content = proxyToSingle(nodes, 15 | 4096, ext);
         if(argUpload)
             uploadGist("sub", argUploadPath, output_content, false);
+        break;
+    case "wireguard"_hash:
+        writeLog(0, "Generate target: WireGuard", LOG_LEVEL_INFO);
+        output_content = proxyToSingle(nodes, 4096, ext);
+        if(argUpload)
+            uploadGist("wireguard", argUploadPath, output_content, false);
         break;
     case "quan"_hash:
         writeLog(0, "Generate target: Quantumult", LOG_LEVEL_INFO);
@@ -1207,7 +1229,7 @@ std::string surgeConfToClash(RESPONSE_CALLBACK_ARGS)
 }
 
 // Merge multiple key-values based on delimiters
-static void merge_values(const string_multimap& source, 
+static void merge_values(const string_multimap& source,
                  const std::string& key,
                  std::string& merged,
                  char delimiter)
@@ -1224,7 +1246,7 @@ static void merge_values(const string_multimap& source,
 }
 
 // Update container
-static void update_container(string_multimap& container, 
+static void update_container(string_multimap& container,
                      const std::string& key,
                      const std::string& merged)
 {
@@ -1301,7 +1323,7 @@ std::string getProfile(RESPONSE_CALLBACK_ARGS)
             return "Forbidden";
         }
     }
-    
+
     // Handle url
     std::string all_urls;
     merge_values(contents, "url", all_urls, '|');
@@ -1325,7 +1347,7 @@ std::string getProfile(RESPONSE_CALLBACK_ARGS)
             ini.get_items("Profile", profile_items); // Get all key-value pairs in the [Profile] section
             size_t before_length = all_urls.length();
             merge_values(profile_items, "url", all_urls, '|');
-            if (all_urls.length() > before_length) 
+            if (all_urls.length() > before_length)
             {
                 writeLog(0, "Profile url from '" + name + "' added.", LOG_LEVEL_INFO);
             }
@@ -1334,7 +1356,7 @@ std::string getProfile(RESPONSE_CALLBACK_ARGS)
                 writeLog(0, "Profile '" + name + "' does not have url key. Skipping...", LOG_LEVEL_INFO);
             }
         }
-    } 
+    }
     // Update the url key-value pairs in contents uniformly
     update_container(contents, "url", all_urls);
 
