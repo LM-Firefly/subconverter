@@ -10,7 +10,7 @@
 
 /// rule type lists
 #define basic_types "DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD", "IP-CIDR", "SRC-IP-CIDR", "GEOIP", "MATCH", "FINAL"
-string_array ClashRuleTypes = {basic_types, "IP-CIDR6", "SRC-PORT", "DST-PORT", "PROCESS-NAME"};
+string_array ClashRuleTypes = {basic_types, "IP-CIDR6", "SRC-PORT", "DST-PORT", "PROCESS-NAME", "DOMAIN-REGEX", "DOMAIN-WILDCARD", "GEOSITE", "IP-SUFFIX", "IP-ASN", "SRC-GEOIP", "SRC-IP-ASN", "SRC-IP-SUFFIX", "IN-PORT", "IN-TYPE", "IN-USER", "IN-NAME", "PROCESS-PATH-REGEX", "PROCESS-PATH", "PROCESS-NAME-REGEX", "PROCESS-NAME-WILDCARD", "PROCESS-PATH-WILDCARD", "UID", "NETWORK", "DSCP", "SUB-RULE", "RULE-SET", "AND", "OR", "NOT"};
 string_array Surge2RuleTypes = {basic_types, "IP-CIDR6", "USER-AGENT", "URL-REGEX", "PROCESS-NAME", "IN-PORT", "DEST-PORT", "SRC-IP"};
 string_array SurgeRuleTypes = {basic_types, "IP-CIDR6", "USER-AGENT", "URL-REGEX", "AND", "OR", "NOT", "PROCESS-NAME", "IN-PORT", "DEST-PORT", "SRC-IP"};
 string_array QuanXRuleTypes = {basic_types, "USER-AGENT", "HOST", "HOST-SUFFIX", "HOST-KEYWORD"};
@@ -133,6 +133,7 @@ void rulesetToClash(YAML::Node &base_rule, std::vector<RulesetContent> &ruleset_
 
     if(!overwrite_original_rules && base_rule[field_name].IsDefined())
         rules = base_rule[field_name];
+//    const std::string rule_match_regex = "^(.*?,.*?)(,.*)(,.*)$";
 
     std::vector<std::string_view> temp(4);
     for(RulesetContent &x : ruleset_content_array)
@@ -152,6 +153,8 @@ void rulesetToClash(YAML::Node &base_rule, std::vector<RulesetContent> &ruleset_
             if(startsWith(strLine, "FINAL"))
                 strLine.replace(0, 5, "MATCH");
             strLine = transformRuleToCommon(temp, strLine, rule_group);
+//            if(!startsWith(strLine, "AND") && !startsWith(strLine, "OR") && !startsWith(strLine, "NOT") && count_least(strLine, ',', 3))
+//                strLine = regReplace(strLine, rule_match_regex, "$1$3$2");
             allRules.emplace_back(strLine);
             total_rules++;
             continue;
@@ -178,6 +181,8 @@ void rulesetToClash(YAML::Node &base_rule, std::vector<RulesetContent> &ruleset_
                 strLine = trimWhitespace(strLine);
             }
             strLine = transformRuleToCommon(temp, strLine, rule_group);
+//            if(!startsWith(strLine, "AND") && !startsWith(strLine, "OR") && !startsWith(strLine, "NOT") && count_least(strLine, ',', 3))
+//                strLine = regReplace(strLine, rule_match_regex, "$1$3$2");
             allRules.emplace_back(strLine);
         }
     }
@@ -205,6 +210,8 @@ std::string rulesetToClashStr(YAML::Node &base_rule, std::vector<RulesetContent>
     }
     base_rule.remove(field_name);
 
+//    const std::string rule_match_regex = "^(.*?,.*?)(,.*)(,.*)$";
+
     string_view_array temp(4);
     for(RulesetContent &x : ruleset_content_array)
     {
@@ -223,6 +230,8 @@ std::string rulesetToClashStr(YAML::Node &base_rule, std::vector<RulesetContent>
             if(startsWith(strLine, "FINAL"))
                 strLine.replace(0, 5, "MATCH");
             strLine = transformRuleToCommon(temp, strLine, rule_group);
+//            if(!startsWith(strLine, "AND") && !startsWith(strLine, "OR") && !startsWith(strLine, "NOT") && count_least(strLine, ',', 3))
+//                strLine = regReplace(strLine, rule_match_regex, "$1$3$2");
             output_content += "  - " + strLine + "\n";
             total_rules++;
             continue;
@@ -248,15 +257,33 @@ std::string rulesetToClashStr(YAML::Node &base_rule, std::vector<RulesetContent>
                 strLine.erase(strLine.find("//"));
                 strLine = trimWhitespace(strLine);
             }
-            strLine = transformRuleToCommon(temp, strLine, rule_group);
-            output_content += "  - " + strLine + "\n";
+            //AND & OR & NOT
+            if(startsWith(strLine, "AND") || startsWith(strLine, "OR") || startsWith(strLine, "NOT"))
+            {
+                output_content += "  - " + strLine + "," + rule_group + "\n";
+            }
+            //SUB-RULE & RULE-SET
+            else if(startsWith(strLine, "SUB-RULE") || startsWith(strLine, "RULE-SET"))
+            {
+                output_content += "  - " + strLine + "\n";
+            }
+            else
+            //OTHER
+            {
+                strLine = transformRuleToCommon(temp, strLine, rule_group);
+                output_content += "  - " + strLine + "\n";
+            }
+//            strLine = transformRuleToCommon(temp, strLine, rule_group);
+//            if(!startsWith(strLine, "AND") && !startsWith(strLine, "OR") && !startsWith(strLine, "NOT") && count_least(strLine, ',', 3))
+//                strLine = regReplace(strLine, rule_match_regex, "$1$3$2");
+//            output_content += "  - " + strLine + "\n";
             total_rules++;
         }
     }
     return output_content;
 }
 
-void rulesetToSurge(INIReader &base_rule, std::vector<RulesetContent> &ruleset_content_array, int surge_ver, bool overwrite_original_rules, const std::string &remote_path_prefix)
+void rulesetToSurge(INIReader &base_rule, std::vector<RulesetContent> &ruleset_content_array, int surge_ver, bool overwrite_original_rules, const std::string &remote_path_prefix, bool use_domain_set)
 {
     string_array allRules;
     std::string rule_group, rule_path, rule_path_typed, retrieved_rules, strLine;
@@ -335,7 +362,19 @@ void rulesetToSurge(INIReader &base_rule, std::vector<RulesetContent> &ruleset_c
             {
                 if(surge_ver > 2 && !remote_path_prefix.empty())
                 {
-                    strLine = "RULE-SET," + remote_path_prefix + "/getruleset?type=1&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                    if(use_domain_set)
+                    {
+                        // DOMAIN-SET for domain rules + RULE-SET for non-domain rules
+                        strLine = "DOMAIN-SET," + remote_path_prefix + "/getruleset?type=5&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                        if(x.update_interval)
+                            strLine += ",update-interval=" + std::to_string(x.update_interval);
+                        allRules.emplace_back(strLine);
+                        strLine = "RULE-SET," + remote_path_prefix + "/getruleset?type=7&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                    }
+                    else
+                    {
+                        strLine = "RULE-SET," + remote_path_prefix + "/getruleset?type=1&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                    }
                     if(x.update_interval)
                         strLine += ",update-interval=" + std::to_string(x.update_interval);
                     allRules.emplace_back(strLine);
@@ -362,12 +401,33 @@ void rulesetToSurge(INIReader &base_rule, std::vector<RulesetContent> &ruleset_c
                     if(x.rule_type != RULESET_SURGE)
                     {
                         if(!remote_path_prefix.empty())
-                            strLine = "RULE-SET," + remote_path_prefix + "/getruleset?type=1&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                        {
+                            if(use_domain_set)
+                            {
+                                strLine = "DOMAIN-SET," + remote_path_prefix + "/getruleset?type=5&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                                allRules.emplace_back(strLine);
+                                strLine = "RULE-SET," + remote_path_prefix + "/getruleset?type=7&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                            }
+                            else
+                                strLine = "RULE-SET," + remote_path_prefix + "/getruleset?type=1&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                        }
                         else
                             continue;
                     }
                     else
-                        strLine = "RULE-SET," + rule_path + "," + rule_group;
+                    {
+                        if(use_domain_set && !remote_path_prefix.empty())
+                        {
+                            // Redirect native RULE-SET through subconverter proxy for DOMAIN-SET splitting
+                            strLine = "DOMAIN-SET," + remote_path_prefix + "/getruleset?type=5&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                            if(x.update_interval)
+                                strLine += ",update-interval=" + std::to_string(x.update_interval);
+                            allRules.emplace_back(strLine);
+                            strLine = "RULE-SET," + remote_path_prefix + "/getruleset?type=7&url=" + urlSafeBase64Encode(rule_path_typed) + "," + rule_group;
+                        }
+                        else
+                            strLine = "RULE-SET," + rule_path + "," + rule_group;
+                    }
 
                     if(x.update_interval)
                         strLine += ",update-interval=" + std::to_string(x.update_interval);
