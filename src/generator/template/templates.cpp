@@ -307,7 +307,7 @@ std::string findFileName(const std::string &path)
     return path.substr(pos + 1, pos2 - pos - 1);
 }
 
-int renderClashScript(YAML::Node &base_rule, std::vector<RulesetContent> &ruleset_content_array, const std::string &remote_path_prefix, bool script, bool overwrite_original_rules, bool clash_classical_ruleset)
+int renderClashScript(YAML::Node &base_rule, std::vector<RulesetContent> &ruleset_content_array, const std::string &remote_path_prefix, bool script, bool overwrite_original_rules, bool use_domain_set)
 {
     nlohmann::json data;
     std::string match_group, geoips, retrieved_rules;
@@ -394,7 +394,7 @@ int renderClashScript(YAML::Node &base_rule, std::vector<RulesetContent> &rulese
                     urls[rule_name] = rule_path_typed;
                     rule_type[rule_name] = x.rule_type;
                     ruleset_interval[rule_name] = x.update_interval;
-                    if(clash_classical_ruleset)
+                    if(use_domain_set)
                     {
                         if(!script)
                             rules.emplace_back("RULE-SET," + rule_name + "," + rule_group);
