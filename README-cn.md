@@ -2,10 +2,10 @@
 
 在各种订阅格式之间进行转换的实用程序.
 
-[![Build Status](https://github.com/tindy2013/subconverter/actions/workflows/build.yml/badge.svg)](https://github.com/tindy2013/subconverter/actions)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/tags)
-[![GitHub release](https://img.shields.io/github/release/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/releases)
-[![GitHub license](https://img.shields.io/github/license/tindy2013/subconverter.svg)](https://github.com/tindy2013/subconverter/blob/master/LICENSE)
+[![Build Status](https://github.com/LM-Firefly/subconverter/actions/workflows/build.yml/badge.svg)](https://github.com/LM-Firefly/subconverter/actions)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/tindy2013/subconverter.svg)](https://github.com/LM-Firefly/subconverter/tags)
+[![GitHub release](https://img.shields.io/github/release/tindy2013/subconverter.svg)](https://github.com/LM-Firefly/subconverter/releases)
+[![GitHub license](https://img.shields.io/github/license/tindy2013/subconverter.svg)](https://github.com/LM-Firefly/subconverter/blob/master/LICENSE)
 
 * * *
 
@@ -24,8 +24,8 @@
 -   新增 [特别用法](#特别用法) 中 [规则转换](#规则转换) 的说明
 -   修改 [配置文件](#配置文件) 中的 `clash_proxy_group` 为 `proxy_group` ，并增加修改描述与示例
 -   修改 [配置文件](#配置文件) 中 `[ruleset]` 部分的 `surge_ruleset` 为 `ruleset ` ，并增加修改示例
--   修改 [外部配置](#外部配置) 中 `surge_ruleset` 为 `ruleset ` 
--   新增 [外部配置](#外部配置) 中 `add_emoji` 和 `remove_old_emoji` 
+-   修改 [外部配置](#外部配置) 中 `surge_ruleset` 为 `ruleset `
+-   新增 [外部配置](#外部配置) 中 `add_emoji` 和 `remove_old_emoji`
 -   修改 [外部配置](#外部配置) 中 `proxy_group` 和  `ruleset ` 的描述与示例
 -   调整 [简易用法](#简易用法) 与 [进阶用法](#进阶用法) 中的部分描述
 -   更换文档中失效的外部链接
@@ -130,11 +130,12 @@
 | SSD                    |   ✓   |    ✓   | ssd            |
 | SSR                    |   ✓   |    ✓   | ssr            |
 | Surfboard              |   ✓   |    ✓   | surfboard      |
-| Surge 2                |   ✓   |    ✓   | surge&ver=2    |
-| Surge 3                |   ✓   |    ✓   | surge&ver=3    |
 | Surge 4                |   ✓   |    ✓   | surge&ver=4    |
+| Surge 5                |   ✓   |    ✓   | surge&ver=5    |
 | Trojan                 |   ✓   |    ✓   | trojan         |
-| V2Ray                  |   ✓   |    ✓   | v2ray          |
+| V2Ray / VLESS          |   ✓   |    ✓   | v2ray          |
+| WireGuard              |   ✓   |    ✓   | wireguard      |
+| sing-box               |   ✓   |    ✓   | singbox        |
 | 类 TG 代理的 HTTP/Socks 链接 |   ✓   |    ×   | 仅支持 `&url=` 调用 |
 | Mixed                  |   ×   |    ✓   | mixed          |
 | Auto                   |   ×   |    ✓   | auto           |
@@ -148,9 +149,11 @@
     -   tg://http?server=1.2.3.4&port=233&user=user&pass=pass&remarks=Example&group=xxx
     -   <https://t.me/http?server=1.2.3.4&port=233&user=user&pass=pass&remarks=Example&group=xxx>
 
-3.  目标类型为 `mixed` 时，会输出所有支持的节点的单链接组成的普通订阅（Base64编码）
+3.  目标类型为`mixed`时，会将所有支持的单一代理链接（包括 WireGuard）输出为 Base64 编码的普通订阅。
 
-4.  目标类型为 `auto` 时，会根据请求的 `User-Agent` 自动判断输出的目标类型，匹配规则可参见 [此处](https://github.com/tindy2013/subconverter/blob/master/src/handler/interfaces.cpp#L121) （该链接有可能因为代码修改而不能准确指向相应的代码）
+4.  目标类型为 `auto` 时，会根据请求的 `User-Agent` 自动判断输出的目标类型，匹配规则可参见 [此处](https://github.com/LM-Firefly/subconverter/blob/master/src/handler/interfaces.cpp#L121) （该链接有可能因为代码修改而不能准确指向相应的代码）
+
+5.  可使用 `&ua=` 设置下载订阅时的自定义 User-Agent，使用 `&agekey=` 传入 X25519 秘钥以解密 age-encryption 加密的订阅
 
 * * *
 
@@ -168,7 +171,7 @@ http://127.0.0.1:25500/sub?target=%TARGET%&url=%URL%&config=%CONFIG%
 
 | 调用参数   | 必要性 | 示例                        | 解释                                                                                                                  |
 | ------ | :-: | :------------------------ | ------------------------------------------------------------------------------------------------------------------- |
-| target |  必要 | surge&ver=4               | 指想要生成的配置类型，详见上方 [支持类型](#支持类型) 中的参数                                                                                  |
+| target |  必要 | surge&ver=5               | 指想要生成的配置类型，详见上方 [支持类型](#支持类型) 中的参数                                                                                  |
 | url    |  必要 | https%3A%2F%2Fwww.xxx.com | 指机场所提供的订阅链接或代理节点的分享链接，需要经过 [URLEncode](https://www.urlencoder.org/) 处理                                              |
 | config |  可选 | https%3A%2F%2Fwww.xxx.com | 指 外部配置 的地址 (包含分组和规则部分)，需要经过 [URLEncode](https://www.urlencoder.org/) 处理，详见 [外部配置](#外部配置) ，当此参数不存在时使用 程序的主程序目录中的配置文件 |
 
@@ -307,7 +310,7 @@ http://127.0.0.1:25500/sub?target=%TARGET%&url=%URL%&emoji=%EMOJI%····
 
 | 调用参数          | 必要性 | 示例                        | 解释                                                                                                                                                                                                          |
 | ------------- | :-: | :------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| target        |  必要 | surge&ver=4               | 指想要生成的配置类型，详见上方 [支持类型](#支持类型) 中的参数                                                                                                                                                                          |
+| target        |  必要 | surge&ver=5               | 指想要生成的配置类型，详见上方 [支持类型](#支持类型) 中的参数                                                                                                                                                                          |
 | url           |  可选 | https%3A%2F%2Fwww.xxx.com | 指机场所提供的订阅链接或代理节点的分享链接，需要经过 [URLEncode](https://www.urlencoder.org/) 处理，**可选的前提是在 `default_url` 中进行指定**。也可以使用 data URI。可使用 `tag:xxx,https%3A%2F%2Fwww.xxx.com` 指定该订阅的所有节点归属于`xxx`分组，用于配置文件中的`!!GROUP=XXX` 匹配 |
 | group         |  可选 | MySS                      | 用于设置该订阅的组名，多用于 SSD/SSR                                                                                                                                                                                      |
 | upload_path   |  可选 | MySS.yaml                 | 用于将生成的订阅文件上传至 `Gist` 后的名称，需要经过 [URLEncode](https://www.urlencoder.org/) 处理                                                                                                                                  |
@@ -325,21 +328,23 @@ http://127.0.0.1:25500/sub?target=%TARGET%&url=%URL%&emoji=%EMOJI%····
 | add_emoji     |  可选 | true / false              | 用于在节点名称前加入 Emoji，默认为 true                                                                                                                                                                                   |
 | remove_emoji  |  可选 | true / false              | 用于设置是否删除节点名称中原有的 Emoji，默认为 true                                                                                                                                                                             |
 | append_type   |  可选 | true / false              | 用于在节点名称前插入节点类型，如 `[SS]`,`[SSR]`等                                                                                                                                                                               |
-| tfo           |  可选 | true / false              | 用于开启该订阅链接的 TCP Fast Open，默认为 false                                                                                                                                                                          |
-| udp           |  可选 | true / false              | 用于开启该订阅链接的 UDP，默认为 false                                                                                                                                                                                    |
+| tfo           |  可选 | true / false              | 用于开启该订阅链接的 TCP Fast Open，不指定时保留源节点的值（源节点无值时不导出该字段）                                                                                                                                                                          |
+| udp           |  可选 | true / false              | 用于开启该订阅链接的 UDP，不指定时保留源节点的值（源节点无值时不导出该字段）                                                                                                                                                                                    |
 | list          |  可选 | true / false              | 用于输出 Surge Node List 或者 Clash Proxy Provider 或者 Quantumult (X) 的节点订阅 或者 解码后的 SIP002                                                                                                                         |
 | sort          |  可选 | true / false              | 用于对输出的节点或策略组按节点名进行再次排序，默认为 false                                                                                                                                                                            |
 | sort_script   |  可选 | 详见下文 `sort_script`        | 用于自定义排序的js代码，需要经过 [URLEncode](https://www.urlencoder.org/) 处理，会覆盖配置文件里的设置。出于安全考虑，链接需包含正确的 `token` 参数，才会应用该设置                                                                                                |
 | script        |  可选 | true / false              | 用于生成Clash Script，默认为 false                                                                                                                                                                                  |
 | insert        |  可选 | true / false              | 用于设置是否将配置文件中的 `insert_url` 插入，默认为 true                                                                                                                                                                      |
-| scv           |  可选 | true / false              | 用于关闭 TLS 节点的证书检查，默认为 false                                                                                                                                                                                  |
+| scv           |  可选 | true / false              | 用于关闭 TLS 节点的证书检查，不指定时保留源节点的值（源节点无值时不导出该字段）                                                                                                                                                                                  |
 | fdn           |  可选 | true / false              | 用于过滤目标类型不支持的节点，默认为 true                                                                                                                                                                                     |
 | expand        |  可选 | true / false              | 用于在 API 端处理或转换 Surge, QuantumultX, Clash 的规则列表，即是否将规则全文置入订阅中，默认为 true，设置为 false 则不会将规则全文写进订阅                                                                                                                |
 | append_info   |  可选 | true / false              | 用于输出包含流量或到期信息的节点, 默认为 true，设置为 false 则取消输出                                                                                                                                                                  |
 | prepend       |  可选 | true / false              | 用于设置插入 `insert_url` 时是否插入到所有节点前面，默认为 true                                                                                                                                                                   |
-| classic       |  可选 | true / false              | 用于设置是否生成 Clash classical rule-provider                                                                                                                                                                      |
+| classic       |  可选 | true / false              | 用于设置是否生成 Clash classical rule-provider；对 Surge 启用 DOMAIN-SET 分流（域名规则使用 DOMAIN-SET，非域名规则使用 RULE-SET）                                                                                                      |
 | tls13         |  可选 | true / false              | 用于设置是否为节点增加tls1.3开启参数                                                                                                                                                                                       |
 | new_name      |  可选 | true / false              | 如果设置为 true，则将启用 Clash 的新组名称 (proxies, proxy-groups, rules)                                                                                                                                                  |
+| ua            |  可选 | 自定义字符串                | 用于设置下载订阅时使用的自定义 User-Agent，需要经过 [URLEncode](https://www.urlencoder.org/) 处理                                                                                                                            |
+| agekey        |  可选 | X25519 秘钥                | 用于传入 X25519 秘钥以解密 age-encryption 加密的订阅内容，非加密内容原样透传                                                                                                                                                  |
 
 举个例子：
 
@@ -373,6 +378,26 @@ http://127.0.0.1:25500/sub?target=surge&ver=4&tfo=true&udp=true&emoji=true&exclu
 http://127.0.0.1:25500/getprofile?name=%NAME%&token=%TOKEN%
 ```
 
+#### 布尔字段赋值逻辑说明
+
+`udp`、`tfo`（`tcpfastopen`）、`scv`（`skip-cert-verify`）、`xudp` 等布尔字段采用三态（`true` / `false` / 未定义）合并逻辑，赋值优先级从高到低为：
+
+1. **URL 参数**（如 `&udp=true`、`&tfo=false`）：显式指定时强制生效，覆盖源节点的值
+2. **源节点字段**（如 Clash YAML 中的 `udp: true`、`skip-cert-verify: false`）：URL 参数未指定时，保留源节点的值
+3. **全局默认值**（如 `pref` 中的 `udp_flag`、`tfo_flag`、`skip_cert_verify_flag`）：URL 参数和源节点均未指定时作为兜底
+
+不同情况下的输出行为：
+
+| URL 参数 | 源节点有值 | 输出结果 |
+|:---:|:---:|:---|
+| `udp=true` | true / false / 无 | 始终输出 `udp: true` |
+| `udp=false` | true / false / 无 | 始终输出 `udp: false` |
+| 未指定 | `udp: true` | 输出 `udp: true` |
+| 未指定 | `udp: false` | 输出 `udp: false` |
+| 未指定 | 无值 | **不输出该字段**（由目标客户端使用自身默认值） |
+
+> **注意**：当 URL 未指定且源节点无值时，导出的订阅中不会出现该字段（而非强制写入 `true` 或 `false`），这样可以避免覆盖目标客户端自身的默认配置。`xudp` 仅从源节点解析，不支持 URL 参数覆盖。
+
 #### 调用说明 (档案)
 
 | 调用参数  | 必要性 | 示例                        | 解释                                                                             |
@@ -382,7 +407,7 @@ http://127.0.0.1:25500/getprofile?name=%NAME%&token=%TOKEN%
 
 应当注意的是，此处文件内的参数**无需进行 URLEncode**，且此处的 `token` 与 `api_mode` 的状态无关。
 
-在程序目录内的任意位置创建一个新的文档文件（推荐保存至 `profiles` 文件夹内，以使整洁目录及便于后续维护），如 `formyairport.ini`，并仿照 [示例文档](https://github.com/tindy2013/subconverter/blob/master/base/profiles/example_profile.ini) 根据配置好的参数填写进去即可。
+在程序目录内的任意位置创建一个新的文档文件（推荐保存至 `profiles` 文件夹内，以使整洁目录及便于后续维护），如 `formyairport.ini`，并仿照 [示例文档](https://github.com/LM-Firefly/subconverter/blob/master/base/profiles/example_profile.ini) 根据配置好的参数填写进去即可。
 
 <details>
 <summary>举个例子：</summary>
@@ -408,7 +433,7 @@ exclude=(流量|官网)
 
 > 关于 subconverter 主程序目录中 `pref.ini` 文件的解释，其余格式的配置文件不再赘述，与之相仿。
 
-注：本部分内容以本程序中的 [`pref.example.ini`](https://github.com/tindy2013/subconverter/blob/master/base/pref.example.ini) 或 [`pref.example.yml`](https://github.com/tindy2013/subconverter/blob/master/base/pref.example.yml) 或 [`pref.example.toml`](https://github.com/tindy2013/subconverter/blob/master/base/pref.example.toml) 为准，本文档可能由于更新不及时，内容不适用于新版本。
+注：本部分内容以本程序中的 [`pref.example.ini`](https://github.com/LM-Firefly/subconverter/blob/master/base/pref.example.ini) 或 [`pref.example.yml`](https://github.com/LM-Firefly/subconverter/blob/master/base/pref.example.yml) 或 [`pref.example.toml`](https://github.com/LM-Firefly/subconverter/blob/master/base/pref.example.toml) 为准，本文档可能由于更新不及时，内容不适用于新版本。
 
 加载配置文件时会按照`pref.toml`、`pref.yml`、`pref.ini`的优先级顺序加载优先级高的配置文件
 
@@ -674,19 +699,19 @@ exclude=(流量|官网)
 
 1.  **udp_flag**
 
-    > 为节点打开 UDP 模式，设置为 true 时打开，默认为 false
+    > 为节点打开 UDP 模式，设置为 true 时打开。作为全局默认值，优先级低于 URL 参数 `udp` 和源节点自身的 `udp` 字段
 
     -   当不清楚机场的设置时**请勿调整此项**。
 
 2.  **tcp_fast_open_flag**
 
-    > 为节点打开 TFO (TCP Fast Open) 模式，设置为 true 时打开，默认为 false
+    > 为节点打开 TFO (TCP Fast Open) 模式，设置为 true 时打开。作为全局默认值，优先级低于 URL 参数 `tfo` 和源节点自身的 `tfo`/`fast-open` 字段
 
     -   当不清楚机场的设置时**请勿调整此项**。
 
 3.  **skip_cert_verify_flag**
 
-    > 关闭 TLS 节点的证书检查，设置为 true 时打开，默认为 false
+    > 关闭 TLS 节点的证书检查，设置为 true 时打开。作为全局默认值，优先级低于 URL 参数 `scv` 和源节点自身的 `skip-cert-verify` 字段
 
     -   **请勿随意将此设置修改为 true**
 
@@ -926,7 +951,7 @@ exclude=(流量|官网)
 > \[] 前缀后的文字将被当作引用策略组
 
 ```ini
-custom_proxy_group=Group_Name`url-test|fallback|load-balance`Rule_1`Rule_2`...`test_url`interval[,timeout][,tolerance]
+custom_proxy_group=Group_Name`url-test|fallback|load-balance`Rule_1`Rule_2`...`test_url`interval[,timeout][,tolerance][,strategy]
 custom_proxy_group=Group_Name`select`Rule_1`Rule_2`...
 # 格式示例
 custom_proxy_group=🍎 苹果服务`url-test`(美国|US)`http://www.gstatic.com/generate_204`300,5,100
@@ -935,6 +960,8 @@ custom_proxy_group=🇯🇵 日本延迟最低`url-test`(日|JP)`http://www.gsta
 # 表示创建一个叫 🇯🇵 日本延迟最低 的 url-test 策略组,并向其中添加名字含'日','JP'的节点，每隔300秒测试一次，测速超时为5s
 custom_proxy_group=负载均衡`load-balance`.*`http://www.gstatic.com/generate_204`300,,100
 # 表示创建一个叫 负载均衡 的 load-balance 策略组,并向其中添加所有的节点，每隔300秒测试一次，切换节点的延迟容差为100ms
+custom_proxy_group=粘性会话`load-balance`.*`http://www.gstatic.com/generate_204`300,,100,sticky-sessions
+# 表示创建一个叫 粘性会话 的 load-balance 策略组，使用 sticky-sessions 策略，同一客户端会尽量保持连接同一节点
 custom_proxy_group=🇯🇵 JP`select`沪日`日本`[]🇯🇵 日本延迟最低
 # 表示创建一个叫 🇯🇵 JP 的 select 策略组,并向其中**依次**添加名字含'沪日','日本'的节点，以及引用上述所创建的 🇯🇵 日本延迟最低 策略组
 custom_proxy_group=节点选择`select`(^(?!.*(美国|日本)).*)
@@ -1135,7 +1162,7 @@ custom_proxy_group=节点选择`select`(^(?!.*(美国|日本)).*)
 
 > 本部分用于 链接参数 **`&config=`**
 
-注：本部分内容以本程序中的 [`/config/example_external_config.ini`](https://github.com/tindy2013/subconverter/blob/master/base/config/example_external_config.ini) 或 [`/config/example_external_config.yml`](https://github.com/tindy2013/subconverter/blob/master/base/config/example_external_config.yml) 或 [`/config/example_external_config.toml`](https://github.com/tindy2013/subconverter/blob/master/base/config/example_external_config.toml) 为准，本文档可能由于更新不及时，内容不适用于新版本。
+注：本部分内容以本程序中的 [`/config/example_external_config.ini`](https://github.com/LM-Firefly/subconverter/blob/master/base/config/example_external_config.ini) 或 [`/config/example_external_config.yml`](https://github.com/LM-Firefly/subconverter/blob/master/base/config/example_external_config.yml) 或 [`/config/example_external_config.toml`](https://github.com/LM-Firefly/subconverter/blob/master/base/config/example_external_config.toml) 为准，本文档可能由于更新不及时，内容不适用于新版本。
 
 将文件按照以下格式写好，上传至 Github Gist 或者 其他**可访问**网络位置
 经过 [URLEncode](https://www.urlencoder.org/) 处理后，添加至 `&config=` 即可调用
@@ -1367,7 +1394,7 @@ http://127.0.0.1:25500/render?path=xxx&额外的调试或控制参数
 
 > 启动程序后，在本地生成对应的配置文件文本
 
-在程序目录内的 [generate.ini](https://github.com/tindy2013/subconverter/blob/master/base/generate.ini) 中设定文件块(`[xxx]`)，生成的文件名(path=xxx)以及其所需要包含的参数，例如：
+在程序目录内的 [generate.ini](https://github.com/LM-Firefly/subconverter/blob/master/base/generate.ini) 中设定文件块(`[xxx]`)，生成的文件名(path=xxx)以及其所需要包含的参数，例如：
 
 ```ini
 [test]
@@ -1389,7 +1416,7 @@ profile=profiles/example_profile.ini
 
 > 自动上传 gist ，可以用于 Clash For Android / Surge 等进行远程订阅
 
-在程序目录内的 [gistconf.ini](https://github.com/tindy2013/subconverter/blob/master/base/gistconf.ini) 中添加 `Personal Access Token`（[在此创建](https://github.com/settings/tokens/new?scopes=gist&description=Subconverter)）例如：
+在程序目录内的 [gistconf.ini](https://github.com/LM-Firefly/subconverter/blob/master/base/gistconf.ini) 中添加 `Personal Access Token`（[在此创建](https://github.com/settings/tokens/new?scopes=gist&description=Subconverter)）例如：
 
 ```ini
 [common]
@@ -1438,7 +1465,7 @@ http://127.0.0.1:25500/getruleset?type=%TYPE%&url=%URL%&group=%GROUP%
 
 | 调用参数  |    必要性    | 示例      | 解释                                                                                                                                                       |
 | ----- | :-------: | :------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type  |     必要    | 6       | 指想要生成的规则类型，用数字表示：1为Surge，2 为 Quantumult X，3 为 Clash domain rule-provider，4 为 Clash ipcidr rule-provider，5 为 Surge DOMAIN-SET，6 为 Clash classical ruleset |
+| type  |     必要    | 6       | 指想要生成的规则类型，用数字表示：1为Surge，2 为 Quantumult X，3 为 Clash domain rule-provider，4 为 Clash ipcidr rule-provider，5 为 Surge DOMAIN-SET，6 为 Clash classical ruleset，7 为 Surge RULE-SET（仅非域名规则） |
 | url   |     必要    |         | 指待转换的规则链接，需要经过 [Base64](https://base64.us/) 处理                                                                                                           |
 | group | type=2时必选 | mygroup | 规则对应的策略组名，生成Quantumult X类型（type=2）时必须提供                                                                                                                  |
 
