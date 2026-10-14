@@ -189,6 +189,10 @@ DOMAIN-SUFFIX,pstatp.com
 DOMAIN-SUFFIX,zijiecdn.com
 DOMAIN-SUFFIX,zijiecdn.net
 DOMAIN-SUFFIX,zjcdn.com
+## >> CapCut
+DOMAIN-SUFFIX,capcut.com
+DOMAIN-SUFFIX,capcutapi.com
+DOMAIN-SUFFIX,capcutstatic.com
 ## >> TikTok
 USER-AGENT,TikTok*
 PROCESS-NAME,com.zhiliaoapp.musically
@@ -386,20 +390,46 @@ DOMAIN-SUFFIX,larksuite.com
 DOMAIN-SUFFIX,larksuitecdn.com
 ## >> 脸萌Faceu
 DOMAIN-SUFFIX,2333333333333.com
+DOMAIN-SUFFIX,blkcan.cn
+DOMAIN-SUFFIX,blkcan.com
 DOMAIN-SUFFIX,bqtalk.com
+DOMAIN-SUFFIX,dreamina.cn
+DOMAIN-SUFFIX,editorjianying.com
+DOMAIN-SUFFIX,editorjianyingk.com
 DOMAIN-SUFFIX,faceu.com
 DOMAIN-SUFFIX,faceu.com.cn
 DOMAIN-SUFFIX,faceu.mobi
 DOMAIN-SUFFIX,faceu.net
+DOMAIN-SUFFIX,heiguantou.cn
+DOMAIN-SUFFIX,hey-can.cn
+DOMAIN-SUFFIX,hey-can.com
+DOMAIN-SUFFIX,hey-creator.cn
+DOMAIN-SUFFIX,hey-creator.com
 DOMAIN-SUFFIX,heycan.com
 # >> qmoji
 DOMAIN-SUFFIX,qmoji.mobi
 DOMAIN-SUFFIX,qmoji.net
+# >> 剪映
+DOMAIN-SUFFIX,capcut.cn
+DOMAIN-SUFFIX,jianying.com
+DOMAIN-SUFFIX,jianyingmicro.com
+DOMAIN-SUFFIX,jimeng.cn
+DOMAIN-SUFFIX,jimeng.com
+DOMAIN-SUFFIX,jimeng.com.cn
+DOMAIN-SUFFIX,jimengai.com.cn
+DOMAIN-SUFFIX,retouchpics.com
+DOMAIN-SUFFIX,vlabimg.com
+DOMAIN-SUFFIX,vlabstatic.com
+DOMAIN-SUFFIX,vlabvod.com
+DOMAIN-SUFFIX,xingtupics.com
 # >> 轻颜相机
+DOMAIN-SUFFIX,ulikeapi.com
 DOMAIN-SUFFIX,ulikecam.cn
 DOMAIN-SUFFIX,ulikecam.com
 DOMAIN-SUFFIX,ulikecam.mobi
 DOMAIN-SUFFIX,ulikecam.net
+DOMAIN-SUFFIX,ulikepic.com
+DOMAIN-SUFFIX,ulikestatic.com
 ## >> 皮皮虾
 DOMAIN-SUFFIX,pipix.com
 ## >> 曲奇剪辑
