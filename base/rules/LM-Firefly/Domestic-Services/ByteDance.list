@@ -193,6 +193,7 @@ DOMAIN-SUFFIX,zjcdn.com
 DOMAIN-SUFFIX,capcut.com
 DOMAIN-SUFFIX,capcutapi.com
 DOMAIN-SUFFIX,capcutapi.us
+DOMAIN-SUFFIX,capcutcdn-us.com
 DOMAIN-SUFFIX,capcutstatic.com
 ## >> TikTok
 USER-AGENT,TikTok*
