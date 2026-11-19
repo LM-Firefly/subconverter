@@ -58,7 +58,7 @@ replace = "$1 $2"
 # replace = "$2"
 
 [[node_pref.rename_node]]
-match = "((?:CN\\d•|HK🔛|US🔛|🔛|^)(?:⓪|❶|❷|❸|❻)(?:TJ\\.|gR\\.|V2\\.|H2\\.|SS\\.)?)"
+match = "((?:CN\\d•|HK🔛|US🔛|🔛|✖︎被墙✖︎|^)(?:⓪|❶|❷|❸|❻)(?:TJ\\.|gR\\.|V2\\.|H2\\.|SS\\.)?)"
 replace = ""
 
 [[node_pref.rename_node]]
