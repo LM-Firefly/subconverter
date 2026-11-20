@@ -11,6 +11,23 @@
 
 ## 新增内容
 
+2026/11/20
+
+-   新增 Quantumult X（`quanx`）对 Hysteria2 节点的导出
+-   新增 Loon（`loon`）对 Snell v4/v5 与 VLESS/VMess/Trojan XHTTP 传输的支持，导出参数全面对齐 Loon 官方文档（`sni`、`tls-profile`、ShadowTLS 系列参数、`server-ports`、`hop-interval`、`block-quic`、`ip-mode`、`server-dns`、AnyTLS REALITY 参数、WireGuard `peers`、Tailscale 等）
+-   完善 Surge（`surge`）导出：VMess/Trojan/VLESS 支持 HTTPUpgrade 传输（`ws-http-upgrade`，iOS 6.0.0+ / Mac 6.12.0+，`ver<6` 时跳过）
+-   完善节点解析：`type=httpupgrade` / `net=httpupgrade` 分享链接、`hysteria2://` 的 `ports`/`mport` 端口跳跃、Loon 行文法的 `server-ports`/`hop-interval`/`ws-http-upgrade` 等参数
+-   修复：订阅解析空行崩溃、clash Trojan 的 `sni` 取值、sing-box Hysteria2 `server_ports` 格式、clash `v2ray-http-upgrade-fast-open` 误输出
+
+2026/11/14
+
+-   新增 VLESS、TUIC、WireGuard（含 AmneziaWG）、Masque、Mieru、Sudoku、TrustTunnel、OpenVPN、Tailscale、ShadowQuic、ZeroTier、SSH、AnyTLS、EasyTier、GostRelay 等协议支持（Clash / sing-box / Surge / Loon / Surfboard 导出，自定义与标准 URI、Sing-box JSON 解析）
+-   Surge 默认按 `ver=6`（Surge 6）导出，Snell 支持 v1–v6；新增 Surfboard 独立导出与 WireGuard 单链导出（`target=wireguard`），`mixed` 输出包含 WireGuard
+-   统一 Loon/Surge 行文法解析，完善 `socks://`、`hysteria2://` 等分享链接解析
+-   规则转换扩展：DOMAIN-REGEX、GEOSITE、RULE-SET、AND/OR/NOT 等 Clash 规则类型；负载均衡新增 sticky-sessions 策略
+-   订阅增强：`&ua=` 自定义 User-Agent、`&agekey=` 解密 age-encryption 加密订阅
+-   `udp` / `tfo` / `skip-cert-verify` 改为三态合并（URL 参数 > 源节点 > 全局默认），未指定时省略输出以保留客户端默认值
+
 2021/10/1
 
 -   新增 [配置文件](#配置文件) 中 `[advanced]` 部分的说明
@@ -157,6 +174,8 @@
 5.  可使用 `&ua=` 设置下载订阅时的自定义 User-Agent，使用 `&agekey=` 传入 X25519 秘钥以解密 age-encryption 加密的订阅
 
 6.  `target=surge` 默认按 `ver=6`（Surge 6）导出，支持 VLESS 节点（对应 Surge iOS 6.0.0+ / Mac 6.12.0+）；指定 `ver=4`、`ver=5` 时 VLESS 节点会被跳过
+
+7.  `target=surge` 的 HTTPUpgrade 传输（`ws-http-upgrade`）需要 iOS 6.0.0+ / Mac 6.12.0+，`ver=4`、`ver=5` 时此类节点会被跳过。Surge 的 Trojan 不支持 XHTTP 传输（XHTTP 为 VLESS 专属），XHTTP 型 Trojan 节点转 Surge 时按普通 TLS 输出
 
 * * *
 
@@ -314,7 +333,7 @@ http://127.0.0.1:25500/sub?target=%TARGET%&url=%URL%&emoji=%EMOJI%····
 | 调用参数          | 必要性 | 示例                        | 解释                                                                                                                                                                                                          |
 | ------------- | :-: | :------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | target        |  必要 | surge&ver=6               | 指想要生成的配置类型，详见上方 [支持类型](#支持类型) 中的参数                                                                                                                                                                          |
-| ver           |  可选 | 6                         | 用于指定 `target=surge` 的 Surge 配置版本（`4`/`5`/`6`），默认为 6；VLESS 节点的导出需要 `6`（对应 Surge iOS 6.0.0+ / Mac 6.12.0+），低于 6 时 VLESS 节点会被跳过                                                                                                                    |
+| ver           |  可选 | 6                         | 用于指定 `target=surge` 的 Surge 配置版本（`4`/`5`/`6`），默认为 6；VLESS 节点与 HTTPUpgrade 传输（`ws-http-upgrade`）的导出需要 `6`（对应 Surge iOS 6.0.0+ / Mac 6.12.0+），低于 6 时这些节点会被跳过                                                                        |
 | url           |  可选 | https%3A%2F%2Fwww.xxx.com | 指机场所提供的订阅链接或代理节点的分享链接，需要经过 [URLEncode](https://www.urlencoder.org/) 处理，**可选的前提是在 `default_url` 中进行指定**。也可以使用 data URI。可使用 `tag:xxx,https%3A%2F%2Fwww.xxx.com` 指定该订阅的所有节点归属于`xxx`分组，用于配置文件中的`!!GROUP=XXX` 匹配 |
 | group         |  可选 | MySS                      | 用于设置该订阅的组名，多用于 SSD/SSR                                                                                                                                                                                      |
 | upload_path   |  可选 | MySS.yaml                 | 用于将生成的订阅文件上传至 `Gist` 后的名称，需要经过 [URLEncode](https://www.urlencoder.org/) 处理                                                                                                                                  |
