@@ -437,6 +437,12 @@ struct Proxy
     tribool TailscaleAcceptRoutes;
     String TailscaleExitNode;
     tribool TailscaleExitNodeAllowLANAccess;
+    tribool TailscaleAcceptDNS;
+    tribool TailscaleMagicDNS;
+    tribool TailscaleAllowInbound;
+    tribool TailscaleAdvertiseExitNode;
+    tribool TailscaleExitFakeIP;
+    String TailscalePathMode;
 
     // SSH-specific
     String SSHPrivateKey;
