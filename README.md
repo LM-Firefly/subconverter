@@ -63,6 +63,8 @@ Notice:
 
 6. `target=surge` exports with `ver=6` (Surge 6) by default and supports VLESS nodes (Surge iOS 6.0.0+ / Mac 6.12.0+); VLESS nodes are skipped when `ver=4` or `ver=5` is specified.
 
+7. The HTTPUpgrade transport (`ws-http-upgrade`) on `target=surge` requires iOS 6.0.0+ / Mac 6.12.0+; such nodes are skipped when `ver=4` or `ver=5`. Surge's Trojan has no XHTTP transport (XHTTP is VLESS-only), so XHTTP-based Trojan nodes are exported as plain TLS Trojan.
+
 
 ---
 

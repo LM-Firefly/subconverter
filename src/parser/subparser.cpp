@@ -828,6 +828,7 @@ void explodeVmess(std::string vmess, Proxy &node)
     std::string version, ps, add, port, type, id, aid, net, path, host, tls, sni;
     std::string fingerprint, client_fingerprint, alpn, ip_version, packet_encoding;
     std::string ech_config, skip_cert_verify_str, udp_str, tfo_str, authenticated_length_str, global_padding_str, ech_enable_str;
+    tribool v2ray_http_upgrade;
     Document jsondata;
     std::vector<std::string> vArray;
 
@@ -868,6 +869,11 @@ void explodeVmess(std::string vmess, Proxy &node)
     GetMember(jsondata, "id", id);
     GetMember(jsondata, "aid", aid);
     GetMember(jsondata, "net", net);
+    if(net == "httpupgrade") // v2rayN encodes HTTPUpgrade in "net"
+    {
+        net = "ws";
+        v2ray_http_upgrade = tribool(true);
+    }
     GetMember(jsondata, "tls", tls);
 
     GetMember(jsondata, "host", host);
@@ -948,7 +954,7 @@ void explodeVmess(std::string vmess, Proxy &node)
     if(!ech_config.empty())
         node.EchConfig = ech_config;
 
-    vmessConstruct(node, V2RAY_DEFAULT_GROUP, ps, add, port, type, id, aid, net, "auto", path, host, "", tls, sni, alpnList, udp, tfo, scv, tribool(), "", fingerprint, client_fingerprint);
+    vmessConstruct(node, V2RAY_DEFAULT_GROUP, ps, add, port, type, id, aid, net, "auto", path, host, "", tls, sni, alpnList, udp, tfo, scv, tribool(), "", fingerprint, client_fingerprint, v2ray_http_upgrade);
 }
 
 void explodeVmessConf(std::string content, std::vector<Proxy> &nodes)
@@ -1554,7 +1560,7 @@ void explodeHTTPSub(std::string link, Proxy &node)
 void explodeTrojan(std::string trojan, Proxy &node)
 {
     std::string server, port, psk, addition, group, remark, host, path, network, fp, sni;
-    tribool udp, tfo, scv;
+    tribool udp, tfo, scv, v2ray_http_upgrade;
     if (startsWith(trojan, "trojan://"))
         trojan.erase(0, 9);
     if (startsWith(trojan, "trojan-go://"))
@@ -1602,6 +1608,14 @@ void explodeTrojan(std::string trojan, Proxy &node)
             path = urlDecode(path);
         network = "ws";
     }
+    else if(getUrlArg(addition, "type") == "httpupgrade")
+    {
+        path = getUrlArg(addition, "path");
+        if(path.substr(0, 3) == "%2F")
+            path = urlDecode(path);
+        network = "ws";
+        v2ray_http_upgrade = tribool(true);
+    }
     else if(getUrlArg(addition, "type") == "grpc")
     {
         path = getUrlArg(addition, "serviceName");
@@ -1641,7 +1655,7 @@ void explodeTrojan(std::string trojan, Proxy &node)
             alpnList.push_back(value);
     }
 
-    trojanConstruct(node, group, remark, server, port, psk, network, host, path, fp, sni, alpnList, true, udp, tfo, scv);
+    trojanConstruct(node, group, remark, server, port, psk, network, host, path, fp, sni, alpnList, true, udp, tfo, scv, tribool(), "", v2ray_http_upgrade);
 }
 
 void explodeWireguard(std::string wg, Proxy &node)
@@ -4430,6 +4444,7 @@ void explodeStdVMess(std::string vmess, Proxy &node)
     std::string add, port, type, id, aid, net, path, host, tls, remarks;
     std::string fingerprint, client_fingerprint, sni, alpn, skip_cert_verify, udp_str, tfo_str, ip_version;
     std::string addition;
+    tribool v2ray_http_upgrade;
     vmess = vmess.substr(8);
     string_size pos;
     pos = vmess.rfind('#');
@@ -4449,8 +4464,14 @@ void explodeStdVMess(std::string vmess, Proxy &node)
         break;
     case "http"_hash:
     case "ws"_hash:
+    case "httpupgrade"_hash:
         host = getUrlArg(addition, "host");
         path = getUrlArg(addition, "path");
+        if(net == "httpupgrade")
+        {
+            net = "ws";
+            v2ray_http_upgrade = tribool(true);
+        }
         break;
     case "quic"_hash:
         type = getUrlArg(addition, "security");
@@ -4491,7 +4512,7 @@ void explodeStdVMess(std::string vmess, Proxy &node)
     if(!ip_version.empty())
         node.IPVersion = ip_version;
 
-    vmessConstruct(node, V2RAY_DEFAULT_GROUP, remarks, add, port, type, id, aid, net, "auto", path, host, "", tls, sni, alpnList, udp, tfo, scv, tribool(), "", fingerprint, client_fingerprint);
+    vmessConstruct(node, V2RAY_DEFAULT_GROUP, remarks, add, port, type, id, aid, net, "auto", path, host, "", tls, sni, alpnList, udp, tfo, scv, tribool(), "", fingerprint, client_fingerprint, v2ray_http_upgrade);
 }
 
 void explodeShadowrocket(std::string rocket, Proxy &node)
@@ -4854,6 +4875,9 @@ void explodeStdHysteria2(std::string hysteria2, Proxy &node)
             return false;
         if(!parse_port_spec(port_spec, primary_port))
             return false;
+        // a plain single port in the authority is just the main port, not a hopping spec
+        if(regMatch(port_spec, R"(^\d+$)"))
+            port_spec.clear();
         return true;
     };
     if(!parse_authority(hysteria2, add, port, ports))
@@ -5561,6 +5585,7 @@ void explodeStdVLESS(std::string vless, Proxy &node)
         {
             case "tcp"_hash:
             case "ws"_hash:
+            case "httpupgrade"_hash:
                 type = getUrlArg(addition, "headerType");
                 path = urlDecode(getUrlArg(addition, "path"));
                 host = urlDecode(getUrlArg(addition, "host"));
@@ -5575,6 +5600,12 @@ void explodeStdVLESS(std::string vless, Proxy &node)
                 {
                     node.V2rayHttpUpgradeFastOpen = tribool(temp_val);
                     v2ray_http_upgrade_fast_open = node.V2rayHttpUpgradeFastOpen;
+                }
+                if(net == "httpupgrade") // v2rayN/sing-box share links: type=httpupgrade
+                {
+                    net = "ws";
+                    node.V2rayHttpUpgrade = tribool(true);
+                    v2ray_http_upgrade = node.V2rayHttpUpgrade;
                 }
                 break;
             case "h2"_hash:
@@ -6101,6 +6132,193 @@ static bool isSurgeCredentialField(const std::string &field)
     return startsWith(value, "username=") || startsWith(value, "password=");
 }
 
+// Apply one xhttp option key to the node; accepts both the surge and the loon spellings.
+// xhttp-mode/path/host stay with the caller since they feed the construct parameters.
+// Host headers update the caller's host when it is not set explicitly.
+static bool applyXhttpExtraOption(const std::string &key, const std::string &value, Proxy &node, std::string &host)
+{
+    switch(hash_(key))
+    {
+    case "xhttp-padding-bytes"_hash:
+        node.XHTTPXPaddingBytes = value;
+        return true;
+    case "xhttp-padding-obfs"_hash:
+    case "xhttp-padding-obfs-mode"_hash:
+        node.XHTTPXPaddingObfsMode = tribool(value);
+        return true;
+    case "xhttp-padding-key"_hash:
+        node.XHTTPXPaddingKey = value;
+        return true;
+    case "xhttp-padding-header"_hash:
+        node.XHTTPXPaddingHeader = value;
+        return true;
+    case "xhttp-padding-placement"_hash:
+        node.XHTTPXPaddingPlacement = value;
+        return true;
+    case "xhttp-padding-method"_hash:
+        node.XHTTPXPaddingMethod = value;
+        return true;
+    case "xhttp-uplink-method"_hash:
+        node.XHTTPUplinkHTTPMethod = value;
+        return true;
+    case "xhttp-min-posts-interval"_hash:
+    case "xhttp-min-post-interval-ms"_hash:
+        node.XHTTPScMinPostsIntervalMs = value;
+        return true;
+    case "xhttp-max-each-post-bytes"_hash:
+    case "xhttp-max-post-bytes"_hash:
+        node.XHTTPScMaxEachPostBytes = value;
+        return true;
+    case "xhttp-uplink-data-placement"_hash:
+        node.XHTTPUplinkDataPlacement = value;
+        return true;
+    case "xhttp-uplink-data-key"_hash:
+        node.XHTTPUplinkDataKey = value;
+        return true;
+    case "xhttp-uplink-chunk-size"_hash:
+        node.XHTTPUplinkChunkSize = value;
+        return true;
+    case "xhttp-no-grpc-header"_hash:
+        node.XHTTPNoGRPCHeader = tribool(value);
+        return true;
+    case "xhttp-session-placement"_hash:
+    case "xhttp-session-id-placement"_hash:
+        node.XHTTPSessionPlacement = value;
+        return true;
+    case "xhttp-session-key"_hash:
+    case "xhttp-session-id-key"_hash:
+        node.XHTTPSessionKey = value;
+        return true;
+    case "xhttp-session-table"_hash:
+    case "xhttp-session-id-table"_hash:
+        node.XHTTPSessionTable = value;
+        return true;
+    case "xhttp-session-length"_hash:
+    case "xhttp-session-id-length"_hash:
+        node.XHTTPSessionLength = value;
+        return true;
+    case "xhttp-seq-placement"_hash:
+        node.XHTTPSeqPlacement = value;
+        return true;
+    case "xhttp-seq-key"_hash:
+        node.XHTTPSeqKey = value;
+        return true;
+    case "xhttp-xmux-max-concurrency"_hash:
+        node.XHTTPReuseMaxConcurrency = value;
+        return true;
+    case "xhttp-xmux-max-connections"_hash:
+        node.XHTTPReuseMaxConnections = value;
+        return true;
+    case "xhttp-xmux-max-reuse-times"_hash:
+        node.XHTTPReuseCMaxReuseTimes = value;
+        return true;
+    case "xhttp-xmux-max-request-times"_hash:
+        node.XHTTPReuseHMaxRequestTimes = value;
+        return true;
+    case "xhttp-xmux-max-reusable-secs"_hash:
+        node.XHTTPReuseHMaxReusableSecs = value;
+        return true;
+    case "xhttp-xmux-keep-alive"_hash:
+        node.XHTTPReuseHKeepAlivePeriod = to_int(value);
+        return true;
+    case "xhttp-headers"_hash: // "Name:Value|Name:Value"
+    case "xhttp-header"_hash: // loon: "Name: Value", repeatable
+    {
+        for(const auto &item : (key == "xhttp-header" ? std::vector<std::string>{value} : split(value, "|")))
+        {
+            const std::string entry = trim(item);
+            const auto pos = entry.find(':');
+            if(pos == std::string::npos)
+                continue;
+            const std::string name = trim(entry.substr(0, pos)), header_value = trim(entry.substr(pos + 1));
+            if(name.empty())
+                continue;
+            if(toLower(name) == "host")
+            {
+                if(host.empty())
+                    host = header_value;
+                continue;
+            }
+            if(!node.XHTTPHeaders.empty())
+                node.XHTTPHeaders += ";";
+            node.XHTTPHeaders += urlEncode(name) + "=" + urlEncode(header_value);
+        }
+        return true;
+    }
+    default:
+        return false;
+    }
+}
+
+// Loon generic parameter table (server-dns/ip-mode/block-quic/tls-profile/...) shared by all protocols.
+// Applied after the per-type construct so the values are not overwritten by construct parameters.
+static void applyLoonExtraOptions(Proxy &node, const std::vector<std::string> &configs)
+{
+    for(const auto &item : configs)
+    {
+        const auto vArray = splitKeyValue(trim(item), "=");
+        if(vArray.size() != 2)
+            continue;
+        const std::string key = toLower(trim(vArray[0]));
+        const std::string value = trimQuote(trim(vArray[1]));
+        switch(hash_(key))
+        {
+        case "block-quic"_hash:
+            node.AnyTLSBlockQUIC = value;
+            break;
+        case "ip-mode"_hash:
+            node.IPVersion = value;
+            break;
+        case "server-dns"_hash:
+            // WireGuard's DnsServers hold tunnel DNS (dns=/dnsv6=); the Snell case already collected the value
+            if(!node.DnsServers.empty() || node.Type == ProxyType::WireGuard)
+                break;
+            for(const auto &y : split(value, ","))
+            {
+                const std::string trimmed = trim(y);
+                if(!trimmed.empty())
+                    node.DnsServers.emplace_back(trimmed);
+            }
+            break;
+        case "tls-profile"_hash:
+            node.ClientFingerprint = value;
+            break;
+        case "always-use-connect"_hash:
+            node.AlwaysUseConnect = value;
+            break;
+        case "udp-over-tcp"_hash:
+            node.UDPoverTCP = value;
+            break;
+        case "shadow-tls-password"_hash:
+            node.ObfsPassword = value;
+            break;
+        case "shadow-tls-version"_hash:
+            node.ObfsVersion = to_int(value);
+            break;
+        case "shadow-tls-sni"_hash:
+            node.Host = value;
+            break;
+        case "udp-port"_hash:
+            node.UDPPort = to_int(value);
+            break;
+        case "max-stream-count"_hash:
+            node.MaxStreams = to_int(value);
+            break;
+        case "idle-session-timeout"_hash:
+            node.IdleSessionTimeout = to_int(value);
+            break;
+        case "public-key"_hash: // anytls/vmess realty-vision keys; per-type cases may store the same values earlier
+            node.PublicKey = value;
+            break;
+        case "short-id"_hash:
+            node.ShortID = value;
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 // Parse "name = type, server, port, ..." profiles in either the Surge or the Loon dialect:
 // Surge writes the credential as username=/password=, Loon puts a bare credential in that slot (and a credential may contain '='),
 // while the parameter vocabularies of the two overlap, so every type below accepts both spellings. QX-style lines ride in the default case.
@@ -6147,7 +6365,7 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
         std::string itemName, itemVal, config;
         std::vector<std::string> configs, vArray, headers, header;
         std::vector<std::string> alpn_list;
-        tribool udp, tfo, scv, tls13, reuse;
+        tribool udp, tfo, scv, tls13, reuse, v2ray_http_upgrade;
         std::string underlying_proxy, clientFingerprint;
         size_t option_start = 3;
         Proxy node;
@@ -6157,9 +6375,14 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
         */
         regGetMatch(x.second, proxystr, 3, 0, &remarks, &config);
         configs = splitLoonConfig(config);
-        if(configs.size() < 3)
+        if(configs.empty())
             continue;
-        switch(hash_(configs[0]))
+        // loon writes type names such as "VMess"/"Snell", surge uses lowercase
+        const std::string line_type = toLower(trim(configs[0]));
+        // tailscale lines carry options only ("tailscale,hostname=..."), all other types need server/port
+        if(configs.size() < 3 && !(configs.size() == 2 && line_type == "tailscale"))
+            continue;
+        switch(hash_(line_type))
         {
         case "direct"_hash:
         case "reject"_hash:
@@ -6368,7 +6591,7 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             if(port == "0")
                 continue;
             {
-                bool over_tls = hash_(configs[0]) == "socks5-tls"_hash;
+                bool over_tls = line_type == "socks5-tls";
                 option_start = 3;
                 if(configs.size() > 3 && configs[3].find('=') == std::string::npos)
                 {
@@ -6468,8 +6691,20 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                 case "ws"_hash:
                     net = itemVal == "true" ? "ws" : "tcp";
                     break;
+                case "ws-http-upgrade"_hash:
+                    v2ray_http_upgrade = itemVal;
+                    break;
                 case "transport"_hash:
                     net = itemVal.empty() ? "tcp" : itemVal;
+                    break;
+                case "xhttp-mode"_hash:
+                    node.GRPCMode = itemVal;
+                    break;
+                case "public-key"_hash:
+                    node.PublicKey = itemVal;
+                    break;
+                case "short-id"_hash:
+                    node.ShortID = itemVal;
                     break;
                 case "tls"_hash:
                     tls = itemVal == "true" ? "tls" : "";
@@ -6541,13 +6776,15 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                     underlying_proxy = itemVal;
                     break;
                 default:
+                    if(applyXhttpExtraOption(itemName, itemVal, node, host))
+                        break;
                     continue;
                 }
             }
             if(!tls_pubkey_sha256.empty())
                 node.TLSPubkeySha256 = tls_pubkey_sha256;
 
-            vmessConstruct(node, V2RAY_DEFAULT_GROUP, remarks, server, port, "", id, aead, net, method, path, host, edge, tls, sni, alpn_list, udp, tfo, scv, tls13, underlying_proxy, fingerprint, clientFingerprint);
+            vmessConstruct(node, V2RAY_DEFAULT_GROUP, remarks, server, port, "", id, aead, net, method, path, host, edge, tls, sni, alpn_list, udp, tfo, scv, tls13, underlying_proxy, fingerprint, clientFingerprint, v2ray_http_upgrade);
             break;
         case "http"_hash: // http proxy (surge/loon)
         case "https"_hash: // surfboard style https proxy
@@ -6555,7 +6792,7 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             port = trim(configs[2]);
             if(port == "0")
                 continue;
-            tls = hash_(configs[0]) == "https"_hash ? "tls" : "";
+            tls = line_type == "https" ? "tls" : "";
             option_start = 3;
             if(configs.size() > 3 && configs[3].find('=') == std::string::npos)
             {
@@ -6648,14 +6885,18 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                     break;
                 case "sni"_hash:
                 case "tls-name"_hash:
-                    host = itemVal;
                     sni = itemVal;
+                    if(host.empty())
+                        host = itemVal;
                     break;
                 case "transport"_hash:
                     net = itemVal.empty() ? "tcp" : itemVal;
                     break;
                 case "ws"_hash:
                     net = itemVal == "true" ? "ws" : "tcp";
+                    break;
+                case "ws-http-upgrade"_hash:
+                    v2ray_http_upgrade = itemVal;
                     break;
                 case "ws-path"_hash:
                 case "path"_hash:
@@ -6704,10 +6945,21 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                 case "alpn"_hash:
                     alpn_list = parseLoonAlpn(itemVal);
                     break;
+                case "xhttp-mode"_hash:
+                    node.GRPCMode = itemVal;
+                    break;
+                case "public-key"_hash:
+                    node.PublicKey = itemVal;
+                    break;
+                case "short-id"_hash:
+                    node.ShortID = itemVal;
+                    break;
                 case "underlying-proxy"_hash:
                     underlying_proxy = itemVal;
                     break;
                 default:
+                    if(applyXhttpExtraOption(itemName, itemVal, node, host))
+                        break;
                     continue;
                 }
             }
@@ -6716,26 +6968,38 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             if(!tls_pubkey_sha256.empty())
                 node.TLSPubkeySha256 = tls_pubkey_sha256;
 
-            trojanConstruct(node, TROJAN_DEFAULT_GROUP, remarks, server, port, password, net, host, path, clientFingerprint, sni, alpn_list, true, udp, tfo, scv, tls13, underlying_proxy);
+            trojanConstruct(node, TROJAN_DEFAULT_GROUP, remarks, server, port, password, net, host, path, clientFingerprint, sni, alpn_list, true, udp, tfo, scv, tls13, underlying_proxy, v2ray_http_upgrade);
             break;
         case "snell"_hash:
             server = trim(configs[1]);
             port = trim(configs[2]);
             if(port == "0")
                 continue;
-            for(i = 3; i < configs.size(); i++)
+            option_start = 3;
+            if(configs.size() > 3)
+            {
+                // Loon places the PSK in the 4th field (bare or psk=...); Surge writes psk=...
+                const std::string slot = toLower(trimQuote(trim(configs[3])));
+                if(!startsWith(slot, "psk="))
+                {
+                    password = trimQuote(trim(configs[3]));
+                    option_start = 4;
+                }
+            }
+            for(i = option_start; i < configs.size(); i++)
             {
                 vArray = splitKeyValue(configs[i], "=");
                 if(vArray.size() != 2)
                     continue;
-                itemName = trim(vArray[0]);
-                itemVal = trim(vArray[1]);
+                itemName = toLower(trim(vArray[0]));
+                itemVal = trimQuote(trim(vArray[1]));
                 switch(hash_(itemName))
                 {
                 case "psk"_hash:
                     password = itemVal;
                     break;
                 case "obfs"_hash:
+                case "obfs-name"_hash:
                     plugin = itemVal;
                     break;
                 case "obfs-host"_hash:
@@ -6745,12 +7009,14 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                     path = itemVal;
                     break;
                 case "udp-relay"_hash:
+                case "udp"_hash:
                     udp = itemVal;
                     break;
                 case "udp-port"_hash:
                     node.UDPPort = to_int(itemVal);
                     break;
                 case "tfo"_hash:
+                case "fast-open"_hash:
                     tfo = itemVal;
                     break;
                 case "skip-cert-verify"_hash:
@@ -6766,6 +7032,23 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                 case "mode"_hash: // snell v6
                     node.SnellMode = itemVal;
                     break;
+                case "block-quic"_hash:
+                    node.AnyTLSBlockQUIC = itemVal;
+                    break;
+                case "ip-mode"_hash:
+                    node.IPVersion = itemVal;
+                    break;
+                case "server-dns"_hash:
+                {
+                    const std::string servers = trimQuote(itemVal);
+                    for(const auto &y : split(servers, ","))
+                    {
+                        const auto trimmed = trim(y);
+                        if(!trimmed.empty())
+                            dns_servers.emplace_back(trimmed);
+                    }
+                    break;
+                }
                 case "shadow-tls-password"_hash:
                     node.ObfsPassword = itemVal;
                     if(plugin.empty())
@@ -6786,6 +7069,8 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             }
             if(plugin == "http" && !path.empty())
                 node.Path = path;
+            if(!dns_servers.empty())
+                node.DnsServers = dns_servers;
 
             snellConstruct(node, SNELL_DEFAULT_GROUP, remarks, server, port, password, plugin, host, to_int(version, 0), udp, tfo, scv, underlying_proxy);
             break;
@@ -6932,6 +7217,64 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             if(!peer.empty())
                 parsePeers(node, peer);
             break;
+        case "tailscale"_hash: // loon: "name = tailscale, key=value, ..." (no server/port slot)
+            node.Type = ProxyType::Tailscale;
+            node.Group = TAILSCALE_DEFAULT_GROUP;
+            node.Remark = remarks;
+            for(i = 1; i < configs.size(); i++)
+            {
+                vArray = splitKeyValue(trim(configs[i]), "=");
+                if(vArray.size() != 2)
+                    continue;
+                itemName = toLower(trim(vArray[0]));
+                itemVal = trimQuote(trim(vArray[1]));
+                switch(hash_(itemName))
+                {
+                case "auth-key"_hash:
+                    node.TailscaleAuthKey = itemVal;
+                    break;
+                case "control-url"_hash:
+                    node.TailscaleControlURL = itemVal;
+                    break;
+                case "hostname"_hash:
+                    node.Hostname = itemVal;
+                    break;
+                case "exit-node"_hash:
+                    node.TailscaleExitNode = itemVal;
+                    break;
+                case "accept-routes"_hash:
+                    node.TailscaleAcceptRoutes = itemVal;
+                    break;
+                case "accept-dns"_hash:
+                    node.TailscaleAcceptDNS = itemVal;
+                    break;
+                case "magic-dns"_hash:
+                    node.TailscaleMagicDNS = itemVal;
+                    break;
+                case "allow-inbound"_hash:
+                    node.TailscaleAllowInbound = itemVal;
+                    break;
+                case "advertise-exit-node"_hash:
+                    node.TailscaleAdvertiseExitNode = itemVal;
+                    break;
+                case "exit-fake-ip"_hash:
+                    node.TailscaleExitFakeIP = itemVal;
+                    break;
+                case "path-mode"_hash:
+                    node.TailscalePathMode = itemVal;
+                    break;
+                case "mtu"_hash:
+                    node.Mtu = to_int(itemVal);
+                    break;
+                case "udp"_hash:
+                case "udp-relay"_hash:
+                    node.UDP = itemVal;
+                    break;
+                default:
+                    break; // generic keys (block-quic/ip-mode/server-dns/...) land in applyLoonExtraOptions
+                }
+            }
+            break;
         case "anytls"_hash:
             server = trim(configs[1]);
             port = trim(configs[2]);
@@ -7054,7 +7397,11 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                 case "ports"_hash:
                     ports = itemVal;
                     break;
+                case "server-ports"_hash: // loon, colon ranges like "20000:20100"
+                    ports = replaceAllDistinct(trimQuote(itemVal), ":", "-");
+                    break;
                 case "port-hopping-interval"_hash:
+                case "hop-interval"_hash: // loon
                     hop_interval = itemVal;
                     break;
                 case "sni"_hash:
@@ -7068,6 +7415,9 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                     break;
                 case "tls-pubkey-sha256"_hash:
                     tls_pubkey_sha256 = itemVal;
+                    break;
+                case "alpn"_hash:
+                    alpn_list = parseLoonAlpn(itemVal);
                     break;
                 case "udp-relay"_hash:
                 case "udp"_hash:
@@ -7103,7 +7453,7 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             if(!tls_pubkey_sha256.empty())
                 node.TLSPubkeySha256 = tls_pubkey_sha256;
 
-            hysteria2Construct(node, HYSTERIA2_DEFAULT_GROUP, remarks, server, port, ports, up, down, password, "", obfs, obfs_password, sni, fingerprint, "", "", "", hop_interval, "", "", "", "", "", "", udp, tfo, scv, underlying_proxy);
+            hysteria2Construct(node, HYSTERIA2_DEFAULT_GROUP, remarks, server, port, ports, up, down, password, "", obfs, obfs_password, sni, fingerprint, "", "", "", hop_interval, "", "", "", "", "", "", udp, tfo, scv, underlying_proxy, alpn_list);
             break;
         case "tuic-v5"_hash:
         case "tuic"_hash:
@@ -7208,6 +7558,9 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                     if(itemVal == "true")
                         net = "ws";
                     break;
+                case "ws-http-upgrade"_hash:
+                    v2ray_http_upgrade = itemVal;
+                    break;
                 case "ws-path"_hash:
                 case "path"_hash:
                     path = itemVal;
@@ -7260,101 +7613,6 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                 case "xhttp-mode"_hash:
                     mode = itemVal;
                     break;
-                case "xhttp-headers"_hash:
-                    headers = split(itemVal, "|");
-                    for(auto &y : headers)
-                    {
-                        header = splitKeyValue(trim(y), ":");
-                        if(header.size() != 2)
-                            continue;
-                        else if(regMatch(header[0], "(?i)host"))
-                        {
-                            if(host.empty())
-                                host = trim(header[1]);
-                        }
-                        else
-                        {
-                            if(!encoded_headers.empty())
-                                encoded_headers += ";";
-                            encoded_headers += urlEncode(trim(header[0])) + "=" + urlEncode(trim(header[1]));
-                        }
-                    }
-                    break;
-                case "xhttp-padding-bytes"_hash:
-                    node.XHTTPXPaddingBytes = itemVal;
-                    break;
-                case "xhttp-padding-obfs"_hash:
-                    node.XHTTPXPaddingObfsMode = tribool(itemVal);
-                    break;
-                case "xhttp-padding-key"_hash:
-                    node.XHTTPXPaddingKey = itemVal;
-                    break;
-                case "xhttp-padding-header"_hash:
-                    node.XHTTPXPaddingHeader = itemVal;
-                    break;
-                case "xhttp-padding-placement"_hash:
-                    node.XHTTPXPaddingPlacement = itemVal;
-                    break;
-                case "xhttp-padding-method"_hash:
-                    node.XHTTPXPaddingMethod = itemVal;
-                    break;
-                case "xhttp-uplink-method"_hash:
-                    node.XHTTPUplinkHTTPMethod = itemVal;
-                    break;
-                case "xhttp-session-placement"_hash:
-                    node.XHTTPSessionPlacement = itemVal;
-                    break;
-                case "xhttp-session-key"_hash:
-                    node.XHTTPSessionKey = itemVal;
-                    break;
-                case "xhttp-session-table"_hash:
-                    node.XHTTPSessionTable = itemVal;
-                    break;
-                case "xhttp-session-length"_hash:
-                    node.XHTTPSessionLength = itemVal;
-                    break;
-                case "xhttp-seq-placement"_hash:
-                    node.XHTTPSeqPlacement = itemVal;
-                    break;
-                case "xhttp-seq-key"_hash:
-                    node.XHTTPSeqKey = itemVal;
-                    break;
-                case "xhttp-uplink-data-placement"_hash:
-                    node.XHTTPUplinkDataPlacement = itemVal;
-                    break;
-                case "xhttp-uplink-data-key"_hash:
-                    node.XHTTPUplinkDataKey = itemVal;
-                    break;
-                case "xhttp-uplink-chunk-size"_hash:
-                    node.XHTTPUplinkChunkSize = itemVal;
-                    break;
-                case "xhttp-no-grpc-header"_hash:
-                    node.XHTTPNoGRPCHeader = tribool(itemVal);
-                    break;
-                case "xhttp-max-each-post-bytes"_hash:
-                    node.XHTTPScMaxEachPostBytes = itemVal;
-                    break;
-                case "xhttp-min-posts-interval"_hash:
-                    node.XHTTPScMinPostsIntervalMs = itemVal;
-                    break;
-                case "xhttp-xmux-max-concurrency"_hash:
-                    node.XHTTPReuseMaxConcurrency = itemVal;
-                    break;
-                case "xhttp-xmux-max-connections"_hash:
-                    node.XHTTPReuseMaxConnections = itemVal;
-                    break;
-                case "xhttp-xmux-max-reuse-times"_hash:
-                    node.XHTTPReuseCMaxReuseTimes = itemVal;
-                    break;
-                case "xhttp-xmux-max-request-times"_hash:
-                    node.XHTTPReuseHMaxRequestTimes = itemVal;
-                    break;
-                case "xhttp-xmux-max-reusable-secs"_hash:
-                    node.XHTTPReuseHMaxReusableSecs = itemVal;
-                    break;
-                case "xhttp-xmux-keep-alive"_hash:
-                    node.XHTTPReuseHKeepAlivePeriod = to_int(itemVal);
-                    break;
                 case "sni"_hash:
                 case "tls-name"_hash:
                     sni = itemVal;
@@ -7392,6 +7650,8 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
                     underlying_proxy = itemVal;
                     break;
                 default:
+                    if(applyXhttpExtraOption(itemName, itemVal, node, host))
+                        break;
                     continue;
                 }
             }
@@ -7401,16 +7661,11 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             if(!tls_pubkey_sha256.empty())
                 node.TLSPubkeySha256 = tls_pubkey_sha256;
 
-            vlessConstruct(node, VLESS_DEFAULT_GROUP, remarks, server, port, "", uuid, net, "", flow, mode, path, host, edge, tls, public_key, shortid, fingerprint, sni, alpn_list, "", encryption, udp, tfo, scv, tls13, underlying_proxy);
+            vlessConstruct(node, VLESS_DEFAULT_GROUP, remarks, server, port, "", uuid, net, "", flow, mode, path, host, edge, tls, public_key, shortid, fingerprint, sni, alpn_list, "", encryption, udp, tfo, scv, tls13, underlying_proxy, v2ray_http_upgrade);
             if(!name_cert_verify.empty())
                 node.NameCertVerify = name_cert_verify;
             if(!encoded_headers.empty())
-            {
-                if(net == "xhttp")
-                    node.XHTTPHeaders = encoded_headers;
-                else
-                    node.WsHeadersMap = encoded_headers;
-            }
+                node.WsHeadersMap = encoded_headers;
             break;
         default:
             switch (hash_(remarks))
@@ -8180,6 +8435,7 @@ bool explodeNamedConfig(std::string content, std::vector<Proxy> &nodes)
             break;
         }
 
+        applyLoonExtraOptions(node, configs);
         node.Id = index;
         nodes.emplace_back(std::move(node));
         index++;
