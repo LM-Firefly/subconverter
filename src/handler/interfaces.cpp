@@ -807,7 +807,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
             output_content = proxyToSurge(nodes, base_content, dummy_ruleset, dummy_group, intSurgeVer, ext);
 
             if(argUpload)
-                uploadGist("surge" + argSurgeVer + "list", argUploadPath, output_content, true);
+                uploadGist("surge" + argSurgeVer + "list", argUploadPath, output_content, global.writeManagedConfig);
         }
         else
         {
@@ -819,7 +819,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
             output_content = proxyToSurge(nodes, base_content, lRulesetContent, lCustomProxyGroups, intSurgeVer, ext);
 
             if(argUpload)
-                uploadGist("surge" + argSurgeVer, argUploadPath, output_content, true);
+                uploadGist("surge" + argSurgeVer, argUploadPath, output_content, global.writeManagedConfig);
 
             if(global.writeManagedConfig && !global.managedConfigPrefix.empty())
                 output_content = "#!MANAGED-CONFIG " + managed_url + (interval ? " interval=" + std::to_string(interval) : "") \
@@ -836,7 +836,7 @@ std::string subconverter(RESPONSE_CALLBACK_ARGS)
         }
         output_content = proxyToSurfboard(nodes, base_content, lRulesetContent, lCustomProxyGroups, ext);
         if(argUpload)
-            uploadGist("surfboard", argUploadPath, output_content, true);
+            uploadGist("surfboard", argUploadPath, output_content, global.writeManagedConfig);
 
         if(global.writeManagedConfig && !global.managedConfigPrefix.empty())
             output_content = "#!MANAGED-CONFIG " + managed_url + (interval ? " interval=" + std::to_string(interval) : "") \

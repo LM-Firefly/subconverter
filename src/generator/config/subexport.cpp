@@ -3231,6 +3231,21 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
         for(const auto& y : x.Proxies)
             groupGenerate(y, nodelist, filtered_nodelist, true, ext);
 
+        // Clash only: add dialer-proxy to every node selected into this group
+        // (set via !!DIALER= / dialer-proxy); a node's own dialer-proxy is kept
+        if(!clashR && !x.DialerProxy.empty())
+        {
+            for(auto &&proxy_node : proxies)
+            {
+                const YAML::Node &cnode = proxy_node;
+                if(cnode["dialer-proxy"])
+                    continue;
+                const std::string node_name = cnode["name"].as<std::string>();
+                if(std::find(filtered_nodelist.begin(), filtered_nodelist.end(), node_name) != filtered_nodelist.end())
+                    proxy_node["dialer-proxy"] = x.DialerProxy;
+            }
+        }
+
         if(!x.UsingProvider.empty())
             singlegroup["use"] = x.UsingProvider;
         else
@@ -4159,6 +4174,11 @@ std::string proxyToSurge(std::vector<Proxy> &nodes, const std::string &base_conf
                     group += "," + content;
             }
         }
+
+        // Surge only: chain the whole group through another policy/group.
+        // Appended last, after icon-url and other parameters.
+        if(!x.DialerProxy.empty() && surge_ver != -3)
+            group += ",underlying-proxy=" + x.DialerProxy;
 
         ini.set("{NONAME}", x.Name + " = " + group); //insert order
     }

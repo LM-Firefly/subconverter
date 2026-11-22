@@ -87,6 +87,8 @@ namespace toml
                 throw serialization_error(format_error("Proxy Group must contains at least one of proxy match rule or provider!", v.location(), "here"), v.location());
             if(v.contains("disable-udp"))
                 conf.DisableUdp = find_or(v, "disable-udp", conf.DisableUdp.get());
+            if(v.contains("dialer-proxy"))
+                conf.DialerProxy = find_or<String>(v, "dialer-proxy", "");
             return conf;
         }
     };
@@ -277,6 +279,8 @@ namespace INIBinding
                         conf.UsingProvider.reserve(conf.UsingProvider.size() + list.size());
                         std::move(list.begin(), list.end(), std::back_inserter(conf.UsingProvider));
                     }
+                    else if(startsWith(vArray[i], "!!DIALER="))
+                        conf.DialerProxy = vArray[i].substr(9);
                     else
                         conf.Proxies.emplace_back(std::move(vArray[i]));
                 }
