@@ -36,6 +36,7 @@ struct ProxyGroupConfig
     Boolean DisableUdp;
     Boolean Persistent;
     Boolean EvaluateBeforeUse;
+    String DialerProxy;
 
     String TypeStr() const
     {
