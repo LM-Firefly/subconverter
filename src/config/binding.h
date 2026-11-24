@@ -89,6 +89,8 @@ namespace toml
                 conf.DisableUdp = find_or(v, "disable-udp", conf.DisableUdp.get());
             if(v.contains("dialer-proxy"))
                 conf.DialerProxy = find_or<String>(v, "dialer-proxy", "");
+            if(v.contains("icon"))
+                conf.Icon = find_or<String>(v, "icon", "");
             return conf;
         }
     };
@@ -279,6 +281,8 @@ namespace INIBinding
                         conf.UsingProvider.reserve(conf.UsingProvider.size() + list.size());
                         std::move(list.begin(), list.end(), std::back_inserter(conf.UsingProvider));
                     }
+                    else if(startsWith(vArray[i], "!!ICON="))
+                        conf.Icon = vArray[i].substr(7);
                     else if(startsWith(vArray[i], "!!DIALER="))
                         conf.DialerProxy = vArray[i].substr(9);
                     else

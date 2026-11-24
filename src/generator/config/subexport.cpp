@@ -3255,6 +3255,8 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
         }
         if(!filtered_nodelist.empty())
             singlegroup["proxies"] = filtered_nodelist;
+        if(!clashR && !x.Icon.empty())
+            singlegroup["icon"] = x.Icon;
         if(group_block)
             singlegroup.SetStyle(YAML::EmitterStyle::Block);
         else
@@ -4163,8 +4165,13 @@ std::string proxyToSurge(std::vector<Proxy> &nodes, const std::string &base_conf
                 group += ",evaluate-before-use=" + x.EvaluateBeforeUse.get_str();
         }
 
+        // icon set via !!ICON= takes precedence over a trailing icon-url in the base template
+        bool surge_icon = !x.Icon.empty() && surge_ver != -3;
+        if(surge_icon)
+            group += ",icon-url=" + x.Icon;
+
         auto iter = original_groups.find(x.Name);
-        if(iter != original_groups.end())
+        if(iter != original_groups.end() && !surge_icon)
         {
             string_array vArray = split(iter->second, ",");
             if(vArray.size() > 1)
@@ -5737,7 +5744,10 @@ void proxyToQuanX(std::vector<Proxy> &nodes, INIReader &ini, std::vector<Ruleset
             else
                 return false;
         });
-        if(iter != original_groups.end())
+        // icon set via !!ICON= takes precedence over a trailing img-url in the base template
+        if(!x.Icon.empty())
+            filtered_nodelist.emplace_back("img-url=" + x.Icon);
+        else if(iter != original_groups.end())
         {
             string_array vArray = split(iter->second, ",");
             if(vArray.size() > 1)
@@ -6555,7 +6565,10 @@ std::string proxyToLoon(std::vector<Proxy> &nodes, const std::string &base_conf,
             return trim(n.first) == x.Name;
         });
 
-        if(iter != original_groups.end())
+        // icon set via !!ICON= takes precedence over a trailing img-url in the base template
+        if(!x.Icon.empty())
+            filtered_nodelist.emplace_back("img-url=" + x.Icon);
+        else if(iter != original_groups.end())
         {
             string_array vArray = split(iter->second, ",");
             if(vArray.size() > 1)

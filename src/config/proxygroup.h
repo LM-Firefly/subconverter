@@ -37,6 +37,7 @@ struct ProxyGroupConfig
     Boolean Persistent;
     Boolean EvaluateBeforeUse;
     String DialerProxy;
+    String Icon;
 
     String TypeStr() const
     {
