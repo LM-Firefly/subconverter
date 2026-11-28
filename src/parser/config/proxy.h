@@ -529,6 +529,9 @@ struct Proxy
 
     // GOST relay-specific
     bool GostRelayForward = false;
+    bool GostRelayWS = false;
+    String GostRelayWSPath;
+    String GostRelayWSHeaders;
 
     // Mieru-specific
     String PortRange;
