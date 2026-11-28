@@ -3947,6 +3947,14 @@ void explodeClash(Node yamlnode, std::vector<Proxy> &nodes)
                 node.SmuxEnabled = safe_as<bool>(singleproxy["mux"]);
             if(singleproxy["forward"].IsDefined())
                 node.GostRelayForward = safe_as<bool>(singleproxy["forward"]);
+            if(singleproxy["ws"].IsDefined())
+                node.GostRelayWS = safe_as<bool>(singleproxy["ws"]);
+            if(singleproxy["ws-opts"].IsDefined())
+            {
+                singleproxy["ws-opts"]["path"] >>= node.GostRelayWSPath;
+                if(singleproxy["ws-opts"]["headers"].IsDefined())
+                    node.GostRelayWSHeaders = encodeHTTPHeaderMap(singleproxy["ws-opts"]["headers"]);
+            }
             if(singleproxy["fingerprint"].IsDefined())
                 singleproxy["fingerprint"] >>= fingerprint;
             if(singleproxy["client-fingerprint"].IsDefined())

@@ -2259,6 +2259,13 @@ void proxyToClash(std::vector<Proxy> &nodes, YAML::Node &yamlnode, const ProxyGr
             singleproxy["type"] = "gost-relay";
             if(x.GostRelayForward)
                 singleproxy["forward"] = true;
+            if(x.GostRelayWS)
+            {
+                singleproxy["ws"] = true;
+                if(!x.GostRelayWSPath.empty())
+                    singleproxy["ws-opts"]["path"] = x.GostRelayWSPath;
+                applyEncodedHeaders(x.GostRelayWSHeaders, singleproxy["ws-opts"]["headers"]);
+            }
             if(!x.SmuxEnabled.is_undef())
                 singleproxy["mux"] = x.SmuxEnabled.get();
             if(x.TLSSecure)
